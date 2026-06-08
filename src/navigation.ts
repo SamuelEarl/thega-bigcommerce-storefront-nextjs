@@ -1,0 +1,307 @@
+export interface NavItem {
+  text: string;
+  icon?: string;
+  path?: string;
+  isAllAudienceProductsLink?: boolean;
+  subnav?: NavItem[];
+}
+
+export function topNav(): NavItem[] {
+  return [
+    {
+      text: "MEN",
+      path: "/shop?audience=men",
+      subnav: [
+        {
+          text: "All Men's Products",
+          path: "/shop?audience=men",
+          isAllAudienceProductsLink: true,
+        },
+        {
+          text: "Shoes",
+          path: "/shop?audience=men&apparel=shoes",
+          subnav: [
+            {
+              text: "All Men's Shoes",
+              path: "/shop?audience=men&apparel=shoes",
+            },
+            {
+              text: "Running",
+              path: "/shop?audience=men&apparel=shoes&sport=running",
+            },
+            {
+              text: "Soccer",
+              path: "/shop?audience=men&apparel=shoes&sport=soccer",
+            },
+            {
+              text: "Basketball",
+              path: "/shop?audience=men&apparel=shoes&sport=basketball",
+            },
+          ],
+        },
+        {
+          text: "Clothing",
+          path: "/shop?audience=men&apparel=clothing",
+          subnav: [
+            {
+              text: "All Men's Clothing",
+              path: "/shop?audience=men&apparel=clothing",
+            },
+            {
+              text: "Pants",
+              path: "/shop?audience=men&apparel=clothing&piece=pants",
+            },
+            {
+              text: "Shorts",
+              path: "/shop?audience=men&apparel=clothing&piece=shorts",
+            },
+            {
+              text: "Shirts & Tops",
+              path: "/shop?audience=men&apparel=clothing&piece=shirts-and-tops",
+            },
+          ],
+        },
+        {
+          text: "Accessories",
+          path: "/shop?audience=men&apparel=accessories",
+          subnav: [
+            {
+              text: "All Men's Accessories",
+              path: "/shop?audience=men&apparel=accessories",
+            },
+            {
+              text: "Hats",
+              path: "/shop?audience=men&apparel=accessories&piece=hats",
+            },
+            {
+              text: "Socks",
+              path: "/shop?audience=men&apparel=accessories&piece=socks",
+            },
+            {
+              text: "Belts",
+              path: "/shop?audience=men&apparel=accessories&piece=belts",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: "WOMEN",
+      path: "/shop?audience=women",
+      subnav: [
+        {
+          text: "All Women's Products",
+          path: "/shop?audience=women",
+          isAllAudienceProductsLink: true,
+        },
+        {
+          text: "Shoes",
+          path: "/shop?audience=women&apparel=shoes",
+          subnav: [
+            {
+              text: "All Women's Shoes",
+              path: "/shop?audience=women&apparel=shoes",
+            },
+            {
+              text: "Running",
+              path: "/shop?audience=women&apparel=shoes&sport=running",
+            },
+            {
+              text: "Soccer",
+              path: "/shop?audience=women&apparel=shoes&sport=soccer",
+            },
+            {
+              text: "Basketball",
+              path: "/shop?audience=women&apparel=shoes&sport=basketball",
+            },
+          ],
+        },
+        {
+          text: "Clothing",
+          path: "/shop?audience=women&apparel=clothing",
+          subnav: [
+            {
+              text: "All Women's Clothing",
+              path: "/shop?audience=women&apparel=clothing",
+            },
+            {
+              text: "Pants",
+              path: "/shop?audience=women&apparel=clothing&piece=pants",
+            },
+            {
+              text: "Shorts",
+              path: "/shop?audience=women&apparel=clothing&piece=shorts",
+            },
+            {
+              text: "Shirts & Tops",
+              path: "/shop?audience=women&apparel=clothing&piece=shirts-and-tops",
+            },
+          ],
+        },
+        {
+          text: "Accessories",
+          path: "/shop?audience=women&apparel=accessories",
+          subnav: [
+            {
+              text: "All Women's Accessories",
+              path: "/shop?audience=women&apparel=accessories",
+            },
+            {
+              text: "Hats",
+              path: "/shop?audience=women&apparel=accessories&piece=hats",
+            },
+            {
+              text: "Socks",
+              path: "/shop?audience=women&apparel=accessories&piece=socks",
+            },
+            {
+              text: "Belts",
+              path: "/shop?audience=women&apparel=accessories&piece=belts",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: "KIDS",
+      path: "/shop?audience=kids",
+      subnav: [
+        {
+          text: "All Kids Products",
+          path: "/shop?audience=kids",
+          isAllAudienceProductsLink: true,
+        },
+        {
+          text: "Shoes",
+          path: "/shop?audience=kids&apparel=shoes",
+          subnav: [
+            {
+              text: "All Kids Shoes",
+              path: "/shop?audience=kids&apparel=shoes",
+            },
+            {
+              text: "Running",
+              path: "/shop?audience=kids&apparel=shoes&sport=running",
+            },
+            {
+              text: "Soccer",
+              path: "/shop?audience=kids&apparel=shoes&sport=soccer",
+            },
+            {
+              text: "Basketball",
+              path: "/shop?audience=kids&apparel=shoes&sport=basketball",
+            },
+          ],
+        },
+        {
+          text: "Clothing",
+          path: "/shop?audience=kids&apparel=clothing",
+          subnav: [
+            {
+              text: "All Kids Clothing",
+              path: "/shop?audience=kids&apparel=clothing",
+            },
+            {
+              text: "Pants",
+              path: "/shop?audience=kids&apparel=clothing&piece=pants",
+            },
+            {
+              text: "Shorts",
+              path: "/shop?audience=kids&apparel=clothing&piece=shorts",
+            },
+            {
+              text: "Shirts & Tops",
+              path: "/shop?audience=kids&apparel=clothing&piece=shirts-and-tops",
+            },
+          ],
+        },
+        {
+          text: "Accessories",
+          path: "/shop?audience=kids&apparel=accessories",
+          subnav: [
+            {
+              text: "All Kids Accessories",
+              path: "/shop?audience=kids&apparel=accessories",
+            },
+            {
+              text: "Hats",
+              path: "/shop?audience=kids&apparel=accessories&piece=hats",
+            },
+            {
+              text: "Socks",
+              path: "/shop?audience=kids&apparel=accessories&piece=socks",
+            },
+            {
+              text: "Belts",
+              path: "/shop?audience=kids&apparel=accessories&piece=belts",
+            },
+          ],
+        },
+      ],
+    },
+  ];
+}
+
+export function iconNav(): NavItem[] {
+  return [
+    {
+      text: "Search",
+      icon: "search-line",
+      path: "search",
+    },
+    {
+      text: "Shopping Bag",
+      icon: "shopping-bag-line",
+      path: "shopping-bag",
+    },
+    {
+      text: "User Account",
+      icon: "user-line",
+      path: "user-account",
+    },
+  ];
+}
+
+export function companyInfoNav(): NavItem[] {
+  return [
+    {
+      text: "COMPANY INFO",
+      path: "company-info",
+      subnav: [
+        {
+          text: "About Us",
+          path: "about-us",
+        },
+        {
+          text: "Contact Us",
+          path: "contact-us",
+        },
+        {
+          text: "Shipping & Delivery Policies",
+          path: "shipping-and-delivery-policies",
+        },
+        {
+          text: "Returns, Exchanges, Refunds",
+          path: "returns-exchanges-refunds",
+        },
+        {
+          text: "FAQ",
+          path: "faq",
+        },
+        {
+          text: "Privacy Policy",
+          path: "privacy-policy",
+        },
+        {
+          text: "Terms of Service",
+          path: "terms-of-service",
+        },
+      ],
+    },
+  ];
+}
+
+// Combine all the navigation arrays into a single navigation array.
+export function combinedNav(): NavItem[] {
+  return [...topNav(), ...iconNav(), ...companyInfoNav()];
+}

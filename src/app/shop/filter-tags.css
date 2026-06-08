@@ -1,0 +1,15 @@
+.filter-tags-container {
+  display: flex;
+  gap: var(--size-2);
+  overflow-y: auto;
+
+  .filter-tag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--primary-bg);
+    color: var(--primary-fg);
+    border-radius: 25px;
+    padding: var(--size-1) var(--size-2);
+  }
+}

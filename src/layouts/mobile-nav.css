@@ -1,0 +1,125 @@
+@scope (.mobile-menu-container) {
+  @media (--xs-min) {
+    :scope {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      /* Crucial for sliding panels */
+      background-color: var(--primary-bg);
+
+      .mobile-menu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--size-3) var(--page-padding) var(--size-5) var(--page-padding);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        /* .logo {
+          height: 35px;
+        } */
+
+        .mobile-menu-header-btn-transparent {
+          background: none;
+          border: none;
+          /* Hide the icon */
+          color: transparent;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .mobile-menu-header-btn,
+      .back-btn {
+        background: none;
+        border: none;
+        color: var(--white);
+        cursor: pointer;
+      }
+
+      .back-btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 1.25rem;
+        margin: 20px 0;
+        text-transform: uppercase;
+      }
+    }
+
+    .mobile-menu-icons-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: var(--size-5) var(--page-padding);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      /* Enough for Levels 1, 2, and 3 side-by-side */
+      width: 300%;
+      height: 100%;
+      transition: transform 0.3s ease-in-out;
+
+      /* Slide to show Level 2 panel */
+      &.slide-level2 {
+        transform: translateX(-33.333%);
+      }
+
+      /* Slide to show Level 3 panel */
+      &.slide-level3 {
+        transform: translateX(-66.666%);
+      }
+
+      .nav-panel {
+        width: 33.333%;
+        /* One full screen width (100% of viewport = 33.333% of 300% container) */
+        height: 100%;
+        list-style: none;
+        flex-shrink: 0;
+
+        .navigation-list,
+        .subnav-list {
+          flex: 1;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+          margin: 0;
+          list-style: none;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          /* Smooth scrolling on iOS */
+        }
+
+        .navigation-list {
+          padding-bottom: 60px;
+          /* Add extra space to compensate for the height of the mobile-menu-header */
+        }
+
+        .subnav-list {
+          padding-bottom: calc(60px + 70px);
+          /* Add extra space to compensate for the height of the mobile-menu-header and the back button. */
+        }
+
+        .nav-item {
+          font-size: 1.5rem;
+          padding: 15px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          color: var(--white);
+
+          .nav-trigger {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "thega-bigcommerce-storefront-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint:check": "eslint",
+    "lint:fix": "eslint --fix",
+    "format:check": "prettier --check",
+    "format:fix": "prettier --write",
+    "test:unit": "NODE_ENV=test jest",
+    "test:integration": "NODE_ENV=test jest",
+    "test:e2e": "start-server-and-test start http://localhost:3000 'NODE_ENV=test npx playwright test'",
+    "dev": "NODE_ENV=development next dev",
+    "build:staging": "NODE_ENV=staging next build",
+    "start:staging": "NODE_ENV=staging next start",
+    "build:prod": "NODE_ENV=production next build",
+    "start:prod": "NODE_ENV=production next start"
+  },
+  "dependencies": {
+    "@remixicon/react": "^4.9.0",
+    "next": "16.2.7",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@csstools/postcss-global-data": "^4.0.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.5.0",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.7",
+    "postcss-custom-media": "^12.0.1",
+    "typescript": "^5"
+  }
+}
