@@ -1,3 +1,21 @@
+# THEGA SPORTSWEAR - BigCommerce Storefront Next.js
+
+---
+
+## Install the BigCommerce Docs MCP Server
+
+The BigCommerce Docs MCP Server allows your AI Agent to reference the BigCommerce documentation while coding on this project.
+
+Go to of the docs pages (https://docs.bigcommerce.com/) and click the dropdown arrow next to the "Copy page" button (to the right of the page title) and select "Connect to Claude Code". That will copy the following command to your clipboard:
+
+```bash
+claude mcp add --transport http docs-bigcommerce-com https://docs.bigcommerce.com/_mcp/server
+```
+
+Paste that command into your Claude Code terminal and run it and Claude will install the BigCommerce MCP Server.
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
