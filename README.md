@@ -12,7 +12,23 @@ Go to of the docs pages (https://docs.bigcommerce.com/) and click the dropdown a
 claude mcp add --transport http docs-bigcommerce-com https://docs.bigcommerce.com/_mcp/server
 ```
 
-Paste that command into your Claude Code terminal and run it and Claude will install the BigCommerce MCP Server.
+Paste that command into your Claude Code terminal and run it. Claude will install a configuration entry locally in `~/.claude.json`. Specifically, it's stored under a section that is specific to your project folder:
+
+```json
+"/absolute/path/to/my/project": {
+  "allowedTools": [],
+  "mcpContextUris": [],
+  "mcpServers": {
+    "docs-bigcommerce-com": {
+      "type": "http",
+      "url": "https://docs.bigcommerce.com/_mcp/server"
+    }
+  },
+  ...
+}
+```
+
+So when your run `claude mcp add --transport http`, it creates a Claude configuration entry in your `~/.claude.json` file, scopes that entry to your current project directory, and populates an `mcpServers` configuration with the `"docs-bigcommerce-com"` MCP server configuration. So if you ever change your project folder location on your computer, then you will probably need to run the command again so the MCP server configuration is scoped to your updated project directory.
 
 ---
 
