@@ -13,7 +13,7 @@
     padding: var(--size-2) var(--size-3);
 
     &:hover {
-      background-color: var(--primary-fg);
+      background-color: transparent;
       color: var(--primary-bg);
     }
   }

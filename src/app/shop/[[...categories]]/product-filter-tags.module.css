@@ -15,7 +15,7 @@
   padding: var(--size-1) var(--size-2);
 
   &:hover {
-    background-color: var(--primary-fg);
+    background-color: transparent;
     color: var(--primary-bg);
   }
 }
