@@ -70,15 +70,15 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Pants",
-              path: "/shop?audience=men&category=clothing&subCategory=pants",
+              path: "/shop?audience=men&category=clothing : pants",
             },
             {
               text: "Shorts",
-              path: "/shop?audience=men&category=clothing&subCategory=shorts",
+              path: "/shop?audience=men&category=clothing : shorts",
             },
             {
               text: "Shirts & Tops",
-              path: `/shop?audience=men&category=clothing&subCategory=${encodeURIComponent("shirts-&-tops")}`,
+              path: `/shop?audience=men&category=clothing : ${encodeURIComponent("shirts-&-tops")}`,
             },
           ],
         },
@@ -92,15 +92,15 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Hats",
-              path: "/shop?audience=men&category=accessories&subCategory=hats",
+              path: "/shop?audience=men&category=accessories : hats",
             },
             {
               text: "Socks",
-              path: "/shop?audience=men&category=accessories&subCategory=socks",
+              path: "/shop?audience=men&category=accessories : socks",
             },
             {
               text: "Belts",
-              path: "/shop?audience=men&category=accessories&subCategory=belts",
+              path: "/shop?audience=men&category=accessories : belts",
             },
           ],
         },
@@ -147,15 +147,15 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Pants",
-              path: "/shop?audience=women&category=clothing&subCategory=pants",
+              path: "/shop?audience=women&category=clothing : pants",
             },
             {
               text: "Shorts",
-              path: "/shop?audience=women&category=clothing&subCategory=shorts",
+              path: "/shop?audience=women&category=clothing : shorts",
             },
             {
               text: "Shirts & Tops",
-              path: `/shop?audience=women&category=clothing&subCategory=${encodeURIComponent("shirts-&-tops")}`,
+              path: `/shop?audience=women&category=clothing : ${encodeURIComponent("shirts-&-tops")}`,
             },
           ],
         },
@@ -169,15 +169,15 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Hats",
-              path: "/shop?audience=women&category=accessories&subCategory=hats",
+              path: "/shop?audience=women&category=accessories : hats",
             },
             {
               text: "Socks",
-              path: "/shop?audience=women&category=accessories&subCategory=socks",
+              path: "/shop?audience=women&category=accessories : socks",
             },
             {
               text: "Belts",
-              path: "/shop?audience=women&category=accessories&subCategory=belts",
+              path: "/shop?audience=women&category=accessories : belts",
             },
           ],
         },
@@ -224,15 +224,15 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Pants",
-              path: "/shop?audience=kids&category=clothing&subCategory=pants",
+              path: "/shop?audience=kids&category=clothing : pants",
             },
             {
               text: "Shorts",
-              path: "/shop?audience=kids&category=clothing&subCategory=shorts",
+              path: "/shop?audience=kids&category=clothing : shorts",
             },
             {
               text: "Shirts & Tops",
-              path: `/shop?audience=kids&category=clothing&subCategory=${encodeURIComponent("shirts-&-tops")}`,
+              path: `/shop?audience=kids&category=clothing : ${encodeURIComponent("shirts-&-tops")}`,
             },
           ],
         },
@@ -246,15 +246,15 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Hats",
-              path: "/shop?audience=kids&category=accessories&subCategory=hats",
+              path: "/shop?audience=kids&category=accessories : hats",
             },
             {
               text: "Socks",
-              path: "/shop?audience=kids&category=accessories&subCategory=socks",
+              path: "/shop?audience=kids&category=accessories : socks",
             },
             {
               text: "Belts",
-              path: "/shop?audience=kids&category=accessories&subCategory=belts",
+              path: "/shop?audience=kids&category=accessories : belts",
             },
           ],
         },
