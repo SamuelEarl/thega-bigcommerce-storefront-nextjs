@@ -3,7 +3,18 @@ export { Button } from "./buttons/button";
 export type { ButtonProps } from "./buttons/button";
 
 // Dialogs
-export { Dialog } from "./dialogs/dialog";
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialogs/dialog";
 
 // Colors and Sizes utilities
 export {

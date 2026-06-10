@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import ProductFilterTags from "./product-filter-tags";
 import ProductFilterModal from "./product-filter-modal";
-// import "./shop.css";
+import styles from "./page.module.css";
 
 interface ShopProps {
   params: Promise<{
@@ -18,13 +18,17 @@ export default async function Shop({ params }: ShopProps) {
   return (
     <div className="shop">
       <div className="shop-header">
-        <ProductFilterModal />
-        {/* {segments?.length > 0 && <Suspense fallback={<div>Updating filters...</div>}>
-          <ProductFilterTags />
-        </Suspense>} */}
-        <Suspense fallback={<div>Updating filters...</div>}>
-          <ProductFilterTags />
-        </Suspense>
+        <div className={styles["product-filters-container"]}>
+          <ProductFilterModal />
+        </div>
+        <div>
+          {/* {segments?.length > 0 && <Suspense fallback={<div>Updating filters...</div>}>
+            <ProductFilterTags />
+          </Suspense>} */}
+          <Suspense fallback={<div>Updating filters...</div>}>
+            <ProductFilterTags />
+          </Suspense>
+        </div>
       </div>
       {/* {segments.map((segment, index) => (
         <div key={index}>Segment {index + 1}: {segment}</div>

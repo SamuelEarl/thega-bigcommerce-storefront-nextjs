@@ -1,0 +1,5 @@
+@media (--xs-min) {
+  .product-filters-container {
+    margin-bottom: var(--size-4);
+  }
+}

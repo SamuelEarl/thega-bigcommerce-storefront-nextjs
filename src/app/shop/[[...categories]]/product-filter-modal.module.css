@@ -1,4 +1,4 @@
-@media (min-width: 0px) {
+@media (--xs-min) {
   .product-filter-modal {
     margin-bottom: var(--size-4);
   }
@@ -6,6 +6,14 @@
   .product-filter-modal-button {
     display: flex;
     align-items: center;
-    gap: var(--size-2);
+    gap: var(--size-3);
+    background-color: var(--primary-bg);
+    color: var(--primary-fg);
+    padding: var(--size-2) var(--size-3);
+
+    &:hover {
+      outline: 2px solid var(--primary-bg);
+      outline-offset: 3px;
+    }
   }
 }

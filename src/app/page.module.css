@@ -1,4 +1,4 @@
-@media (min-width: 0px) {
+@media (--xs-min) {
   @media (--standard-res) {
     .hero-image-container {
       background-image: url("/images/res-standard/hero-image-optimized-xs-res-standard-768x800.webp");
