@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/../public/images/logo-and-name-horizontal-black-191919.svg";
 import { topNav, companyInfoNav } from "@/navigation";
-import "./footer.css";
+import styles from "./footer.module.css";
 
 export default function Footer() {
   const combinedNav = [...topNav(), ...companyInfoNav()];
@@ -11,20 +11,20 @@ export default function Footer() {
   const currentYear = now.getFullYear();
 
   return (
-    <div className="footer-container">
-      <hr className="footer-top-divider" />
-      <footer className="footer-top">
-        <nav className="footer-nav">
+    <div className={styles["footer-container"]}>
+      <hr className={styles["footer-top-divider"]} />
+      <footer className={styles["footer-top"]}>
+        <nav className={styles["footer-nav"]}>
           {combinedNav.map((column) => (
-            <ul className="column" key={column.text}>
+            <ul className={styles["column"]} key={column.text}>
               <li>
-                <h5 className="column-header">{column.text}</h5>
+                <h5 className={styles["column-header"]}>{column.text}</h5>
               </li>
               {column.subnav?.map((item) => (
                 <li key={item.text}>
                   <Link
                     href={item.path || "#"}
-                    className="item-link"
+                    className={styles["item-link"]}
                   >
                     {item.text}
                   </Link>
@@ -35,20 +35,20 @@ export default function Footer() {
         </nav>
       </footer>
 
-      <hr className="footer-divider" />
+      <hr className={styles["footer-divider"]} />
 
-      <footer className="footer-bottom">
-        <div className="logo-container">
+      <footer className={styles["footer-bottom"]}>
+        <div className={styles["logo-container"]}>
           <Link href="/">
             <Image
               src={Logo}
               alt="THEGA logo"
-              className="logo"
+              className={styles["logo"]}
               height={35}
             />
           </Link>
         </div>
-        <div className="copyright-container">
+        <div className={styles["copyright-container"]}>
           {`© ${currentYear} THEGA. All rights reserved.`}
         </div>
       </footer>

@@ -1,5 +1,5 @@
-@scope (.footer-container) {
-  @media (--xs-min) {
+@media (--xs-min) {
+  .footer-container {
 
     .footer-top-divider {
       margin: 0;
@@ -61,9 +61,11 @@
       } */
     }
   }
+}
 
 
-  @media (--md-min) {
+@media (--md-min) {
+  .footer-container {
 
     .footer-top {
 
@@ -83,9 +85,11 @@
       align-items: center;
     }
   }
+}
 
 
-  @media (--xl-min) {
+@media (--xl-min) {
+  .footer-container {
 
     .footer-nav {
       max-width: var(--xl-max);

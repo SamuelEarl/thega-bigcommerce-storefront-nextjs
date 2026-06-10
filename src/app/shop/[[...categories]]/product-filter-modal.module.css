@@ -1,0 +1,11 @@
+@media (min-width: 0px) {
+  .product-filter-modal {
+    margin-bottom: var(--size-4);
+  }
+
+  .product-filter-modal-button {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+  }
+}

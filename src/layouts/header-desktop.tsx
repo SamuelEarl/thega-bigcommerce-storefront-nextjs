@@ -9,7 +9,7 @@ import {
 } from "@remixicon/react";
 import Logo from "@/../public/images/logo-and-name-horizontal-white-fbfbfb.svg";
 import { iconNav, NavItem, topNav } from "@/navigation";
-import "./header-desktop.css";
+import styles from "./header-desktop.module.css";
 
 // Icon mapping
 const iconMap: Record<string, RemixiconComponentType> = {
@@ -28,13 +28,13 @@ export default function HeaderDesktop() {
     ?.subnav ?? null;
 
   return (
-    <div className="header-desktop-content">
-      <div className="logo-container">
+    <div className={styles["header-desktop-content"]}>
+      <div className={styles["logo-container"]}>
         <Link href="/">
           <Image
             src={Logo}
             height={40}
-            className="logo"
+            className={styles["logo"]}
             alt="THEGA logo"
             loading="eager"
           />
@@ -43,22 +43,22 @@ export default function HeaderDesktop() {
 
       {/* Wrap nav + mega menu so mouseleave only fires when leaving the entire area. */}
       <nav
-        className="desktop-top-nav"
+        className={styles["desktop-top-nav"]}
         onMouseLeave={() => setActiveMegaMenu(null)}
       >
         {/* The top-level navigation items that appear in the header (above the mega menu). */}
-        <ul className="nav-list desktop-top-nav-list">
+        <ul className={`${styles["nav-list"]} ${styles["desktop-top-nav-list"]}`}>
           {topNav().map((navItem: NavItem) => {
             if (navItem.subnav) {
               // Render the top-level navigation Link along with its subnav in the mega menu.
               return (
                 <li
                   key={navItem.text}
-                  className="desktop-top-nav-item"
+                  className={styles["desktop-top-nav-item"]}
                   onMouseEnter={() => setActiveMegaMenu(navItem.text)}
                 >
                   <Link
-                    className={`desktop-top-nav-item-link ${activeMegaMenu === navItem.text ? "active-mega-menu" : ""}`}
+                    className={styles["desktop-top-nav-item-link"]}
                     href={navItem.path || "#"}
                     onClick={() => setActiveMegaMenu(null)}
                   >
@@ -72,11 +72,11 @@ export default function HeaderDesktop() {
               return (
                 <li
                   key={navItem.text}
-                  className="desktop-top-nav-item"
+                  className={styles["desktop-top-nav-item"]}
                   onMouseEnter={() => setActiveMegaMenu(null)}
                 >
                   <Link
-                    className="desktop-top-nav-item-link"
+                    className={styles["desktop-top-nav-item-link"]}
                     href={navItem.path || "#"}
                   >
                     {navItem.text}
@@ -88,17 +88,17 @@ export default function HeaderDesktop() {
         </ul>
 
         {/* The active mega menu. This is a single mega menu container whose content changes based on the activeMegaMenu state. */}
-        <div className={`mega-menu-container ${activeMegaMenu ? "show-mega-menu" : ""}`}>
-          <div className="mega-menu">
+        <div className={`${styles["mega-menu-container"]} ${activeMegaMenu ? styles["show-mega-menu"] : ""}`.trim()}>
+          <div className={styles["mega-menu"]}>
             {/* If the subnav item is an "all audience products" item, then display it in the top row - above the bottom row of columns. */}
-            <div className="mega-menu-top-row">
+            <div className={styles["mega-menu-top-row"]}>
               {activeSubnav && activeSubnav.map((subnavItem: NavItem) => {
                 if (subnavItem.isAllAudienceProductsLink) {
                   return (
                     <Link
                       key={subnavItem.text}
                       href={subnavItem.path || "#"}
-                      className="mega-menu-top-row-item"
+                      className={styles["mega-menu-top-row-item"]}
                       onClick={() => setActiveMegaMenu(null)}
                     >
                       {subnavItem.text}
@@ -107,7 +107,7 @@ export default function HeaderDesktop() {
                 }
               })}
             </div>
-            <ul className="nav-list mega-menu-bottom-row">
+            <ul className={`${styles["nav-list"]} ${styles["mega-menu-bottom-row"]}`}>
               {activeSubnav && activeSubnav.map((subnavItem: NavItem) => {
                 // Do not display the "all audience products" item in the bottom row.
                 if (subnavItem.isAllAudienceProductsLink) return;
@@ -119,7 +119,7 @@ export default function HeaderDesktop() {
                     // The category headings in the mega menu.
                     <li key={subnavItem.text}>
                       {/* NOTE: It is necessary to use an h5 tag as a child of the li in order to set the styles only on the li text instead of the ul that is a child of this li. */}
-                      <h5 className="mega-menu-column-heading">
+                      <h5 className={styles["mega-menu-column-heading"]}>
                         <Link
                           href={subnavItem.path || "#"}
                           onClick={() => setActiveMegaMenu(null)}
@@ -129,11 +129,11 @@ export default function HeaderDesktop() {
                       </h5>
 
                       {/* The column's subnav items in the mega menu. */}
-                      <ul className="nav-list mega-menu-subnav-list">
+                      <ul className={`${styles["nav-list"]} ${styles["mega-menu-subnav-list"]}`}>
                         {subnavItem.subnav.map((columnSubnavItem: NavItem) => (
                           <li key={columnSubnavItem.text}>
                             <Link
-                              className="mega-menu-subnav-item"
+                              className={styles["mega-menu-subnav-item"]}
                               href={columnSubnavItem.path || "#"}
                               onClick={() => setActiveMegaMenu(null)}
                             >
@@ -152,9 +152,9 @@ export default function HeaderDesktop() {
                 //     // The category headings in the mega menu.
                 //     <li key={subnavItem.text}>
                 //       {/* See my note above the other `.mega-menu-column-heading` element. */}
-                //       <h5 className="mega-menu-column-heading">
+                //       <h5 className={styles["mega-menu-column-heading"]}>
                 //         <Link
-                //           className="mega-menu-subnav-item"
+                //           className={styles["mega-menu-subnav-item"]}
                 //           href={subnavItem.path || "#"}
                 //           onClick={() => setActiveMegaMenu(null)}
                 //         >
@@ -171,7 +171,7 @@ export default function HeaderDesktop() {
       </nav>
 
       {/* Icon nav */}
-      <nav className="desktop-nav-icons-container">
+      <nav className={styles["desktop-nav-icons-container"]}>
         {iconNav().map((item, index) => {
           const IconComponent = item.icon ? iconMap[item.icon] : null;
 
@@ -179,7 +179,7 @@ export default function HeaderDesktop() {
             <button
               key={item.text}
               aria-label={item.text}
-              className="desktop-nav-icon"
+              className={styles["desktop-nav-icon"]}
               onClick={() => console.log("Clicked " + item.text)}
             >
               {IconComponent && <IconComponent size={24} />}

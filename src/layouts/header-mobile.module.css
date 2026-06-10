@@ -1,0 +1,25 @@
+@media (--xs-min) {
+  .header-mobile-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--size-3) var(--page-padding);
+
+    .menu-btn-container {
+      display: flex;
+      align-items: center;
+      color: var(--primary-fg);
+    }
+
+    .logo {
+      height: 35px;
+    }
+
+    .transparent-btn {
+      background: transparent;
+      color: transparent;
+      pointer-events: none;
+    }
+  }
+}

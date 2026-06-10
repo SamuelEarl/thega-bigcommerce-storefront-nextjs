@@ -2,6 +2,9 @@
 export { Button } from "./buttons/button";
 export type { ButtonProps } from "./buttons/button";
 
+// Dialogs
+export { Dialog } from "./dialogs/dialog";
+
 // Colors and Sizes utilities
 export {
   Variant,

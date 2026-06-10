@@ -12,7 +12,7 @@ import {
 } from "@remixicon/react";
 import { iconNav, NavItem, topNav } from "@/navigation";
 import Logo from "@/../public/images/logo-and-name-horizontal-white-fbfbfb.svg"
-import "./mobile-nav.css";
+import styles from "./mobile-nav.module.css"
 
 
 // Icon mapping
@@ -41,16 +41,16 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
   };
 
   return (
-    <nav className="mobile-menu-container">
-      <div className="mobile-menu-header">
+    <nav className={styles["mobile-menu-container"]}>
+      <div className={styles["mobile-menu-header"]}>
         <button
-          className="mobile-menu-header-btn"
+          className={styles["mobile-menu-header-btn"]}
           onClick={() => closeAll()}
         >
           <RiCloseLargeLine size={30} />
         </button>
 
-        <div className="logo-container">
+        <div className={styles["logo-container"]}>
           <Link
             href={"/"}
             onClick={() => closeAll()}
@@ -58,7 +58,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <Image
               src={Logo}
               height={35}
-              className="logo"
+              className={styles["logo"]}
               alt="THEGA Logo"
               loading="eager"
             />
@@ -66,14 +66,14 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
         </div>
 
         <button
-          className="mobile-menu-header-btn-transparent"
+          className={styles["mobile-menu-header-btn-transparent"]}
           disabled
         >
           <RiCloseLargeLine size={30} />
         </button>
       </div>
 
-      <div className="mobile-menu-icons-container">
+      <div className={styles["mobile-menu-icons-container"]}>
         {iconNav().map((item, index) => {
           const IconComponent = item.icon ? iconMap[item.icon] : null;
 
@@ -81,7 +81,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
             <button
               key={item.text}
               aria-label={item.text}
-              className="mobile-menu-header-btn icon-button"
+              className={`${styles["mobile-menu-header-btn"]} ${styles["icon-button"]}`}
               onClick={() => {
                 console.log("Clicked icon button");
               }}
@@ -93,20 +93,20 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
       </div>
 
       {/* Menu container (sliding menu with 3 panels) */}
-      {/* activeMenu and activeSubmenu are both null = Level 1 (Default). */}
-      {/* activeMenu is truthy = Level 2. */}
-      {/* activeSubmenu is truthy = Level 3. */}
-      <div className={`nav-container ${activeMenu ? "slide-level2" : ""} ${activeSubmenu ? "slide-level3" : ""} `}>
+      {/* If activeMenu and activeSubmenu are both null = Level 1 (Default). */}
+      {/* If activeMenu is truthy = Level 2. */}
+      {/* If activeSubmenu is truthy = Level 3. */}
+      <div className={`${styles["nav-container"]} ${activeMenu ? styles["slide-level2"] : ""} ${activeSubmenu ? styles["slide-level3"] : ""}`.trim()}>
 
         {/* Level 1 Panel: Top-level navigation (e.g. Men, Women, Kids) */}
-        <div className="nav-panel">
-          <ul className="navigation-list">
+        <div className={styles["nav-panel"]}>
+          <ul className={styles["navigation-list"]}>
             {topNav().map((item: NavItem, index: number) => (
-              <li key={index} className="nav-item">
+              <li key={index} className={styles["nav-item"]}>
                 {/* If item has subnav, set activeMenu to equal item.text. */}
                 {item.subnav ? (
                   <button
-                    className="nav-trigger"
+                    className={styles["nav-trigger"]}
                     onClick={() => setActiveMenu(item.text)}
                   >
                     {item.text}
@@ -127,12 +127,12 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
         </div>
 
         {/* Level 2 Panel: Sub-navigation (e.g. Shoes, Clothing, Accessories) */}
-        <div className="nav-panel">
+        <div className={styles["nav-panel"]}>
           {activeMenu ? (
             <>
-              <div className="back-btn-container">
+              <div className={styles["back-btn-container"]}>
                 <button
-                  className="back-btn"
+                  className={styles["back-btn"]}
                   onClick={() => setActiveMenu(null)}
                 >
                   <RiArrowLeftSLine size={30} color="var(--old-gold)" />
@@ -140,15 +140,15 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 </button>
               </div>
 
-              <ul className="subnav-list">
+              <ul className={styles["subnav-list"]}>
                 {/* Find the activeMenu in topNav() and map over its subnav. */}
                 {topNav().find((item) => item.text === activeMenu)?.subnav?.map((subnavItem: NavItem, index: number) => (
-                  <li key={index} className="nav-item">
+                  <li key={index} className={styles["nav-item"]}>
                     {/* If item has subnav, set activeMenu to equal item.text. */}
                     {subnavItem.subnav ? (
                       // Set the activeSubmenu to equal subnavItem.text, which will trigger the slide to Level 3.
                       <button
-                        className="nav-trigger"
+                        className={styles["nav-trigger"]}
                         onClick={() => setActiveSubmenu(subnavItem.text)}
                       >
                         {subnavItem.text}
@@ -171,12 +171,12 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
         </div>
 
         {/* Level 3 Panel: Leaf-level links (e.g. All Men's Shoes, Running, Soccer) */}
-        <div className="nav-panel">
+        <div className={styles["nav-panel"]}>
           {activeSubmenu ? (
             <>
-              <div className="back-btn-container">
+              <div className={styles["back-btn-container"]}>
                 <button
-                  className="back-btn"
+                  className={styles["back-btn"]}
                   onClick={() => setActiveSubmenu(null)}
                 >
                   <RiArrowLeftSLine size={30} color="var(--old-gold)" />
@@ -184,13 +184,13 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                 </button>
               </div>
 
-              <ul className="subnav-list">
+              <ul className={styles["subnav-list"]}>
                 {/* Find the activeMenu, then find activeSubmenu within it, then map over its subnav. */}
                 {topNav()
                   .find((item) => item.text === activeMenu)
                   ?.subnav?.find((subItem) => subItem.text === activeSubmenu)
                   ?.subnav?.map((leafItem: NavItem, index: number) => (
-                    <li key={index} className="nav-item">
+                    <li key={index} className={styles["nav-item"]}>
                       <Link
                         href={leafItem.path || "#"}
                         onClick={() => closeAll()}

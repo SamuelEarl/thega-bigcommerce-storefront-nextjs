@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavItem, combinedNav } from "@/navigation";
-import "./breadcrumbs.css";
+import styles from "./breadcrumbs.module.css";
 
 function findPath(items: NavItem[], targetPath: string): NavItem[] | null {
   for (const item of items) {
@@ -33,23 +33,23 @@ export function Breadcrumbs() {
 
   return (
     <nav aria-label="Breadcrumb">
-      <ol className="breadcrumbs-list">
+      <ol className={styles["breadcrumbs-list"]}>
         {/* Hardcoded Home link */}
-        <li className="breadcrumb-item">
+        <li className={styles["breadcrumb-item"]}>
           <Link href="/">Home</Link>
-          {currentPath !== "/" && <span className="separator"> / </span>}
+          {currentPath !== "/" && <span className={styles["separator"]}> / </span>}
         </li>
 
         {pathTrail.map((item, i) => {
           const isLast = i === pathTrail.length - 1;
           return (
-            <li key={item.text} className="breadcrumb-item">
+            <li key={item.text} className={styles["breadcrumb-item"]}>
               {isLast ? (
-                <span className="current-route">{item.text}</span>
+                <span className={styles["current-route"]}>{item.text}</span>
               ) : (
                 <>
                   <Link href={item.path!}>{item.text}</Link>
-                  <span className="separator"> / </span>
+                  <span className={styles["separator"]}> / </span>
                 </>
               )}
             </li>

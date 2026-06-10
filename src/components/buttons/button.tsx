@@ -1,6 +1,6 @@
 "use client";
 
-import { ButtonHTMLAttributes, MouseEvent } from "react";
+import { ButtonHTMLAttributes, MouseEvent, useEffect, useRef } from "react";
 import {
   Variant,
   ElementWidths,
@@ -10,7 +10,7 @@ import {
   getElementSizes,
   getElementWidth,
 } from "../colors-and-sizes";
-import "./button.css";
+import styles from "./button.module.css";
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
   variant?: Variant;
@@ -37,9 +37,18 @@ export function Button({
   className = "",
   ...attributes
 }: ButtonProps) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const colorStyle = getBtnColors(colors, variant, outline);
   const sizeStyle = getElementSizes(sizes, true);
   const widthStyle = getElementWidth(width);
+
+  // Apply inline styles using setAttribute since React doesn't support CSS string in style prop
+  useEffect(() => {
+    if (buttonRef.current) {
+      const inlineStyles = `${colorStyle} ${sizeStyle.all} ${widthStyle}`;
+      buttonRef.current.setAttribute("style", inlineStyles);
+    }
+  }, [colorStyle, sizeStyle.all, widthStyle]);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (!disabled && onClick) {
@@ -47,13 +56,13 @@ export function Button({
     }
   };
 
-  const btnClass = disabled && loadingText ? `btn loading` : "btn";
+  const btnClass = disabled && loadingText ? `${styles["btn"]} ${styles["loading"]}` : styles["btn"];
   const finalClassName = className ? `${btnClass} ${className}` : btnClass;
 
   return (
     <button
+      ref={buttonRef}
       className={finalClassName}
-      style={{ cssText: `${colorStyle} ${sizeStyle.all} ${widthStyle}` } as any}
       disabled={disabled}
       onClick={handleClick}
       {...attributes}
