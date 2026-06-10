@@ -7,13 +7,14 @@ export default function Home() {
     <div className={styles["hero-image-container"]}>
       <div className={styles["hero-content-container"]}>
         <div className={styles["hero-content"]}>
-          <h1>THE GAME IS LIFE</h1>
-          <p className={styles["clear-tagline-styles"]}>For those who live and breathe sports and fitness—</p>
-          <p className={styles["clear-tagline-styles"]}>
-            <span className={styles["tagline"]}>THE GAME IS LIFE</span>,
-          </p>
-          <p className={styles["clear-tagline-styles"]}>and our gear powers every step forward.</p>
-          <br />
+          <div className={styles["tagline-container"]}>
+            <h1 className={styles["hero-title"]}>THE GAME IS LIFE</h1>
+            <p className={styles["paragraph-styles"]}>For those who live and breathe sports and fitness—</p>
+            <p className={styles["paragraph-styles"]}>
+              <span className={styles["tagline"]}>THE GAME IS LIFE</span>,
+            </p>
+            <p className={styles["paragraph-styles"]}>and our gear powers every step forward.</p>
+          </div>
           <div className={styles["cta-container"]}>
             {topNav().map((item: NavItem) => (
               <Link key={item.text} href={item.path || "#"} className={styles["cta"]}>

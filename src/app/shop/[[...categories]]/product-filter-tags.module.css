@@ -10,6 +10,12 @@
   gap: 5px;
   background-color: var(--primary-bg);
   color: var(--primary-fg);
+  border: 2px solid var(--primary-bg);
   border-radius: 25px;
   padding: var(--size-1) var(--size-2);
+
+  &:hover {
+    background-color: var(--primary-fg);
+    color: var(--primary-bg);
+  }
 }
