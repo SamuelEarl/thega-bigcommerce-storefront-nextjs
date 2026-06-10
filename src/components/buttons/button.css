@@ -1,0 +1,40 @@
+@scope (.btn) {
+  .btn {
+    border-width: var(--border-width);
+    border-style: var(--border-style);
+    border-radius: var(--radius);
+    outline-width: var(--outline-none);
+    outline-style: var(--outline-style);
+    outline-offset: var(--outline-offset);
+    display: flex;
+    align-items: center;
+    /* Center the text when the button is full width. */
+    justify-content: center;
+  }
+
+  .btn:hover:not(:disabled),
+  .btn:focus:not(:disabled) {
+    outline-width: var(--outline-width);
+  }
+
+  /* Disabled State */
+  .btn:disabled {
+    pointer-events: none;
+    opacity: 0.6;
+    filter: grayscale(0.4);
+  }
+
+  .loading:disabled {
+    animation: loading-pulse 1s linear infinite alternate;
+  }
+
+  @keyframes loading-pulse {
+    0% {
+      opacity: 0.3;
+    }
+
+    100% {
+      opacity: 0.8;
+    }
+  }
+}

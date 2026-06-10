@@ -1,7 +1,9 @@
-.filter-tags-container {
-  display: flex;
-  gap: var(--size-2);
-  overflow-y: auto;
+@scope (.product-filter-tags-container) {
+  :scope {
+    display: flex;
+    gap: var(--size-2);
+    overflow-y: auto;
+  }
 
   .filter-tag {
     display: flex;

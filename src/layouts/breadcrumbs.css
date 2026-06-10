@@ -1,0 +1,36 @@
+@media (--xs-min) {
+  .breadcrumbs-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    padding-bottom: var(--size-4);
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--neutral-11);
+    text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb-item {
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  .breadcrumb-item a {
+    border-bottom: 1px dotted var(--text-color);
+  }
+
+  .breadcrumb-item a:hover {
+    border-bottom: none;
+  }
+
+  .separator {
+    margin-left: 0.5rem;
+    color: var(--neutral-6);
+  }
+
+  .current-route {
+    font-weight: bold;
+    color: var(--text-color);
+  }
+}

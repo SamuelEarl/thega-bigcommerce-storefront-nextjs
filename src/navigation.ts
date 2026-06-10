@@ -6,6 +6,27 @@ export interface NavItem {
   subnav?: NavItem[];
 }
 
+// --------------------------------
+// Note about URL encoding using the '&' character in URLs:
+// --------------------------------
+// The & character needs to be URL-encoded as %26 in the URL. So it should be ?category=shirts-%26-tops.
+// If you're creating these URLs programmatically, here's how to ensure proper encoding:
+
+// ✅ Good - URLSearchParams automatically encodes special characters
+// const params = new URLSearchParams();
+// params.set("category", "shirts-&-tops");
+// const url = `${pathname}?${params.toString()}`;
+// Results in: ?category=shirts-%26-tops
+
+// ✅ Good - manual encoding
+// const value = "shirts-&-tops";
+// const url = `${pathname}?category=${encodeURIComponent(value)}`;
+
+// ❌ Bad - unencoded ampersand
+// const url = `${pathname}?category=shirts-&-tops`;
+// Browser sees two params: category=shirts- and tops
+// --------------------------------
+
 export function topNav(): NavItem[] {
   return [
     {
@@ -57,7 +78,7 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Shirts & Tops",
-              path: "/shop?audience=men&apparel=clothing&piece=shirts-and-tops",
+              path: `/shop?audience=men&apparel=clothing&piece=${encodeURIComponent("shirts-&-tops")}`,
             },
           ],
         },
@@ -134,7 +155,7 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Shirts & Tops",
-              path: "/shop?audience=women&apparel=clothing&piece=shirts-and-tops",
+              path: `/shop?audience=women&apparel=clothing&piece=${encodeURIComponent("shirts-&-tops")}`,
             },
           ],
         },
@@ -211,7 +232,7 @@ export function topNav(): NavItem[] {
             },
             {
               text: "Shirts & Tops",
-              path: "/shop?audience=kids&apparel=clothing&piece=shirts-and-tops",
+              path: `/shop?audience=kids&apparel=clothing&piece=${encodeURIComponent("shirts-&-tops")}`,
             },
           ],
         },

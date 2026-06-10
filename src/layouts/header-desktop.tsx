@@ -90,7 +90,7 @@ export default function HeaderDesktop() {
         {/* The active mega menu. This is a single mega menu container whose content changes based on the activeMegaMenu state. */}
         <div className={`mega-menu-container ${activeMegaMenu ? "show-mega-menu" : ""}`}>
           <div className="mega-menu">
-            {/* If the subnav item is an "all customer products" item, then display it in the top row - above the bottom row of columns. */}
+            {/* If the subnav item is an "all audience products" item, then display it in the top row - above the bottom row of columns. */}
             <div className="mega-menu-top-row">
               {activeSubnav && activeSubnav.map((subnavItem: NavItem) => {
                 if (subnavItem.isAllAudienceProductsLink) {
@@ -109,7 +109,7 @@ export default function HeaderDesktop() {
             </div>
             <ul className="nav-list mega-menu-bottom-row">
               {activeSubnav && activeSubnav.map((subnavItem: NavItem) => {
-                // Do not display the "all customer products" item in the bottom row.
+                // Do not display the "all audience products" item in the bottom row.
                 if (subnavItem.isAllAudienceProductsLink) return;
                 // Make sure to check for the existence of a subnav. 
                 // I only want to display columns that have a heading and a subnav under that heading.
