@@ -17,8 +17,6 @@ export default function ProductFilterTags() {
       .replace(/\b\w/g, (l) => l.toUpperCase());
   }
 
-  console.log("SHIRTS & TOPS:", formatQueryParam("shirts-&-tops"));
-
   return (
     <div className="product-filter-tags-container">
       {/* Loop over the query params and create a <button> for each query param. */}
