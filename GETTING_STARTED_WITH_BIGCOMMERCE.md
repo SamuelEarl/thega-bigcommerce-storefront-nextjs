@@ -141,10 +141,11 @@ Create the following values in your `.env` file and populate them with your own 
 
 ```bash
 TRUSTED_PROXY_SECRET = 
-# NAME / CLIENT NAME: Private Token Generator
+# CLIENT NAME: Private Token Generator
 ACCESS_TOKEN = 
 CLIENT_ID = 
 CLIENT_SECRET = 
+# Store identifiers
 API_PATH = 
 STORE_HASH = 
 CHANNEL_ID = 
@@ -153,3 +154,9 @@ PRIVATE_API_TOKEN =
 ```
 
 Keep in mind that BigCommerce will reject private token requests that originate from web browsers. You should only pass this token via server-to-server operations (such as a Next.js or Node.js backend) to communicate securely with the [BigCommerce GraphQL Storefront API](https://docs.bigcommerce.com/developer/docs/storefront/guides/graphql-storefront-api/authentication).
+
+## How to cache the catalog
+
+TODO: Read the information at the following URL and figure out how to cache the catalog.
+
+https://docs.bigcommerce.com/developer/docs/storefront/headless/products/overview#cache-the-catalog

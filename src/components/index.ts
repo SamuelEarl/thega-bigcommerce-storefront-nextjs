@@ -2,19 +2,14 @@
 export { Button } from "./buttons/button";
 export type { ButtonProps } from "./buttons/button";
 
-// Dialogs
+// Modals
 export {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTitle,
-  DialogTrigger,
-} from "./dialogs/dialog";
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "./modals/modal";
 
 // Colors and Sizes utilities
 export {

@@ -5,14 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { RiListCheck2 } from "@remixicon/react";
 import {
   Button,
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "@/components";
 import styles from "./product-filter-modal.module.css";
 
@@ -24,37 +21,46 @@ export default function ProductFilterModal() {
   const searchParams = useSearchParams();
 
   return (
-    <Dialog>
-      <DialogTrigger className={styles["product-filter-modal-button"]}>
-        Filters
-        <RiListCheck2 size={20} />
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
-  );
+    <>
+      <div className={styles["product-filter-modal"]}>
+        <Button
+          className={styles["product-filter-modal-button"]}
+          onClick={() => setOpen(true)}
+        >
+          Filters
+          <RiListCheck2 size={20} />
+        </Button>
+      </div>
 
-  // return (
-  //   <>
-  //     <div className={styles["product-filter-modal"]}>
-  //       <Button className={styles["product-filter-modal-button"]}>
-  //         Filters
-  //         <RiListCheck2 size={20} />
-  //       </Button>
-  //     </div>
-
-  //     <div className={styles["product-filter-modal-dialog"]}>
-  //       <div>
-
-  //       </div>
-  //     </div>
-  //   </>
-  // )
+      {open && (
+        <div className={styles["product-filter-modal-dialog"]}>
+          <ModalOverlay>
+            <ModalContent>
+              <ModalHeader
+                title="Filters Products"
+                description="Filter products by category and price"
+                onClick={() => setOpen(false)}
+              />
+              <ModalBody>
+                <div>Checkboxes and other filters go here</div>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  onClick={async () => {
+                    // await applyFilters();
+                    setOpen(false);
+                  }}
+                >
+                  Apply
+                </Button>
+                <Button onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </ModalOverlay>
+        </div>
+      )}
+    </>
+  )
 }

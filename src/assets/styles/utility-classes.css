@@ -16,10 +16,12 @@ TRANSITIONS & ANIMATION
 	from {
 		transform: rotate(0deg);
 	}
+
 	to {
 		transform: rotate(360deg);
 	}
 }
+
 /* End of "fp-spin" class */
 
 /* Beginning of "fp-animatetop class */
@@ -33,9 +35,24 @@ TRANSITIONS & ANIMATION
 		top: -300px;
 		opacity: 0;
 	}
+
 	to {
 		top: 0;
 		opacity: 1;
 	}
 }
+
 /* End of "fp-animatetop class */
+
+/* TailwindCSS Screen Reader Utility Classes */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
