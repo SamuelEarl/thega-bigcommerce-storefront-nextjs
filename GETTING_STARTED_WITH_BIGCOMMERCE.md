@@ -19,6 +19,25 @@ This is how data flows through these 3 parts:
 3. Your backend API has endpoints that are configured to receive those data and send them to the appropriate BigCommerce Storefront API endpoint where category or product data can be retrieved, products can be added to the cart, user credentials can be authenticated, etc.
 4. BigCommerce responds to your backend API with the requested data, and then your backend API forwards that response to your storefront where the user sees the results of their action.
 
+## Create a channel
+
+A BigCommerce channel is any storefront, marketplace, point-of-sale (POS) system, or advertising platform where you sell and promote your products. If you have multiple location where you sell and promote products, then you will need to create a channel for each location. The BigCommerce Control Panel allows you to manage your entire omnichannel operation—including product listings, inventory, and orders—from one central dashboard.
+
+How to create a channel for your headless storefront:
+
+TODO: These steps are not complete. I need to figure out how to do this for a demo storefront.
+
+1. Log into your BigCommerce Control Panel.
+2. Click on **Channels** (or **Channels** > **Channel Manager**) in the navigation menu, in the left sidebar.
+3. Inside the "Storefronts" section, click **+ Add new**.
+4. You will be redirected to the "Storefronts" section of the "Add new channel" page.
+5. Click the "Create" button to the right of "BigCommerce".
+6. Give your storefront a name, select your language, and click "Create".
+
+## Create a Free Developer Sandbox
+
+Go to https://start.bigcommerce.com/developer-sandbox/ and fill out the form to create a free developer sandbox.
+
 ## Trusted Proxy Configuration
 
 Your backend API will act as a proxy server that sits between your storefront and BigCommerce's Storefront API. 
@@ -32,12 +51,24 @@ How it works:
         2. Include the secret in the `X-BC-Trusted-Proxy-Secret` header
     2. `True-Client-IP`: The remote user’s original IP address. You will configure your backend API to extract the user's original IP address from the request headers and forward it to BigCommerce's Storefront API in this header.
 
+## Group related requests together
 
-## Create a Free Developer Sandbox
+Some operations may require several API calls. For example, processing a payment and refunding an order each require reading and writing information using multiple endpoints. When you perform a multi-part operation on a headless storefront, you should group those related requests together using the `X-Correlation-Id` header. This is how it's done:
 
-https://start.bigcommerce.com/developer-sandbox/
+1. Generate a UUID that will represent the entire operation.
+2. Send that UUID in the `X-Correlation-Id` request header with every request in the group.
 
-# API TOKENS
+This helps BigCommerce track the handoff from request to request as the operation moves through their servers.
+
+For information on how to send these headers in your GraphQL requests, search for "how to send http headers in graphql request".
+
+For more details, as well as an example using the GraphQL Storefront API, see [Correlating requests](https://docs.bigcommerce.com/developer/docs/storefront/headless/overview#correlating-requests).
+
+## How to handle customer logins
+
+Your storefront will be on one domain (probably your main domain, e.g. mystore.com) and your BigCommerce checkout needs to be configured on a different domain (e.g. checkout.mystore.com). When an authenticated customer clicks "checkout" in your storefront, they will be redirected to the BigCommerce checkout on the different domain. This could cause issues with customer logins where the customer is authenticated on your storefront but not on your checkout page. However, BigCommerce uses a JWT-based "Session Sync" to transfer session details, such as customer and cart data, across domains. 
+
+The "Session Sync" uses a [Customer Access Token](https://docs.bigcommerce.com/developer/docs/storefront/guides/graphql-storefront-api/authentication#customer-access-tokens), but I am not sure if the user has to be logged into your storefront for this to work or not. For more details and an example of how to use it, see [Headless/GraphQL account login](https://docs.bigcommerce.com/developer/docs/storefront/headless/overview#headlessgraphql-account-login) as well as the section after it ([Persisting analytics session IDs](https://docs.bigcommerce.com/developer/docs/storefront/headless/overview#persisting-analytics-session-ids)). The example uses a `$visitorId` parameter instead of a `$userId` parameter, so that makes me wonder if the user has to be logged into the storefront for this to work. 
 
 ## How to Create a Private API Token
 
