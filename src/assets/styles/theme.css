@@ -214,24 +214,24 @@
   /* DEFAULT ELEMENT STYLES  */
   /* (not including buttons) */
   /* ----------------------- */
-  --element-bg: var(--neutral-2);
   /* background color */
-  --element-fg: var(--text-color);
+  --element-bg: var(--neutral-2);
   /* foreground color */
-  --element-br: var(--border-color);
+  --element-fg: var(--text-color);
   /* border color */
-  --element-ol: var(--border-color);
+  --element-br: var(--border-color);
   /* outline color */
+  --element-ol: var(--border-color);
 
   /* --------------- */
   /* Disabled Styles */
   /* --------------- */
-  --element-bg-disabled: var(--neutral-4);
   /* disabled background color */
-  --element-fg-disabled: var(--neutral-1);
+  --element-bg-disabled: var(--neutral-4);
   /* disabled foreground color */
-  --element-br-disabled: var(--element-bg-disabled);
+  --element-fg-disabled: var(--neutral-1);
   /* disabled border color */
+  --element-br-disabled: var(--element-bg-disabled);
 
   /* TODO: Look at SCSS options for darken and lighten values in disabled styles. I should probably create a class for all the repeated disabled styles (in place of using SCSS mixins, since I am not using SCSS). */
 

@@ -1,0 +1,110 @@
+/* Checkbox styles are taken from this article:
+https://moderncss.dev/pure-css-custom-checkbox-style/ */
+
+/* Customize the label (the container). */
+.checkbox-label-wrapper {
+  display: inline-block;
+  position: relative;
+  padding-left: var(--size-10);
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: var(--size-5);
+}
+
+/* .checkbox-label-wrapper:last-child {
+  margin-bottom: var(--size-4);
+} */
+
+/* Hide the browser's default checkbox. */
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Set the base outline styles for the checkbox. */
+/* .checkbox-input~.checkbox-checkmark {
+  outline-width: var(--outline-none);
+  outline-style: var(--outline-style);
+  outline-offset: var(--outline-offset);
+} */
+
+/* When an unchecked checkbox is hovered or receives focus, add an outline to the checkbox that is the default outline color. */
+.checkbox-input:hover~.checkbox-checkmark,
+.checkbox-input:focus~.checkbox-checkmark {
+  /* outline-width: var(--outline-width);
+  outline-color: var(--outline-color); */
+  border-color: var(--primary-bg);
+}
+
+/* When the checkbox is checked, add a primary background color and change the border color to match the background color. */
+.checkbox-input:checked~.checkbox-checkmark {
+  background-color: var(--primary-bg);
+  border-color: var(--primary-bg);
+}
+
+/* Show the checkmark when checked. */
+.checkbox-input:checked~.checkbox-checkmark:after {
+  display: block;
+}
+
+/* When a checked checkbox is hovered or receives focus, add an outline to the checkbox that is the primary color. */
+.checkbox-input:checked:hover~.checkbox-checkmark,
+.checkbox-input:checked:focus~.checkbox-checkmark {
+  /* outline-width: var(--outline-width);
+  outline-color: var(--primary-bg); */
+  /* background-color: var(--primary-fg); */
+  border-color: var(--primary-fg);
+}
+
+/* Create a custom checkbox. */
+/* The `top` style below will set the checkbox higher or lower in relation to the label text. The font family and font size that you set in your app will affect where the checkboxes are aligned in relation to the label text of the checkboxes. */
+.checkbox-checkmark {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: var(--size-7);
+  width: var(--size-7);
+  border: var(--border);
+  border-radius: var(--radius);
+  background-color: var(--element-bg);
+}
+
+/* Create the checkmark/indicator (hidden when not checked). */
+.checkbox-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  /* Style the checkmark/indicator. */
+  left: 7px;
+  top: -1px;
+  width: 10px;
+  height: 20px;
+  border-style: solid;
+  border-width: 0 3px 3px 0;
+  border-color: var(--primary-fg);
+  transform: rotate(45deg);
+}
+
+/* When a checked checkbox is hovered, change the checkmark color to --primary-bg. */
+/* .checkbox-input:checked:hover~.checkbox-checkmark:after {
+  border-color: var(--primary-bg);
+} */
+
+/* Disabled state */
+.checkbox-input:disabled~.checkbox-checkmark {
+  background-color: var(--element-bg-disabled);
+  color: var(--element-text-color-disabled);
+  border-color: var(--element-border-color-disabled);
+  pointer-events: none;
+}
+
+.checkbox-input:disabled~.checkbox-checkmark {
+  outline-width: var(--outline-none);
+}
+
+.checkbox-label-wrapper.disabled {
+  pointer-events: none;
+}
