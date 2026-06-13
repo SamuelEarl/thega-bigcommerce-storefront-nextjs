@@ -23,6 +23,8 @@ The `/shop` page treats hierarchical category navigation (audience â†’ apparel â
 
 Conflating both into removable chips (the original `product-filter-tags.tsx` model) produces incoherent UX: removing a parent category like `clothing` while a child like `pants` survives is semantically meaningless, because the child only exists in the context of its parent. Does Adidas, the visual reference, use the same two-layer split? The separation also allow path URLs to stay stable, cacheable, and SEO-indexed while facet URLs stay user-state-y and noindex.
 
+This might be the best solution for this reason: It might be best to use breadcrumbs to select the main categories/products and then use colors, sizes, etc. to filter those products even further. I was thinking that having a bunch of filters can get confusing. For example, when I select "Men", I am selecting all the products that I want to see, which is an additive filter. But then each filter that I select after that starts to remove products that I can see, which is a subtractive filter. That's why I think it could get confusing for customers.
+
 ### Search query solution idea
 
 We could use the search query params to display the products that match the search query. The current navigation and filtering in the /src/app/shop/[[...categories]]/page.tsx page is a good example of how this could work. I think this could work because each level in the navigation is simply treated as another search query param and can be removed independently. I think this is how Amazon.com handles navigation and filtering, but I could be wrong about that.
