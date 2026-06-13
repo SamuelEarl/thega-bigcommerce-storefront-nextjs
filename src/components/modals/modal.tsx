@@ -1,4 +1,6 @@
-import type { ComponentProps } from "react";
+"use client";
+
+import { useEffect, type ComponentProps } from "react";
 import { RiCloseLine } from "@remixicon/react";
 import styles from "./modal.module.css";
 
@@ -27,9 +29,24 @@ import styles from "./modal.module.css";
 //   );
 // }
 
-function ModalOverlay({ children }: ComponentProps<"div">) {
+function ModalOverlay({ isOpen, children }: ComponentProps<"div"> & { isOpen: boolean }) {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Save original overflow style to restore it later
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+
+    // Lock the scroll
+    document.body.style.overflow = "hidden";
+
+    // Clean up and restore original styles when unmounted or unlocked
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, [isOpen]);
+
   return (
-    <div className={`${styles["modal-overlay"]}`}>
+    <div className={`${styles["modal-overlay"]}`} data-state={isOpen ? "open" : "closed"}>
       {children}
     </div>
   );
@@ -56,7 +73,7 @@ function ModalHeader({ showCloseButton = true, title, description, onClick }: Mo
       {showCloseButton && (
         <div className={styles["header-top"]}>
           <button className={styles["modal-close"]} onClick={onClick}>
-            <RiCloseLine />
+            <RiCloseLine size={24} />
             <span className="sr-only">Close</span>
           </button>
         </div>

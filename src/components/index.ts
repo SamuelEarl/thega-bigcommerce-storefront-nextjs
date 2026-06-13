@@ -2,6 +2,9 @@
 export { Button } from "./buttons/button";
 export type { ButtonProps } from "./buttons/button";
 
+// Checkboxes
+export { Checkbox } from "./checkboxes/checkbox";
+
 // Modals
 export {
   ModalOverlay,

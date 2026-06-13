@@ -15,34 +15,21 @@ Breakpoints
 Usage examples:
 ----------------------------
 
-@scope (.root) {
-  @media (--xs-min) {
-    // :scope refers to the scope root element.
-    :scope {
-      min-height: 100vh;
-
-      .selector {
-        padding: 15px;
-      }
-    }
+@media (--xs-min) {
+  .selector {
+    padding: 15px;
   }
+}
 
-  @media (--md-min) {
-    :scope {
-
-      .selector {
-        padding: 20px;
-      }
-    }
+@media (--md-min) {
+  .selector {
+    padding: 20px;
   }
+}
 
-  @media (--xl-min) {
-    :scope {
-
-      .selector {
-        padding: 25px;
-      }
-    }
+@media (--xl-min) {
+  .selector {
+    padding: 25px;
   }
 }
 
@@ -106,57 +93,44 @@ You can use a breakpoint media query in combination with a resolution media quer
 Usage example:
 ----------------------------
 
-@scope (.root) {
-  @media (--xs-min) {
-    // :scope refers to the scope root element.
-    :scope {
-      min-height: 100vh;
-
-      @media (--standard-res) {
-        .hero-image {
-          background-image: url("/images/res-standard/xs-standard-res-image.webp");
-        }
-      }
-
-      @media (--high-res) {
-        .hero-image {
-          background-image: url("/images/res-high/xs-high-res-image.webp");
-        }
-      }
+@media (--xs-min) {
+  @media (--standard-res) {
+    .hero-image {
+      background-image: url("/images/res-standard/xs-standard-res-image.webp");
     }
   }
 
-  @media (--md-min) {
-    :scope {
+  @media (--high-res) {
+    .hero-image {
+      background-image: url("/images/res-high/xs-high-res-image.webp");
+    }
+  }
+}
 
-      @media (--standard-res) {
-        .hero-image {
-          background-image: url("/images/res-standard/md-standard-res-image.webp");
-        }
-      }
-
-      @media (--high-res) {
-        .hero-image {
-          background-image: url("/images/res-high/md-high-res-image.webp");
-        }
-      }
+@media (--md-min) {
+  @media (--standard-res) {
+    .hero-image {
+      background-image: url("/images/res-standard/md-standard-res-image.webp");
     }
   }
 
-  @media (--xl-min) {
-    :scope {
+  @media (--high-res) {
+    .hero-image {
+      background-image: url("/images/res-high/md-high-res-image.webp");
+    }
+  }
+}
 
-      @media (--standard-res) {
-        .hero-image {
-          background-image: url("/images/res-standard/xl-standard-res-image.webp");
-        }
-      }
+@media (--xl-min) {
+  @media (--standard-res) {
+    .hero-image {
+      background-image: url("/images/res-standard/xl-standard-res-image.webp");
+    }
+  }
 
-      @media (--high-res) {
-        .hero-image {
-          background-image: url("/images/res-high/xl-high-res-image.webp");
-        }
-      }
+  @media (--high-res) {
+    .hero-image {
+      background-image: url("/images/res-high/xl-high-res-image.webp");
     }
   }
 }

@@ -17,4 +17,13 @@
       color: var(--primary-bg);
     }
   }
+
+  .filter-fieldset {
+    margin-bottom: var(--size-4);
+  }
+
+  .filter-legend {
+    font-size: var(--size-5);
+    margin-bottom: var(--size-4);
+  }
 }
