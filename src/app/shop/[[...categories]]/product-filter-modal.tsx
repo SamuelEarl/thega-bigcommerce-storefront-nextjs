@@ -17,8 +17,8 @@ import type { FacetCollection, FacetObj } from "./page";
 
 export default function ProductFilterModal({ facets }: { facets: FacetCollection }) {
   const [open, setOpen] = useState(false);
-  // An array of facet objects, each object representing a facet key and its values.
-  const [selectedFacets, setSelectedFacets] = useState<Record<string, string>[]>([]);
+  // A string that contains the facets that the user has selected for filtering. Each key-value pair in the string will be a search param in the URL.
+  const [selectedFacets, setSelectedFacets] = useState<string>("");
 
   const searchParams = useSearchParams();
 
@@ -44,7 +44,7 @@ export default function ProductFilterModal({ facets }: { facets: FacetCollection
               />
               <ModalBody>
                 {
-                  // The URL will act as the single source of truth for the checkbox states. So I need to create the checkboxes based on the `facets` data and set their state based on the `searchParams`.
+                  // TODO: The URL will act as the single source of truth for the checkbox states. So I need to create the checkboxes based on the `facets` data and set their state based on the `searchParams`.
                   // Each of the search params needs to be created as an array of values in the URL because a user could select multiple values under the same category.
                   Object.entries(facets).map(([facetKey, facetArray]) => {
                     return (
@@ -56,33 +56,32 @@ export default function ProductFilterModal({ facets }: { facets: FacetCollection
                             // "audience" checkboxes will create a single search param in the URL, for example: "audience=men", "audience=women"
                             // "sport" checkboxes will create a single search param in the URL, for example: "sport=running", "sport=tennis"
                             // "shoes" checkboxes will create two search params in the URL, for example: "category=shoes&sport=running"
-                            // "clothing" and "accessories" checkboxes will create a single search param in the URL for each category/subcategory pair. If there are multiple keys with the same facet key (e.g. category), then they will be treated as an array of values, for example: "category=clothing:pants&category=clothing:shorts"
+                            // "clothing" and "accessories" checkboxes will create a single search param in the URL for each category/subcategory pair. If there are multiple keys with the same facet key (e.g. category), then they will be treated as an array of values, for example: "category=clothing-pants&category=clothing-shorts"
                             return (
                               <Checkbox
                                 key={`${facetKey}-${facetObj.value}`}
                                 name={facetObj.name}
                                 value={facetObj.value}
-                                checked={searchParams.get(facetKey) === facetObj.value}
+                                // TODO: Set the value of each checkbox based on the search params in the URL.
+                                checked={searchParams.get(facetKey) === [...facetObj.value].join("&")}
                                 onChange={(e) => {
                                   console.log("Checkbox clicked:", e.target.checked);
-                                  const lowerCaseFacetKey = facetKey.toLowerCase();
-                                  const lowerCaseFacetValue = facetObj.value.toLowerCase();
-                                  // Check if the facet key/value pair already exists in the `selectedFacets` array.
-                                  const facetExists = selectedFacets.findIndex((facet) => facet[lowerCaseFacetKey] === lowerCaseFacetValue);
-                                  // If the facet already exsists, then remove it.
-                                  if (facetExists > -1) {
+                                  const facetValueString = facetObj.value;
+                                  // If the user adds a facet, then concatenate it to the end of the `selectedFacets` string.
+                                  if (e.target.checked) {
                                     setSelectedFacets((prev) => {
-                                      const newValue = prev.filter((facet) => facet[lowerCaseFacetKey] !== lowerCaseFacetValue)
-                                      // console.log("selectedFacets (new):", newValue);
-                                      return newValue
+                                      const newValue = prev.concat(facetValueString);
+                                      console.log("selectedFacets (new):", newValue);
+                                      return newValue;
                                     });
                                   }
-                                  // Otherwise, add the facet key/value pair to the `selectedFacets` array.
+                                  // If the user removes a facet, remove only the first instance from the `selectedFacets` string.
+                                  // The "Apply" button logic will handle the rest, including using Set() to remove duplicates.
                                   else {
                                     setSelectedFacets((prev) => {
-                                      const newValue = [...prev, { [lowerCaseFacetKey]: lowerCaseFacetValue }];
-                                      // console.log("selectedFacets (new):", newValue);
-                                      return newValue;
+                                      const result = prev.replace(facetValueString, "");
+                                      console.log("selectedFacets (new):", result);
+                                      return result;
                                     });
                                   }
                                   // navigate(`/shop?${newSearchParams.toString()}`);
@@ -96,71 +95,18 @@ export default function ProductFilterModal({ facets }: { facets: FacetCollection
                       </fieldset>
                     );
                   })
-                  //   // Loop over facet categories (e.g. shoes, clothing, accessories)
-                  //   else if (facetKey === "categories") {
-                  //     return facetArray.map((facetObj: FacetObj) => {
-                  //       const subcategories = facetObj.subcategories;
-                  //       return (
-                  //         <fieldset key={facetObj.value} className={styles["filter-fieldset"]}>
-                  //           <legend className={styles["filter-legend"]}>{facetObj.name.toUpperCase()}</legend>
-                  //           {
-                  //             subcategories && subcategories.map((subcategory: FacetObj) => {
-                  //               // Create checkboxes for each sport within the "Shoes" category. These checkboxes will create two search params in the URL, for example: "category=shoes&sport=running"
-                  //               // Create checkboxes for each subcategory. These checkboxes will create a single search param in the URL with an array value, for example: "category=clothing:pants&category=clothing:shorts"
-                  //               return (
-                  //                 <Checkbox
-                  //                   key={`${facetKey}-${subcategory.value}`}
-                  //                   name={subcategory.name}
-                  //                   value={subcategory.value}
-                  //                   checked={searchParams.get(facetKey) === subcategory.value}
-                  //                   onChange={(e) => {
-                  //                     console.log("Checkbox clicked:", e.target.checked);
-                  //                     const lowerCaseFacetKey = facetKey.toLowerCase();
-                  //                     const lowerCaseFacetValue = facetObj.value.toLowerCase();
-                  //                     // Check if the facet key/value pair already exists in the `selectedFacets` array.
-                  //                     const facetExists = selectedFacets.findIndex((facet) => facet[lowerCaseFacetKey] === lowerCaseFacetValue);
-                  //                     // If the facet already exsists, then remove it.
-                  //                     if (facetExists > -1) {
-                  //                       setSelectedFacets((prev) => {
-                  //                         const newValue = prev.filter((facet) => facet[lowerCaseFacetKey] !== lowerCaseFacetValue)
-                  //                         // console.log("selectedFacets (new):", newValue);
-                  //                         return newValue
-                  //                       });
-                  //                     }
-                  //                     // Otherwise, add the facet key/value pair to the `selectedFacets` array.
-                  //                     else {
-                  //                       setSelectedFacets((prev) => {
-                  //                         const newValue = [...prev, { [lowerCaseFacetKey]: lowerCaseFacetValue }];
-                  //                         // console.log("selectedFacets (new):", newValue);
-                  //                         return newValue;
-                  //                       });
-                  //                     }
-                  //                     // navigate(`/shop?${newSearchParams.toString()}`);
-                  //                   }}
-                  //                 >
-                  //                   {subcategory.name}
-                  //                 </Checkbox>
-                  //               );
-                  //             })
-                  //           }
-                  //         </fieldset>
-                  //       );
-                  //     })
-                  //   }
-                  // })
                 }
               </ModalBody>
               <ModalFooter>
                 <Button
                   onClick={async () => {
-                    // Convert the `selectedFacets` array into search parameters in the URL. 
-                    // const newSearchParams = new URLSearchParams(searchParams);
-                    // if (e.target.checked) {
-                    //   newSearchParams.set(facetKey, facetObj.value);
-                    // } 
-                    // else {
-                    //   newSearchParams.delete(facetKey);
-                    // }
+                    // Convert the `selectedFacets` string into search parameters in the URL.
+                    // Remove the leading '&' from the `selectedFacets` string.
+                    const cleanedFacetsString = selectedFacets.slice(1);
+                    const newSearchParams = new URLSearchParams(cleanedFacetsString);
+                    const newUrl = `${window.location.pathname}?${newSearchParams.toString()}`;
+                    window.history.pushState({}, "", newUrl);
+                    // Send the facet filters to the backend and update the displayed products.
                     // await applyFilters();
                     setOpen(false);
                   }}
@@ -173,7 +119,7 @@ export default function ProductFilterModal({ facets }: { facets: FacetCollection
               </ModalFooter>
             </ModalContent>
           </ModalOverlay>
-        </div>
+        </div >
       )}
     </>
   )

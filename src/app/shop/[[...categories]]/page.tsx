@@ -14,7 +14,7 @@ export type FacetCollection = {
   shoes: FacetObj[];
   clothing: FacetObj[];
   accessories: FacetObj[];
-  sports: FacetObj[];
+  sport: FacetObj[];
 };
 
 async function getAllFacets() {
@@ -22,66 +22,82 @@ async function getAllFacets() {
   // const response = await fetch("/api/facets");
   // const data = await response.json();
   // return data;
-  const sports = [
-    {
-      name: "Running",
-      value: "running",
-    },
-    {
-      name: "Basketball",
-      value: "basketball",
-    },
-    {
-      name: "Soccer",
-      value: "soccer",
-    },
-    {
-      name: "Tennis",
-      value: "tennis",
-    },
-  ];
 
   const facets: FacetCollection = {
     audience: [
       {
         name: "Men",
-        value: "men",
+        value: "&audience=men",
       },
       {
         name: "Women",
-        value: "women",
+        value: "&audience=women",
       },
     ],
-    shoes: sports,
+    shoes: [
+      {
+        name: "Running",
+        value: "&category=shoes&sport=running",
+      },
+      {
+        name: "Basketball",
+        value: "&category=shoes&sport=basketball",
+      },
+      {
+        name: "Soccer",
+        value: "&category=shoes&sport=soccer",
+      },
+      {
+        name: "Tennis",
+        value: "&category=shoes&sport=tennis",
+      },
+    ],
     clothing: [
       {
         name: "Pants",
-        value: "pants",
+        value: "&category=clothing-pants",
       },
       {
         name: "Shorts",
-        value: "shorts",
+        value: "&category=clothing-shorts",
       },
       {
         name: "Shirts & Tops",
-        value: "shirts-and-tops",
+        value: "&category=clothing-shirts_and_tops",
       },
     ],
     accessories: [
       {
         name: "Hats",
-        value: "hats",
+        value: "&category=accessories-hats",
       },
       {
         name: "Socks",
-        value: "socks",
+        value: "&category=accessories-socks",
       },
       {
         name: "Belts",
-        value: "belts",
+        value: "&category=accessories-belts",
       }
     ],
-    sports: sports,
+    sport: [
+      {
+        name: "Running",
+        value: "&sport=running",
+      },
+      {
+        name: "Basketball",
+        value: "&sport=basketball",
+      },
+      {
+        name: "Soccer",
+        value: "&sport=soccer",
+      },
+      {
+        name: "Tennis",
+        value: "&sport=tennis",
+      },
+    ],
   };
 
   return facets;
