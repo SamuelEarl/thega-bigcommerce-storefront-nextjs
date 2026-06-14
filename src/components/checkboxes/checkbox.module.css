@@ -11,9 +11,9 @@ https://moderncss.dev/pure-css-custom-checkbox-style/ */
   cursor: pointer;
 }
 
-.form-control--disabled {
-  color: var(--element-bg-disabled);
-  cursor: not-allowed;
+/* Create space between stacked checkboxes */
+.form-control+.form-control {
+  margin-top: 1rem;
 }
 
 /* Hide the browser's default checkbox. */
@@ -60,12 +60,14 @@ https://moderncss.dev/pure-css-custom-checkbox-style/ */
   outline-offset: max(2px, 0.2rem);
 }
 
-.checkbox-input:disabled {
+.form-control--disabled {
   color: var(--element-bg-disabled);
   cursor: not-allowed;
 }
 
-/* Create space between stacked checkboxes */
-.form-control+.form-control {
-  margin-top: 1rem;
+.checkbox-input:disabled {
+  color: var(--element-bg-disabled);
+  border-color: var(--element-bg-disabled);
+  cursor: not-allowed;
+  outline: none;
 }
