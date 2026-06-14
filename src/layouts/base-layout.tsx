@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import HeaderMobile from "./header-mobile";
 import MobileNav from "./mobile-nav";
 import HeaderDesktop from "./header-desktop";
-// import { Breadcrumbs } from "./breadcrumbs";
+import { Breadcrumbs } from "./breadcrumbs";
 import Footer from "./footer";
 import styles from "./base-layout.module.css";
 
@@ -44,7 +44,7 @@ export default function BaseLayout({
       {/* Else show the .layout-main-content-container */}
       {currentPath !== "/" ? (
         <div className={styles["layout-main-content-container"]}>
-          {/* <Breadcrumbs /> */}
+          <Breadcrumbs />
           {children}
         </div>
       ) : null}
