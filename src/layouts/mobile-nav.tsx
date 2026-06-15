@@ -28,15 +28,15 @@ interface MobileNavProps {
 }
 
 export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
-  // Tracks which Level 1 menu is active (e.g. "MEN", "WOMEN"). null = top level.
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  // Tracks which Level 2 submenu is active (e.g. "Shoes", "Clothing"). null = Level 2.
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  // Tracks which Audience menu is active and currently displayed (e.g. "MEN", "WOMEN"). null = Level 1, shows the audience options.
+  const [activeAudienceMenu, setActiveAudienceMenu] = useState<string | null>(null);
+  // Tracks which Category submenu is active (e.g. "Shoes", "Clothing"). null = Level 2, shows the category options.
+  const [activeCategorySubmenu, setActiveCategorySubmenu] = useState<string | null>(null);
 
   // Reset everything and close.
   const closeAll = () => {
-    setActiveSubmenu(null);
-    setActiveMenu(null);
+    setActiveCategorySubmenu(null);
+    setActiveAudienceMenu(null);
     onClose();
   };
 
@@ -93,34 +93,34 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
       </div>
 
       {/* Menu container (sliding menu with 3 panels) */}
-      {/* If activeMenu and activeSubmenu are both null = Level 1 (Default). */}
-      {/* If activeMenu is truthy = Level 2. */}
-      {/* If activeSubmenu is truthy = Level 3. */}
-      <div className={`${styles["nav-container"]} ${activeMenu ? styles["slide-level2"] : ""} ${activeSubmenu ? styles["slide-level3"] : ""}`.trim()}>
+      {/* If activeAudienceMenu and activeCategorySubmenu are both null = Level 1 (Default). */}
+      {/* If activeAudienceMenu is truthy = Level 2. */}
+      {/* If activeCategorySubmenu is truthy = Level 3. */}
+      <div className={`${styles["nav-container"]} ${activeAudienceMenu ? styles["slide-level2"] : ""} ${activeCategorySubmenu ? styles["slide-level3"] : ""}`.trim()}>
 
         {/* Level 1 Panel: Audience navigation (e.g. Men, Women, Kids) */}
         <div className={styles["nav-panel"]}>
           <ul className={styles["navigation-list"]}>
-            {Object.entries(topNav().audience).map(([audienceKey, audienceValue]) => (
+            {Object.entries(topNav().audience).map(([audienceKey, audienceObj]) => (
               <li key={audienceKey} className={styles["nav-item"]}>
-                {audienceValue.category ?
-                  // If the audienceValue has a category, then display a button that can be clicked, which will then display the audience > categories. If the button is clicked, then set `activeMenu` to equal the audienceValue.text.
+                {audienceObj.category ?
+                  // If the audienceObj has a category, then display a button that can be clicked, which will then display the audience > categories. If the button is clicked, then set `activeAudienceMenu` to equal `audienceKey`.
                   (
                     <button
                       className={styles["nav-trigger"]}
-                      onClick={() => setActiveMenu(audienceValue.text)}
+                      onClick={() => setActiveAudienceMenu(audienceKey)}
                     >
-                      {audienceValue.text}
+                      {audienceObj.text}
                       <RiArrowRightSLine size={30} color="var(--old-gold)" />
                     </button>
                   ) :
                   // Else display a direct Link to a page for items with no subnav.
                   (
                     <Link
-                      href={audienceValue.path || "#"}
+                      href={audienceObj.path || "#"}
                       onClick={() => closeAll()}
                     >
-                      {audienceValue.text}
+                      {audienceObj.text}
                     </Link>
                   )
                 }
@@ -129,41 +129,41 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           </ul>
         </div>
 
-        {/* Level 2 Panel: Sub-navigation (e.g. Shoes, Clothing, Accessories) */}
+        {/* Level 2 Panel: Category navigation (e.g. Shoes, Clothing, Accessories) and Sports navigation. */}
         <div className={styles["nav-panel"]}>
-          {activeMenu ? (
+          {activeAudienceMenu ? (
             <>
               <div className={styles["back-btn-container"]}>
                 <button
                   className={styles["back-btn"]}
-                  onClick={() => setActiveMenu(null)}
+                  onClick={() => setActiveAudienceMenu(null)}
                 >
                   <RiArrowLeftSLine size={30} color="var(--old-gold)" />
-                  {activeMenu}
+                  {activeAudienceMenu}
                 </button>
               </div>
 
               <ul className={styles["subnav-list"]}>
-                {/* Find the activeMenu in topNav() and map over its subnav. */}
-                {topNav().find((item) => item.text === activeMenu)?.subnav?.map((subnavItem: NavItem, index: number) => (
-                  <li key={index} className={styles["nav-item"]}>
-                    {/* If item has subnav, set activeMenu to equal item.text. */}
-                    {subnavItem.subnav ? (
-                      // Set the activeSubmenu to equal subnavItem.text, which will trigger the slide to Level 3.
+                {/* Find the activeAudienceMenu in topNav() and map over its category object entries. */}
+                {Object.entries(topNav().audience[activeAudienceMenu].category).map(([categoryKey, categoryObj]) => (
+                  <li key={categoryKey} className={styles["nav-item"]}>
+                    {/* If item has a productType, then set activeAudienceMenu to equal item.text. */}
+                    {categoryObj.productType ? (
+                      // Set the activeCategorySubmenu to equal categoryKey, which will trigger the slide to Level 3.
                       <button
                         className={styles["nav-trigger"]}
-                        onClick={() => setActiveSubmenu(subnavItem.text)}
+                        onClick={() => setActiveCategorySubmenu(categoryKey)}
                       >
-                        {subnavItem.text}
+                        {categoryObj.text}
                         <RiArrowRightSLine size={30} color="var(--old-gold)" />
                       </button>
                     ) : (
                       // Else display a Link to a page for items with no subnav.
                       <Link
-                        href={subnavItem.path || "#"}
+                        href={categoryObj.path || "#"}
                         onClick={() => closeAll()}
                       >
-                        {subnavItem.text}
+                        {categoryObj.text}
                       </Link>
                     )}
                   </li>
@@ -173,35 +173,32 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
           ) : null}
         </div>
 
-        {/* Level 3 Panel: Leaf-level links (e.g. All Men's Shoes, Running, Soccer) */}
+        {/* Level 3 Panel: Product Type navigation (e.g. All Men's Shoes, Running, Soccer) */}
         <div className={styles["nav-panel"]}>
-          {activeSubmenu ? (
+          {activeCategorySubmenu ? (
             <>
               <div className={styles["back-btn-container"]}>
                 <button
                   className={styles["back-btn"]}
-                  onClick={() => setActiveSubmenu(null)}
+                  onClick={() => setActiveCategorySubmenu(null)}
                 >
                   <RiArrowLeftSLine size={30} color="var(--old-gold)" />
-                  {activeSubmenu}
+                  {activeCategorySubmenu}
                 </button>
               </div>
 
               <ul className={styles["subnav-list"]}>
-                {/* Find the activeMenu, then find activeSubmenu within it, then map over its subnav. */}
-                {topNav()
-                  .find((item) => item.text === activeMenu)
-                  ?.subnav?.find((subItem) => subItem.text === activeSubmenu)
-                  ?.subnav?.map((leafItem: NavItem, index: number) => (
-                    <li key={index} className={styles["nav-item"]}>
-                      <Link
-                        href={leafItem.path || "#"}
-                        onClick={() => closeAll()}
-                      >
-                        {leafItem.text}
-                      </Link>
-                    </li>
-                  ))}
+                {/* Find the activeAudienceMenu, then find activeCategorySubmenu within it, then map over its productType object entries. */}
+                {Object.entries(topNav().audience[activeAudienceMenu].category[activeCategorySubmenu].productType).map(([productTypeKey, productTypeObj]) => (
+                  <li key={productTypeKey} className={styles["nav-item"]}>
+                    <Link
+                      href={productTypeObj.path || "#"}
+                      onClick={() => closeAll()}
+                    >
+                      {productTypeObj.text}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </>
           ) : null}

@@ -27,7 +27,35 @@ export interface NavItem {
 // Browser sees two params: category=shirts- and tops
 // --------------------------------
 
-export function topNav() {
+export interface IProductType {
+  [key: string]: {
+    text: string;
+    path: string;
+  };
+}
+
+export interface ICategoryObj {
+  text: string;
+  path: string;
+  isAllAudienceProductsLink?: boolean;
+  productType?: IProductType;
+};
+
+export interface IAudience {
+  text: string;
+  path: string;
+  category: {
+    [key: string]: ICategoryObj;
+  };
+}
+
+export function topNav(): {
+  audience: {
+    men: IAudience;
+    women: IAudience;
+    kids: IAudience;
+  };
+} {
   return {
     audience: {
       men: {
