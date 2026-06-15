@@ -27,240 +27,318 @@ export interface NavItem {
 // Browser sees two params: category=shirts- and tops
 // --------------------------------
 
-export function topNav(): NavItem[] {
-  return [
-    {
-      text: "MEN",
-      path: "/shop?audience=men",
-      subnav: [
-        {
-          text: "All Men's Products",
-          path: "/shop?audience=men",
-          isAllAudienceProductsLink: true,
+export function topNav() {
+  return {
+    audience: {
+      men: {
+        text: "MEN",
+        path: "/shop/men",
+        category: {
+          all: {
+            text: "All Men's Products",
+            path: "/shop/men",
+            isAllAudienceProductsLink: true,
+          },
+          shoes: {
+            text: "Shoes",
+            path: "/shop/men/shoes",
+            productType: {
+              all: {
+                text: "All Men's Shoes",
+                path: "/shop/men/shoes",
+              },
+              running: {
+                text: "Running",
+                path: "/shop/men/shoes/running",
+              },
+              soccer: {
+                text: "Soccer",
+                path: "/shop/men/shoes/soccer",
+              },
+              basketball: {
+                text: "Basketball",
+                path: "/shop/men/shoes/basketball",
+              },
+            },
+          },
+          clothing: {
+            text: "Clothing",
+            path: "/shop/men/clothing",
+            productType: {
+              all: {
+                text: "All Men's Clothing",
+                path: "/shop/men/clothing",
+              },
+              pants: {
+                text: "Pants",
+                path: "/shop/men/clothing/pants",
+              },
+              shorts: {
+                text: "Shorts",
+                path: "/shop/men/clothing/shorts",
+              },
+              shirtsAndTops: {
+                text: "Shirts & Tops",
+                path: "/shop/men/clothing/shirts_and_tops",
+              },
+            },
+          },
+          accessories: {
+            text: "Accessories",
+            path: "/shop/men/accessories",
+            productType: {
+              all: {
+                text: "All Men's Accessories",
+                path: "/shop/men/accessories",
+              },
+              hats: {
+                text: "Hats",
+                path: "/shop/men/accessories/hats",
+              },
+              socks: {
+                text: "Socks",
+                path: "/shop/men/accessories/socks",
+              },
+              belts: {
+                text: "Belts",
+                path: "/shop/men/accessories/belts",
+              },
+            },
+          },
+          sports: {
+            text: "Sports",
+            path: "/shop/men/sports",
+            sports: {
+              all: {
+                text: "All Men's Sports",
+                path: "/shop/men/sports",
+              },
+              running: {
+                text: "Running",
+                path: "/shop/men/sports/running",
+                productType: {
+                  all: {
+                    text: "All Men's Running",
+                    path: "/shop/men/running",
+                  },
+                  shoes: {
+                    text: "Shoes",
+                    path: "/shop/men/running/shoes",
+                  },
+                  shorts: {
+                    text: "Shorts",
+                    path: "/shop/men/running/shorts",
+                  },
+                  shirtsAndTops: {
+                    text: "Shirts & Tops",
+                    path: "/shop/men/running/shirts_and_tops",
+                  },
+                },
+              },
+              soccer: {
+                text: "Soccer",
+                path: "/shop/men/sports/soccer",
+                productType: {
+                  all: {
+                    text: "All Men's Soccer",
+                    path: "/shop/men/soccer",
+                  },
+                  shoes: {
+                    text: "Shoes",
+                    path: "/shop/men/soccer/shoes",
+                  },
+                  shorts: {
+                    text: "Shorts",
+                    path: "/shop/men/soccer/shorts",
+                  },
+                  shirtsAndTops: {
+                    text: "Shirts & Tops",
+                    path: "/shop/men/soccer/shirts_and_tops",
+                  },
+                },
+              },
+              basketball: {
+                text: "Basketball",
+                path: "/shop/men/sports/basketball",
+                productType: {
+                  all: {
+                    text: "All Men's Basketball",
+                    path: "/shop/men/basketball",
+                  },
+                  shoes: {
+                    text: "Shoes",
+                    path: "/shop/men/basketball/shoes",
+                  },
+                  shorts: {
+                    text: "Shorts",
+                    path: "/shop/men/basketball/shorts",
+                  },
+                  shirtsAndTops: {
+                    text: "Shirts & Tops",
+                    path: "/shop/men/basketball/shirts_and_tops",
+                  },
+                },
+              },
+            },
+          },
         },
-        {
-          text: "Shoes",
-          path: "/shop?audience=men&category=shoes",
-          subnav: [
-            {
-              text: "All Men's Shoes",
-              path: "/shop?audience=men&category=shoes",
+      },
+      women: {
+        text: "WOMEN",
+        path: "/shop/women",
+        category: {
+          all: {
+            text: "All Women's Products",
+            path: "/shop/women",
+            isAllAudienceProductsLink: true,
+          },
+          shoes: {
+            text: "Shoes",
+            path: "/shop/women/shoes",
+            productType: {
+              all: {
+                text: "All Women's Shoes",
+                path: "/shop/women/shoes",
+              },
+              running: {
+                text: "Running",
+                path: "/shop/women/shoes/running",
+              },
+              soccer: {
+                text: "Soccer",
+                path: "/shop/women/shoes/soccer",
+              },
+              basketball: {
+                text: "Basketball",
+                path: "/shop/women/shoes/basketball",
+              },
             },
-            {
-              text: "Running",
-              path: "/shop?audience=men&category=shoes&sport=running",
+          },
+          clothing: {
+            text: "Clothing",
+            path: "/shop/women/clothing",
+            productType: {
+              all: {
+                text: "All Women's Clothing",
+                path: "/shop/women/clothing",
+              },
+              pants: {
+                text: "Pants",
+                path: "/shop/women/clothing/pants",
+              },
+              shorts: {
+                text: "Shorts",
+                path: "/shop/women/clothing/shorts",
+              },
+              shirtsAndTops: {
+                text: "Shirts & Tops",
+                path: "/shop/women/clothing/shirts_and_tops",
+              },
             },
-            {
-              text: "Soccer",
-              path: "/shop?audience=men&category=shoes&sport=soccer",
+          },
+          accessories: {
+            text: "Accessories",
+            path: "/shop/women/accessories",
+            productType: {
+              all: {
+                text: "All Women's Accessories",
+                path: "/shop/women/accessories",
+              },
+              hats: {
+                text: "Hats",
+                path: "/shop/women/accessories/hats",
+              },
+              socks: {
+                text: "Socks",
+                path: "/shop/women/accessories/socks",
+              },
+              belts: {
+                text: "Belts",
+                path: "/shop/women/accessories/belts",
+              },
             },
-            {
-              text: "Basketball",
-              path: "/shop?audience=men&category=shoes&sport=basketball",
-            },
-          ],
+          },
         },
-        {
-          text: "Clothing",
-          path: "/shop?audience=men&category=clothing",
-          subnav: [
-            {
-              text: "All Men's Clothing",
-              path: "/shop?audience=men&category=clothing",
+      },
+      kids: {
+        text: "KIDS",
+        path: "/shop/kids",
+        category: {
+          all: {
+            text: "All Kids Products",
+            path: "/shop/kids",
+            isAllAudienceProductsLink: true,
+          },
+          shoes: {
+            text: "Shoes",
+            path: "/shop/kids/shoes",
+            productType: {
+              all: {
+                text: "All Kids Shoes",
+                path: "/shop/kids/shoes",
+              },
+              running: {
+                text: "Running",
+                path: "/shop/kids/shoes/running",
+              },
+              soccer: {
+                text: "Soccer",
+                path: "/shop/kids/shoes/soccer",
+              },
+              basketball: {
+                text: "Basketball",
+                path: "/shop/kids/shoes/basketball",
+              },
             },
-            {
-              text: "Pants",
-              path: "/shop?audience=men&category=clothing-pants",
+          },
+          clothing: {
+            text: "Clothing",
+            path: "/shop/kids/clothing",
+            productType: {
+              all: {
+                text: "All Kids Clothing",
+                path: "/shop/kids/clothing",
+              },
+              pants: {
+                text: "Pants",
+                path: "/shop/kids/clothing/pants",
+              },
+              shorts: {
+                text: "Shorts",
+                path: "/shop/kids/clothing/shorts",
+              },
+              shirtsAndTops: {
+                text: "Shirts & Tops",
+                path: "/shop/kids/clothing/shirts_and_tops",
+              },
             },
-            {
-              text: "Shorts",
-              path: "/shop?audience=men&category=clothing-shorts",
+          },
+          accessories: {
+            text: "Accessories",
+            path: "/shop/kids/accessories",
+            productType: {
+              all: {
+                text: "All Kids Accessories",
+                path: "/shop/kids/accessories",
+              },
+              hats: {
+                text: "Hats",
+                path: "/shop/kids/accessories/hats",
+              },
+              socks: {
+                text: "Socks",
+                path: "/shop/kids/accessories/socks",
+              },
+              belts: {
+                text: "Belts",
+                path: "/shop/kids/accessories/belts",
+              },
             },
-            {
-              text: "Shirts & Tops",
-              path: "/shop?audience=men&category=clothing-shirts_and_tops",
-            },
-          ],
+          },
         },
-        {
-          text: "Accessories",
-          path: "/shop?audience=men&category=accessories",
-          subnav: [
-            {
-              text: "All Men's Accessories",
-              path: "/shop?audience=men&category=accessories",
-            },
-            {
-              text: "Hats",
-              path: "/shop?audience=men&category=accessories-hats",
-            },
-            {
-              text: "Socks",
-              path: "/shop?audience=men&category=accessories-socks",
-            },
-            {
-              text: "Belts",
-              path: "/shop?audience=men&category=accessories-belts",
-            },
-          ],
-        },
-      ],
+      },
     },
-    {
-      text: "WOMEN",
-      path: "/shop?audience=women",
-      subnav: [
-        {
-          text: "All Women's Products",
-          path: "/shop?audience=women",
-          isAllAudienceProductsLink: true,
-        },
-        {
-          text: "Shoes",
-          path: "/shop?audience=women&category=shoes",
-          subnav: [
-            {
-              text: "All Women's Shoes",
-              path: "/shop?audience=women&category=shoes",
-            },
-            {
-              text: "Running",
-              path: "/shop?audience=women&category=shoes&sport=running",
-            },
-            {
-              text: "Soccer",
-              path: "/shop?audience=women&category=shoes&sport=soccer",
-            },
-            {
-              text: "Basketball",
-              path: "/shop?audience=women&category=shoes&sport=basketball",
-            },
-          ],
-        },
-        {
-          text: "Clothing",
-          path: "/shop?audience=women&category=clothing",
-          subnav: [
-            {
-              text: "All Women's Clothing",
-              path: "/shop?audience=women&category=clothing",
-            },
-            {
-              text: "Pants",
-              path: "/shop?audience=women&category=clothing-pants",
-            },
-            {
-              text: "Shorts",
-              path: "/shop?audience=women&category=clothing-shorts",
-            },
-            {
-              text: "Shirts & Tops",
-              path: "/shop?audience=women&category=clothing-shirts_and_tops",
-            },
-          ],
-        },
-        {
-          text: "Accessories",
-          path: "/shop?audience=women&category=accessories",
-          subnav: [
-            {
-              text: "All Women's Accessories",
-              path: "/shop?audience=women&category=accessories",
-            },
-            {
-              text: "Hats",
-              path: "/shop?audience=women&category=accessories-hats",
-            },
-            {
-              text: "Socks",
-              path: "/shop?audience=women&category=accessories-socks",
-            },
-            {
-              text: "Belts",
-              path: "/shop?audience=women&category=accessories-belts",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      text: "KIDS",
-      path: "/shop?audience=kids",
-      subnav: [
-        {
-          text: "All Kids Products",
-          path: "/shop?audience=kids",
-          isAllAudienceProductsLink: true,
-        },
-        {
-          text: "Shoes",
-          path: "/shop?audience=kids&category=shoes",
-          subnav: [
-            {
-              text: "All Kids Shoes",
-              path: "/shop?audience=kids&category=shoes",
-            },
-            {
-              text: "Running",
-              path: "/shop?audience=kids&category=shoes&sport=running",
-            },
-            {
-              text: "Soccer",
-              path: "/shop?audience=kids&category=shoes&sport=soccer",
-            },
-            {
-              text: "Basketball",
-              path: "/shop?audience=kids&category=shoes&sport=basketball",
-            },
-          ],
-        },
-        {
-          text: "Clothing",
-          path: "/shop?audience=kids&category=clothing",
-          subnav: [
-            {
-              text: "All Kids Clothing",
-              path: "/shop?audience=kids&category=clothing",
-            },
-            {
-              text: "Pants",
-              path: "/shop?audience=kids&category=clothing-pants",
-            },
-            {
-              text: "Shorts",
-              path: "/shop?audience=kids&category=clothing-shorts",
-            },
-            {
-              text: "Shirts & Tops",
-              path: "/shop?audience=kids&category=clothing-shirts_and_tops",
-            },
-          ],
-        },
-        {
-          text: "Accessories",
-          path: "/shop?audience=kids&category=accessories",
-          subnav: [
-            {
-              text: "All Kids Accessories",
-              path: "/shop?audience=kids&category=accessories",
-            },
-            {
-              text: "Hats",
-              path: "/shop?audience=kids&category=accessories-hats",
-            },
-            {
-              text: "Socks",
-              path: "/shop?audience=kids&category=accessories-socks",
-            },
-            {
-              text: "Belts",
-              path: "/shop?audience=kids&category=accessories-belts",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  };
 }
 
 export function iconNav(): NavItem[] {

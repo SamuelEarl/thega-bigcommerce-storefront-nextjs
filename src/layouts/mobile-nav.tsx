@@ -98,29 +98,32 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
       {/* If activeSubmenu is truthy = Level 3. */}
       <div className={`${styles["nav-container"]} ${activeMenu ? styles["slide-level2"] : ""} ${activeSubmenu ? styles["slide-level3"] : ""}`.trim()}>
 
-        {/* Level 1 Panel: Top-level navigation (e.g. Men, Women, Kids) */}
+        {/* Level 1 Panel: Audience navigation (e.g. Men, Women, Kids) */}
         <div className={styles["nav-panel"]}>
           <ul className={styles["navigation-list"]}>
-            {topNav().map((item: NavItem, index: number) => (
-              <li key={index} className={styles["nav-item"]}>
-                {/* If item has subnav, set activeMenu to equal item.text. */}
-                {item.subnav ? (
-                  <button
-                    className={styles["nav-trigger"]}
-                    onClick={() => setActiveMenu(item.text)}
-                  >
-                    {item.text}
-                    <RiArrowRightSLine size={30} color="var(--old-gold)" />
-                  </button>
-                ) : (
-                  // Else display a Link to a page for items with no subnav.
-                  <Link
-                    href={item.path || "#"}
-                    onClick={() => closeAll()}
-                  >
-                    {item.text}
-                  </Link>
-                )}
+            {Object.entries(topNav().audience).map(([audienceKey, audienceValue]) => (
+              <li key={audienceKey} className={styles["nav-item"]}>
+                {audienceValue.category ?
+                  // If the audienceValue has a category, then display a button that can be clicked, which will then display the audience > categories. If the button is clicked, then set `activeMenu` to equal the audienceValue.text.
+                  (
+                    <button
+                      className={styles["nav-trigger"]}
+                      onClick={() => setActiveMenu(audienceValue.text)}
+                    >
+                      {audienceValue.text}
+                      <RiArrowRightSLine size={30} color="var(--old-gold)" />
+                    </button>
+                  ) :
+                  // Else display a direct Link to a page for items with no subnav.
+                  (
+                    <Link
+                      href={audienceValue.path || "#"}
+                      onClick={() => closeAll()}
+                    >
+                      {audienceValue.text}
+                    </Link>
+                  )
+                }
               </li>
             ))}
           </ul>

@@ -30,9 +30,9 @@ export default function BaseLayout({
         <MobileNav isOpen={isMobileNavOpen} onClose={closeMobileNav} />
       </div>
 
-      <header className={styles["layout-header-desktop-container"]}>
+      {/* <header className={styles["layout-header-desktop-container"]}>
         <HeaderDesktop />
-      </header>
+      </header> */}
 
       {/* If the currentPath === "/", then show the .layout-homepage-container */}
       {currentPath === "/" ? (
@@ -44,14 +44,14 @@ export default function BaseLayout({
       {/* Else show the .layout-main-content-container */}
       {currentPath !== "/" ? (
         <div className={styles["layout-main-content-container"]}>
-          <Breadcrumbs />
+          {/* <Breadcrumbs /> */}
           {children}
         </div>
       ) : null}
 
-      <footer className={styles["layout-footer-container"]}>
+      {/* <footer className={styles["layout-footer-container"]}>
         <Footer />
-      </footer>
+      </footer> */}
     </div>
   );
 }
