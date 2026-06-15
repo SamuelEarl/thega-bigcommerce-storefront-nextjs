@@ -175,7 +175,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
         {/* Level 3 Panel: Product Type navigation (e.g. All Men's Shoes, Running, Soccer) */}
         <div className={styles["nav-panel"]}>
-          {activeCategorySubmenu ? (
+          {activeAudienceMenu && activeCategorySubmenu ? (
             <>
               <div className={styles["back-btn-container"]}>
                 <button
@@ -189,7 +189,10 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
               <ul className={styles["subnav-list"]}>
                 {/* Find the activeAudienceMenu, then find activeCategorySubmenu within it, then map over its productType object entries. */}
-                {Object.entries(topNav().audience[activeAudienceMenu].category[activeCategorySubmenu].productType).map(([productTypeKey, productTypeObj]) => (
+                {/* If `productType` is undefined, then `?? {}` defaults to an empty object and Object.entries() will return an empty array and will render nothing. */}
+                {Object.entries(
+                  topNav().audience[activeAudienceMenu].category[activeCategorySubmenu].productType ?? {}
+                ).map(([productTypeKey, productTypeObj]) => (
                   <li key={productTypeKey} className={styles["nav-item"]}>
                     <Link
                       href={productTypeObj.path || "#"}

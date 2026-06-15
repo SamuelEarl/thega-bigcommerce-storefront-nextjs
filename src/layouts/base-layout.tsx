@@ -30,9 +30,9 @@ export default function BaseLayout({
         <MobileNav isOpen={isMobileNavOpen} onClose={closeMobileNav} />
       </div>
 
-      {/* <header className={styles["layout-header-desktop-container"]}>
+      <header className={styles["layout-header-desktop-container"]}>
         <HeaderDesktop />
-      </header> */}
+      </header>
 
       {/* If the currentPath === "/", then show the .layout-homepage-container */}
       {currentPath === "/" ? (

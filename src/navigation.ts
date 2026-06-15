@@ -51,6 +51,7 @@ export interface IAudience {
 
 export function topNav(): {
   audience: {
+    [key: string]: IAudience;
     men: IAudience;
     women: IAudience;
     kids: IAudience;
