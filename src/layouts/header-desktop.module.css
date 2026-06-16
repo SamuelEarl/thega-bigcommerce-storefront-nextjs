@@ -24,91 +24,96 @@
     margin: 0;
   }
 
-  .desktop-top-nav-list {
-    display: flex;
-    margin-bottom: 0;
+  .desktop-top-nav {
 
-    .desktop-top-nav-item {
-      margin: 0;
+    .desktop-top-nav-list {
+      display: flex;
+      margin-bottom: 0;
 
-      .desktop-top-nav-item-link {
-        display: inline-block;
-        padding: var(--size-2) var(--size-4);
-        /* margin-top: var(--size-6); */
-        border-bottom: 2px solid transparent;
-        font-size: var(--size-5);
-        text-transform: uppercase;
+      .desktop-top-nav-item {
+        margin: 0;
 
-        &:hover {
-          color: var(--old-gold);
-          border-bottom-color: var(--old-gold);
-          /* cursor: default; */
-          /* cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23cfb53b' d='M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z'/%3E%3C/svg%3E") 12 12, pointer; */
-        }
+        .desktop-top-nav-item-link {
+          display: inline-block;
+          padding: var(--size-2) var(--size-4);
+          /* margin-top: var(--size-6); */
+          border-bottom: 2px solid transparent;
+          font-size: var(--size-5);
+          text-transform: uppercase;
 
-        &.active-mega-menu {
-          color: var(--old-gold);
-          border-bottom-color: var(--old-gold);
-        }
-      }
-    }
-  }
-
-  .mega-menu-container {
-    width: 100vw;
-    display: flex;
-    position: absolute;
-    /* Places it directly below the parent */
-    top: 100%;
-    left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: var(--primary-bg);
-    font-weight: normal;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.75);
-    z-index: 100;
-    /* Animation for mega menu. Hide mega menu by default. */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(10px);
-    /* Start 10px lower */
-    transition:
-      opacity 0.2s ease-out,
-      visibility 0.2s,
-      transform 0.2s ease-out;
-
-    &.show-mega-menu {
-      /* Manage visibility via opacity. */
-      opacity: 1;
-      visibility: visible;
-      /* Slide up to original position */
-      transform: translateY(0);
-    }
-
-    .mega-menu {
-      max-width: var(--xl-max);
-      padding: var(--size-8) var(--page-padding);
-      margin: 0 auto;
-      /* display: flex;
-      gap: 80px;
-      Remove default margin so there is no gap between the desktop-top-nav-item and mega-menu-subnav-list
-      margin: 0 auto; */
-      color: var(--primary-fg);
-
-      .mega-menu-top-row {
-        padding-bottom: var(--size-6);
-
-        .mega-menu-top-row-item {
           &:hover {
-            border-bottom: 2px solid var(--old-gold);
+            color: var(--old-gold);
+            border-bottom-color: var(--old-gold);
+            /* cursor: default; */
+            /* cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23cfb53b' d='M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z'/%3E%3C/svg%3E") 12 12, pointer; */
+          }
+
+          &.active-mega-menu {
+            color: var(--old-gold);
+            border-bottom-color: var(--old-gold);
           }
         }
       }
+    }
 
-      .mega-menu-bottom-row {
-        display: flex;
-        gap: 80px;
-        /* Remove default margin so there is no gap between the desktop-top-nav-item and mega-menu-subnav-list */
-        margin: 0 auto;
+    .mega-menu-container {
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      /* Places it directly below the parent */
+      top: 100%;
+      left: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      background-color: var(--primary-bg);
+      font-weight: normal;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.75);
+      z-index: 100;
+      /* Animation for mega menu. Hide mega menu by default. */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      /* Start 10px lower */
+      transition:
+        opacity 0.2s ease-out,
+        visibility 0.2s,
+        transform 0.2s ease-out;
+
+      &.show-mega-menu {
+        /* Manage visibility via opacity. */
+        opacity: 1;
+        visibility: visible;
+        /* Slide up to original position */
+        transform: translateY(0);
+      }
+
+      .mega-menu {
+        /* width: var(--xl-max); */
+        padding: var(--size-8) var(--page-padding);
+        color: var(--primary-fg);
+
+        .mega-menu-top-row {
+          padding-bottom: var(--size-6);
+
+          .mega-menu-top-row-item {
+            &:hover {
+              border-bottom: 2px solid var(--old-gold);
+            }
+          }
+        }
+
+        .mega-menu-categories-row,
+        .mega-menu-sports-row {
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+          gap: 80px;
+        }
+
+        .mega-menu-categories-row {
+          margin-bottom: 20px;
+        }
 
         .mega-menu-column-heading {
           display: inline;

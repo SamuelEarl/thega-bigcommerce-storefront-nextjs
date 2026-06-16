@@ -57,24 +57,29 @@
 
   .nav-container {
     display: flex;
-    /* Enough for Levels 1, 2, and 3 side-by-side */
-    width: 300%;
+    /* Enough for Levels 1, 2, 3, and 4 side-by-side */
+    width: 400%;
     height: 100%;
     transition: transform 0.3s ease-in-out;
 
     /* Slide to show Level 2 panel */
     &.slide-level2 {
-      transform: translateX(-33.333%);
+      transform: translateX(-25%);
     }
 
     /* Slide to show Level 3 panel */
     &.slide-level3 {
-      transform: translateX(-66.666%);
+      transform: translateX(-50%);
+    }
+
+    /* Slide to show Level 4 panel */
+    &.slide-level4 {
+      transform: translateX(-75%);
     }
 
     .nav-panel {
-      width: 33.333%;
-      /* One full screen width (100% of viewport = 33.333% of 300% container) */
+      width: 25%;
+      /* One full screen width (100% of viewport = 25% of 400% container) */
       height: 100%;
       list-style: none;
       flex-shrink: 0;

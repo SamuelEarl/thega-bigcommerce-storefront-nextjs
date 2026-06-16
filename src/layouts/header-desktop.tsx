@@ -108,10 +108,11 @@ export default function HeaderDesktop() {
                 }
               })}
             </div>
-            <ul className={`${styles["nav-list"]} ${styles["mega-menu-bottom-row"]}`}>
+            {/* Categories row (Shoes, Clothing, Accessories) - excludes Sports */}
+            <ul className={`${styles["nav-list"]} ${styles["mega-menu-categories-row"]}`}>
               {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
-                // Do not display the `isAllAudienceProductsLink` item in the bottom row.
-                if (category.isAllAudienceProductsLink) return;
+                // Do not display the `isAllAudienceProductsLink` item or Sports category in this row.
+                if (category.isAllAudienceProductsLink || category.text === "Sports") return;
                 // Make sure to check for the existence of a subnav.
                 // I only want to display columns that have a heading and a subnav under that heading.
                 // If the category has a subnav, then display a category heading along with a subnav.
@@ -146,26 +147,56 @@ export default function HeaderDesktop() {
                     </li>
                   );
                 }
-                // else {
-                //   // If the subnavItem does not have a subnav, then display it as a link.
-                //   // I have commented this out because I do not want to display a bunch of category headings across the mega menu without any subnav items.
-                //   return (
-                //     // The category headings in the mega menu.
-                //     <li key={subnavItem.text}>
-                //       {/* See my note above the other `.mega-menu-column-heading` element. */}
-                //       <h5 className={styles["mega-menu-column-heading"]}>
-                //         <Link
-                //           className={styles["mega-menu-subnav-item"]}
-                //           href={subnavItem.path}
-                //           onClick={() => setActiveAudienceMenu(null)}
-                //         >
-                //           {subnavItem.text}
-                //         </Link>
-                //       </h5>
-                //     </li>
-                //   );
-                // }
               })}
+            </ul>
+
+            {/* Sports row - displays each sport as a column with its product types */}
+            <ul className={`${styles["nav-list"]} ${styles["mega-menu-sports-row"]}`}>
+              {(() => {
+                // Find the Sports category
+                const sportsCategory = activeCategorySubmenu?.find((category) => category.text === "Sports");
+
+                // If Sports category exists and has subnav, map over the sports
+                if (sportsCategory && 'subnav' in sportsCategory && sportsCategory.subnav) {
+                  return sportsCategory.subnav.map((sport) => {
+                    // Skip the "All Men's Sports" link
+                    if (sport.navType === "allSports") return null;
+
+                    // Display each sport as a column heading with its product types
+                    if ('subnav' in sport && sport.subnav) {
+                      return (
+                        <li key={sport.text}>
+                          <h5 className={styles["mega-menu-column-heading"]}>
+                            <Link
+                              href={sport.path}
+                              onClick={() => setActiveAudienceMenu(null)}
+                            >
+                              {sport.text}
+                            </Link>
+                          </h5>
+
+                          {/* The sport's product type items */}
+                          <ul className={`${styles["nav-list"]} ${styles["mega-menu-subnav-list"]}`}>
+                            {sport.subnav.map((productType) => (
+                              <li key={productType.text}>
+                                <Link
+                                  className={styles["mega-menu-subnav-item"]}
+                                  href={productType.path}
+                                  onClick={() => setActiveAudienceMenu(null)}
+                                >
+                                  {productType.text}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </li>
+                      );
+                    }
+                    return null;
+                  });
+                }
+                return null;
+              })()}
             </ul>
           </div>
         </div>
@@ -173,7 +204,7 @@ export default function HeaderDesktop() {
 
       {/* Icon nav in the header */}
       <nav className={styles["desktop-nav-icons-container"]}>
-        {iconNav().map((item, index) => {
+        {iconNav().map((item) => {
           const IconComponent = item.icon ? iconMap[item.icon] : null;
 
           return (

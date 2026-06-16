@@ -16,9 +16,9 @@ export default function Home() {
             <p className={styles["paragraph-styles"]}>and our gear powers every step forward.</p>
           </div>
           <div className={styles["cta-container"]}>
-            {Object.entries(topNav().audience).map(([audienceKey, audienceValue]) => (
-              <Link key={audienceKey} href={audienceValue.path || "#"} className={styles["cta"]}>
-                SHOP {audienceValue.text.toUpperCase()}
+            {topNav().map((audience) => (
+              <Link key={audience.text} href={audience.path} className={styles["cta"]}>
+                SHOP {audience.text}
               </Link>
             ))}
           </div>

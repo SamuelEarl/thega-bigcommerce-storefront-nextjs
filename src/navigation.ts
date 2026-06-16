@@ -1,3 +1,46 @@
+const menNav = {
+  audience: "men",
+  categories: {
+    shoes: ["running", "soccer", "basketball"],
+    clothing: ["pants", "shorts", "shirts_and_tops"],
+    accessories: ["hats", "socks", "belts"],
+    sports: {
+      running: ["shoes", "shorts", "shirts_and_tops"],
+      soccer: ["shoes", "shorts", "shirts_and_tops"],
+      basketball: ["shoes", "shorts", "shirts_and_tops"],
+    },
+  }
+};
+
+const womenNav = {
+  audience: "women",
+  categories: {
+    shoes: ["running", "soccer", "basketball"],
+    clothing: ["pants", "shorts", "shirts_and_tops"],
+    accessories: ["hats", "socks", "belts"],
+    sports: {
+      running: ["shoes", "shorts", "shirts_and_tops"],
+      soccer: ["shoes", "shorts", "shirts_and_tops"],
+      basketball: ["shoes", "shorts", "shirts_and_tops"],
+    },
+  }
+};
+
+const kidsNav = {
+  audience: "kids",
+  categories: {
+    shoes: ["running", "soccer", "basketball"],
+    clothing: ["pants", "shorts", "shirts_and_tops"],
+    accessories: ["hats", "socks", "belts"],
+    sports: {
+      running: ["shoes", "shorts", "shirts_and_tops"],
+      soccer: ["shoes", "shorts", "shirts_and_tops"],
+      basketball: ["shoes", "shorts", "shirts_and_tops"],
+    },
+  }
+};
+
+
 export interface IProductType {
   text: string;
   path: string;
@@ -26,7 +69,139 @@ export interface IAudience {
   subnav?: ICategory[];
 }
 
+// Union type for any navigation item
+export type NavItem = IAudience | ICategory | ISport | IProductType;
+
+function capitalizeFirstLetter(str: string): string {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Format product type slug to display name (e.g., "shirts_and_tops" -> "Shirts & Tops")
+function formatProductTypeName(slug: string): string {
+  return slug
+    .split('_')
+    .map(word => word === 'and' ? '&' : capitalizeFirstLetter(word))
+    .join(' ');
+}
+
+// Create a regular category (Shoes, Clothing, Accessories)
+function createCategoryNav(audience: string, categoryName: string, productTypes: string[]): ICategory {
+  const categoryDisplay = capitalizeFirstLetter(categoryName);
+  const audienceDisplay = capitalizeFirstLetter(audience);
+
+  return {
+    text: categoryDisplay,
+    path: `/shop/${audience}/${categoryName}`,
+    navType: "category",
+    subnav: [
+      {
+        text: `All ${audienceDisplay}'s ${categoryDisplay}`,
+        path: `/shop/${audience}/${categoryName}`,
+        navType: "allCategoryProducts",
+      },
+      ...productTypes.map((productType) => ({
+        text: formatProductTypeName(productType),
+        path: `/shop/${audience}/${categoryName}/${productType}`,
+        navType: "productType",
+      })),
+    ],
+  };
+}
+
+// Create a sport with its product types
+function createSportNav(audience: string, sportName: string, productTypes: string[]): ISport {
+  const sportDisplay = capitalizeFirstLetter(sportName);
+  const audienceDisplay = capitalizeFirstLetter(audience);
+
+  return {
+    text: sportDisplay,
+    path: `/shop/${audience}/${sportName}`,
+    navType: "sport",
+    subnav: [
+      {
+        text: `All ${audienceDisplay}'s ${sportDisplay}`,
+        path: `/shop/${audience}/${sportName}`,
+        navType: "allProductType",
+      },
+      ...productTypes.map((productType) => ({
+        text: formatProductTypeName(productType),
+        path: `/shop/${audience}/${sportName}/${productType}`,
+        navType: "productType",
+      })),
+    ],
+  };
+}
+
+// Create the Sports category with all sports
+function createSportsCategory(audience: string, sportsObj: Record<string, string[]>): ICategory {
+  const audienceDisplay = capitalizeFirstLetter(audience);
+
+  return {
+    text: "Sports",
+    path: `/shop/${audience}/sports`,
+    navType: "category",
+    subnav: [
+      {
+        text: `All ${audienceDisplay}'s Sports`,
+        path: `/shop/${audience}/sports`,
+        navType: "allSports",
+      },
+      ...Object.entries(sportsObj).map(([sportName, productTypes]) =>
+        createSportNav(audience, sportName, productTypes)
+      ),
+    ],
+  };
+}
+
+// Main function to create audience navigation from config object
+function createAudienceNav(config: { audience: string; categories: Record<string, string[] | Record<string, string[]>> }): IAudience {
+  const { audience, categories } = config;
+  const audienceDisplay = capitalizeFirstLetter(audience);
+
+  const subnav: ICategory[] = [
+    // "All [Audience]'s Products" link
+    {
+      text: `All ${audienceDisplay}'s Products`,
+      path: `/shop/${audience}`,
+      navType: "allAudienceProducts",
+      isAllAudienceProductsLink: true,
+    },
+  ];
+
+  // Process each category
+  Object.entries(categories).forEach(([categoryName, value]) => {
+    if (categoryName === 'sports' && typeof value === 'object' && !Array.isArray(value)) {
+      // Special handling for sports category
+      subnav.push(createSportsCategory(audience, value as Record<string, string[]>));
+    } else if (Array.isArray(value)) {
+      // Regular category with product types
+      subnav.push(createCategoryNav(audience, categoryName, value));
+    }
+  });
+
+  return {
+    text: audience.toUpperCase(),
+    path: `/shop/${audience}`,
+    navType: "audience",
+    subnav,
+  };
+}
+
+export function createTopNav() {
+  return [
+    createAudienceNav(menNav),
+    createAudienceNav(womenNav),
+    createAudienceNav(kidsNav),
+  ];
+}
+
 export function topNav(): IAudience[] {
+  return createTopNav();
+}
+
+// Keep old implementation commented for reference
+export function TOP_NAV_OLD(): IAudience[] {
   return [
     {
       text: "MEN",
@@ -215,159 +390,6 @@ export function topNav(): IAudience[] {
         },
       ],
     },
-    // {
-    //   text: "WOMEN",
-    //   path: "/shop/women",
-    //   category: {
-    //     all: {
-    //       text: "All Women's Products",
-    //       path: "/shop/women",
-    //       isAllAudienceProductsLink: true,
-    //     },
-    //     shoes: {
-    //       text: "Shoes",
-    //       path: "/shop/women/shoes",
-    //       productType: {
-    //         all: {
-    //           text: "All Women's Shoes",
-    //           path: "/shop/women/shoes",
-    //         },
-    //         running: {
-    //           text: "Running",
-    //           path: "/shop/women/shoes/running",
-    //         },
-    //         soccer: {
-    //           text: "Soccer",
-    //           path: "/shop/women/shoes/soccer",
-    //         },
-    //         basketball: {
-    //           text: "Basketball",
-    //           path: "/shop/women/shoes/basketball",
-    //         },
-    //       },
-    //     },
-    //     clothing: {
-    //       text: "Clothing",
-    //       path: "/shop/women/clothing",
-    //       productType: {
-    //         all: {
-    //           text: "All Women's Clothing",
-    //           path: "/shop/women/clothing",
-    //         },
-    //         pants: {
-    //           text: "Pants",
-    //           path: "/shop/women/clothing/pants",
-    //         },
-    //         shorts: {
-    //           text: "Shorts",
-    //           path: "/shop/women/clothing/shorts",
-    //         },
-    //         shirtsAndTops: {
-    //           text: "Shirts & Tops",
-    //           path: "/shop/women/clothing/shirts_and_tops",
-    //         },
-    //       },
-    //     },
-    //     accessories: {
-    //       text: "Accessories",
-    //       path: "/shop/women/accessories",
-    //       productType: {
-    //         all: {
-    //           text: "All Women's Accessories",
-    //           path: "/shop/women/accessories",
-    //         },
-    //         hats: {
-    //           text: "Hats",
-    //           path: "/shop/women/accessories/hats",
-    //         },
-    //         socks: {
-    //           text: "Socks",
-    //           path: "/shop/women/accessories/socks",
-    //         },
-    //         belts: {
-    //           text: "Belts",
-    //           path: "/shop/women/accessories/belts",
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
-    // {
-    // text: "KIDS",
-    // path: "/shop/kids",
-    // category: {
-    //   all: {
-    //     text: "All Kids Products",
-    //     path: "/shop/kids",
-    //     isAllAudienceProductsLink: true,
-    //   },
-    //   shoes: {
-    //     text: "Shoes",
-    //     path: "/shop/kids/shoes",
-    //     productType: {
-    //       all: {
-    //         text: "All Kids Shoes",
-    //         path: "/shop/kids/shoes",
-    //       },
-    //       running: {
-    //         text: "Running",
-    //         path: "/shop/kids/shoes/running",
-    //       },
-    //       soccer: {
-    //         text: "Soccer",
-    //         path: "/shop/kids/shoes/soccer",
-    //       },
-    //       basketball: {
-    //         text: "Basketball",
-    //         path: "/shop/kids/shoes/basketball",
-    //       },
-    //     },
-    //   },
-    //   clothing: {
-    //     text: "Clothing",
-    //     path: "/shop/kids/clothing",
-    //     productType: {
-    //       all: {
-    //         text: "All Kids Clothing",
-    //         path: "/shop/kids/clothing",
-    //       },
-    //       pants: {
-    //         text: "Pants",
-    //         path: "/shop/kids/clothing/pants",
-    //       },
-    //       shorts: {
-    //         text: "Shorts",
-    //         path: "/shop/kids/clothing/shorts",
-    //       },
-    //       shirtsAndTops: {
-    //         text: "Shirts & Tops",
-    //         path: "/shop/kids/clothing/shirts_and_tops",
-    //       },
-    //     },
-    //   },
-    //   accessories: {
-    //     text: "Accessories",
-    //     path: "/shop/kids/accessories",
-    //     productType: {
-    //       all: {
-    //         text: "All Kids Accessories",
-    //         path: "/shop/kids/accessories",
-    //       },
-    //       hats: {
-    //         text: "Hats",
-    //         path: "/shop/kids/accessories/hats",
-    //       },
-    //       socks: {
-    //         text: "Socks",
-    //         path: "/shop/kids/accessories/socks",
-    //       },
-    //       belts: {
-    //         text: "Belts",
-    //         path: "/shop/kids/accessories/belts",
-    //       },
-    //     },
-    //   },
-    // },
   ];
 }
 
