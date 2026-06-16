@@ -23,10 +23,10 @@ export default function HeaderDesktop() {
   const [activeAudienceMenu, setActiveAudienceMenu] = useState<string | null>(null);
 
   // Find the active nav item's subnav data for the mega menu.
-  // const activeCategorySubmenu = topNav()
-  //   .find((item: NavItem) => item.text === activeAudienceMenu)
-  //   ?.subnav ?? null;
-  const activeCategorySubmenu = activeAudienceMenu ? topNav().audience[activeAudienceMenu].category : {};
+  const activeCategorySubmenu = topNav()
+    .find((item: NavItem) => item.text === activeAudienceMenu)
+    ?.subnav ?? null;
+  // const activeCategorySubmenu = activeAudienceMenu ? topNav().audience[activeAudienceMenu].category : {};
 
   return (
     <div className={styles["header-desktop-content"]}>
@@ -49,21 +49,21 @@ export default function HeaderDesktop() {
       >
         {/* The Audience navigation items that appear in the header (above the mega menu). */}
         <ul className={`${styles["nav-list"]} ${styles["desktop-top-nav-list"]}`}>
-          {Object.entries(topNav().audience).map(([audienceKey, audienceObj]) => {
-            if (audienceObj.category) {
-              // Render the top-level navigation Link along with its sub-menus in the mega menu.
+          {topNav().map((audience) => {
+            if (audience.subnav) {
+              // Render the top-level navigation Link along with its subnav in the mega menu.
               return (
                 <li
-                  key={audienceKey}
+                  key={audience.text}
                   className={styles["desktop-top-nav-item"]}
-                  onMouseEnter={() => setActiveAudienceMenu(audienceKey)}
+                  onMouseEnter={() => setActiveAudienceMenu(audience.text)}
                 >
                   <Link
                     className={styles["desktop-top-nav-item-link"]}
-                    href={audienceObj.path}
+                    href={audience.path}
                     onClick={() => setActiveAudienceMenu(null)}
                   >
-                    {audienceObj.text}
+                    {audience.text}
                   </Link>
                 </li>
               );
@@ -72,15 +72,15 @@ export default function HeaderDesktop() {
             else {
               return (
                 <li
-                  key={audienceKey}
+                  key={audience.text}
                   className={styles["desktop-top-nav-item"]}
                   onMouseEnter={() => setActiveAudienceMenu(null)}
                 >
                   <Link
                     className={styles["desktop-top-nav-item-link"]}
-                    href={audienceObj.path}
+                    href={audience.path}
                   >
-                    {audienceObj.text}
+                    {audience.text}
                   </Link>
                 </li>
               );
@@ -93,52 +93,52 @@ export default function HeaderDesktop() {
           <div className={styles["mega-menu"]}>
             {/* If the subnav item is an `isAllAudienceProductsLink` item, then display it in the top row - above the bottom row of columns. */}
             <div className={styles["mega-menu-top-row"]}>
-              {activeCategorySubmenu && Object.entries(activeCategorySubmenu).map(([categoryKey, categoryObj]) => {
-                if (categoryObj.isAllAudienceProductsLink) {
+              {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
+                if (category.isAllAudienceProductsLink) {
                   return (
                     <Link
-                      key={categoryKey}
-                      href={categoryObj.path}
+                      key={category.text}
+                      href={category.path}
                       className={styles["mega-menu-top-row-item"]}
                       onClick={() => setActiveAudienceMenu(null)}
                     >
-                      {categoryObj.text}
+                      {category.text}
                     </Link>
                   );
                 }
               })}
             </div>
             <ul className={`${styles["nav-list"]} ${styles["mega-menu-bottom-row"]}`}>
-              {activeCategorySubmenu && Object.entries(activeCategorySubmenu).map(([categoryKey, categoryObj]) => {
+              {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
                 // Do not display the `isAllAudienceProductsLink` item in the bottom row.
-                if (categoryObj.isAllAudienceProductsLink) return;
-                // Make sure to check for the existence of a productType. 
-                // I only want to display columns that have a heading and a list of productTypes under that heading.
-                // If the categoryObj has a productType, then display a category heading along with a list of productType items.
-                if (categoryObj.productType) {
+                if (category.isAllAudienceProductsLink) return;
+                // Make sure to check for the existence of a subnav.
+                // I only want to display columns that have a heading and a subnav under that heading.
+                // If the category has a subnav, then display a category heading along with a subnav.
+                if (category.subnav) {
                   return (
                     // The category headings in the mega menu.
-                    <li key={categoryKey}>
+                    <li key={category.text}>
                       {/* NOTE: It is necessary to use an h5 tag as a child of the li in order to set the styles only on the li text instead of the ul that is a child of this li. */}
                       <h5 className={styles["mega-menu-column-heading"]}>
                         <Link
-                          href={categoryObj.path}
+                          href={category.path}
                           onClick={() => setActiveAudienceMenu(null)}
                         >
-                          {categoryObj.text}
+                          {category.text}
                         </Link>
                       </h5>
 
-                      {/* The column's subnav items in the mega menu. */}
+                      {/* The category's subnav items in the mega menu. */}
                       <ul className={`${styles["nav-list"]} ${styles["mega-menu-subnav-list"]}`}>
-                        {Object.entries(categoryObj.productType).map(([productTypeKey, productTypeObj]) => (
-                          <li key={productTypeKey}>
+                        {category.subnav.map((productType) => (
+                          <li key={productType.text}>
                             <Link
                               className={styles["mega-menu-subnav-item"]}
-                              href={productTypeObj.path}
+                              href={productType.path}
                               onClick={() => setActiveAudienceMenu(null)}
                             >
-                              {productTypeObj.text}
+                              {productType.text}
                             </Link>
                           </li>
                         ))}
@@ -171,7 +171,7 @@ export default function HeaderDesktop() {
         </div>
       </nav>
 
-      {/* Icon nav */}
+      {/* Icon nav in the header */}
       <nav className={styles["desktop-nav-icons-container"]}>
         {iconNav().map((item, index) => {
           const IconComponent = item.icon ? iconMap[item.icon] : null;

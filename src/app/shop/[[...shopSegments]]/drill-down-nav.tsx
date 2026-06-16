@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topNav } from "@/navigation";
+import { topNav, type IAudience, type ICategory, type ISport, type IProductType } from "@/navigation";
 import styles from "./drill-down-nav.module.css";
 
 interface DrillDownLink {
@@ -10,93 +10,76 @@ interface DrillDownLink {
   path: string;
 }
 
-interface DrillDownData {
-  heading: string;
-  children: DrillDownLink[];
+type NavNode = IAudience | ICategory | ISport | IProductType;
+
+/**
+ * Filters out "all" navTypes and maps to DrillDownLink format.
+ */
+function filterAndMapChildren(items: NavNode[]): DrillDownLink[] {
+  return items
+    .filter(item => !item.navType.startsWith("all"))
+    .map(item => ({
+      text: item.text,
+      path: item.path,
+    }));
 }
 
 /**
- * Finds the direct children of the current path and returns a heading based on the child level type.
- * Returns null if no children exist (leaf node).
- * Filters out items with the key "all".
+ * Recursively searches nav items to find the one matching the target path.
  */
-function findDirectChildren(targetPath: string): DrillDownData | null {
-  const nav = topNav();
-
-  // If at /shop root, show audiences (filter out "all")
-  if (targetPath === "/shop") {
-    return {
-      heading: "Audience",
-      children: Object.entries(nav.audience)
-        .filter(([key]) => key !== "all")
-        .map(([, audienceObj]) => ({
-          text: audienceObj.text,
-          path: audienceObj.path,
-        })),
-    };
-  }
-
-  // Search through audience -> category -> productType hierarchy
-  for (const audienceObj of Object.values(nav.audience)) {
-    // If current path matches an audience, return its categories (filter out "all")
-    if (audienceObj.path === targetPath) {
-      return {
-        heading: "Category",
-        children: Object.entries(audienceObj.category)
-          .filter(([key]) => key !== "all")
-          .map(([, categoryObj]) => ({
-            text: categoryObj.text,
-            path: categoryObj.path,
-          })),
-      };
+function findNavItem(items: NavNode[], targetPath: string): NavNode | null {
+  for (const item of items) {
+    if (item.path === targetPath) {
+      return item;
     }
 
-    // Search categories
-    for (const categoryObj of Object.values(audienceObj.category)) {
-      // If current path matches a category, return its productTypes (filter out "all")
-      if (categoryObj.path === targetPath) {
-        if (categoryObj.productType) {
-          return {
-            heading: "Product Type",
-            children: Object.entries(categoryObj.productType)
-              .filter(([key]) => key !== "all")
-              .map(([, productTypeObj]) => ({
-                text: productTypeObj.text,
-                path: productTypeObj.path,
-              })),
-          };
-        }
-        return null; // No children
-      }
-
-      // Check productTypes (leaf nodes - no children to return)
-      if (categoryObj.productType) {
-        for (const productTypeObj of Object.values(categoryObj.productType)) {
-          if (productTypeObj.path === targetPath) {
-            return null; // Leaf node, no children
-          }
-        }
-      }
+    if ("subnav" in item && item.subnav) {
+      const found = findNavItem(item.subnav, targetPath);
+      if (found) return found;
     }
   }
   return null;
 }
 
+/**
+ * Finds the direct children of the current path.
+ * Returns null if no children exist or all children are filtered out.
+ */
+function findDirectChildren(targetPath: string): DrillDownLink[] | null {
+  const nav = topNav();
+
+  // Determine which items to use as children
+  let childItems: NavNode[] | undefined;
+
+  if (targetPath === "/shop") {
+    childItems = nav;
+  }
+  else {
+    const currentItem = findNavItem(nav, targetPath);
+    childItems = currentItem && "subnav" in currentItem ? currentItem.subnav : undefined;
+  }
+
+  if (!childItems) {
+    return null;
+  }
+
+  const children = filterAndMapChildren(childItems);
+  return children.length > 0 ? children : null;
+}
+
 export function DrillDownNav() {
   const currentPath = usePathname();
-  const drillDownData = findDirectChildren(currentPath);
+  const children = findDirectChildren(currentPath);
 
-  // Don't render if no children exist
-  if (!drillDownData || drillDownData.children.length === 0) {
+  if (!children) {
     return null;
   }
 
   return (
     <nav aria-label="Drill-down navigation" className={styles["drill-down-nav"]}>
-      {/* <div className={styles["drill-down-heading"]}>{drillDownData.heading}:</div> */}
       <div className={styles["drill-down-heading"]}>Browse for:</div>
       <ul className={styles["drill-down-list"]}>
-        {drillDownData.children.map((child) => (
+        {children.map((child) => (
           <li key={child.path} className={styles["drill-down-item"]}>
             <Link href={child.path} className={styles["drill-down-item-link"]}>{child.text}</Link>
           </li>

@@ -12,11 +12,8 @@ export type FacetObj = {
 };
 
 export type FacetCollection = {
-  audience: FacetObj[];
-  shoes: FacetObj[];
-  clothing: FacetObj[];
-  accessories: FacetObj[];
-  sport: FacetObj[];
+  color: FacetObj[];
+  size: FacetObj[];
 };
 
 async function getAllFacets() {
@@ -105,6 +102,8 @@ export default async function Shop({ params }: ShopProps) {
   const resolvedParams = await params;
   const segments = resolvedParams.shopSegments;
 
+  console.log("segments", segments);
+
   return (
     <div className="shop">
       <div className={styles["shop-header"]}>
@@ -127,8 +126,7 @@ export default async function Shop({ params }: ShopProps) {
       <div className={styles["shop-body"]}>
         <h2>
           {segments?.length > 0 && segments.map((segment, index) => (
-            <span>{segment} </span>
-            // <div key={index}>Segment {index + 1}: {segment}</div>
+            <span key={`${segment}-${index}`}>{segment} </span>
           ))}
         </h2>
       </div>

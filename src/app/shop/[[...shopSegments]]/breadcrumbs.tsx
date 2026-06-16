@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topNav } from "@/navigation";
+import { topNav, type IAudience, type ICategory, type ISport, type IProductType } from "@/navigation";
 import styles from "./breadcrumbs.module.css";
 
 interface BreadcrumbItem {
@@ -10,48 +10,43 @@ interface BreadcrumbItem {
   path: string;
 }
 
+type NavNode = IAudience | ICategory | ISport | IProductType;
+
+/**
+ * Recursively searches through nav items to find the breadcrumb trail for a given path.
+ *
+ * @param items Array of navigation items to search
+ * @param targetPath The path to find
+ * @returns Array of breadcrumb items representing the trail, or null if not found
+ */
+function searchNavItems(items: NavNode[], targetPath: string): BreadcrumbItem[] | null {
+  for (const item of items) {
+    // Check if this item matches the target path
+    if (item.path === targetPath) {
+      return [{ text: item.text, path: item.path }];
+    }
+
+    // Recursively search subnav if it exists (IProductType doesn't have subnav)
+    if ("subnav" in item && item.subnav && item.subnav.length > 0) {
+      const subPath = searchNavItems(item.subnav, targetPath);
+      if (subPath) {
+        // Prepend current item to the path found in children
+        return [{ text: item.text, path: item.path }, ...subPath];
+      }
+    }
+  }
+  return null;
+}
+
 /**
  * Finds the breadcrumb trail for a given path.
- * 
+ *
  * @param targetPath The path to find the breadcrumb trail for.
  * @returns An array of breadcrumb items.
  */
 function findPath(targetPath: string): BreadcrumbItem[] | null {
   const nav = topNav();
-
-  // Search through audience -> category -> productType hierarchy
-  for (const [audienceKey, audienceObj] of Object.entries(nav.audience)) {
-    // Check if audience path matches
-    if (audienceObj.path === targetPath) {
-      return [{ text: audienceObj.text, path: audienceObj.path }];
-    }
-
-    // Search categories
-    for (const [categoryKey, categoryObj] of Object.entries(audienceObj.category)) {
-      // Check if category path matches
-      if (categoryObj.path === targetPath) {
-        return [
-          { text: audienceObj.text, path: audienceObj.path },
-          { text: categoryObj.text, path: categoryObj.path },
-        ];
-      }
-
-      // Search productTypes if they exist
-      if (categoryObj.productType) {
-        for (const [productTypeKey, productTypeObj] of Object.entries(categoryObj.productType)) {
-          // Check if productType path matches
-          if (productTypeObj.path === targetPath) {
-            return [
-              { text: audienceObj.text, path: audienceObj.path },
-              { text: categoryObj.text, path: categoryObj.path },
-              { text: productTypeObj.text, path: productTypeObj.path },
-            ];
-          }
-        }
-      }
-    }
-  }
-  return null;
+  return searchNavItems(nav, targetPath);
 }
 
 export function Breadcrumbs() {

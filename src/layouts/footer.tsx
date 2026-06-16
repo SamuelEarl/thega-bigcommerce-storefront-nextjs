@@ -5,8 +5,6 @@ import { topNav, companyInfoNav } from "@/navigation";
 import styles from "./footer.module.css";
 
 export default function Footer() {
-  const combinedNav = [...topNav(), ...companyInfoNav()];
-
   const now = new Date();
   const currentYear = now.getFullYear();
 
@@ -15,23 +13,39 @@ export default function Footer() {
       <hr className={styles["footer-top-divider"]} />
       <footer className={styles["footer-top"]}>
         <nav className={styles["footer-nav"]}>
-          {combinedNav.map((column) => (
-            <ul className={styles["column"]} key={column.text}>
+          {topNav().map((category) => (
+            <ul className={styles["column"]} key={category.text}>
               <li>
-                <h5 className={styles["column-header"]}>{column.text}</h5>
+                <h5 className={styles["column-header"]}>{category.text}</h5>
               </li>
-              {column.subnav?.map((item) => (
-                <li key={item.text}>
+              {category.subnav?.map((productType) => (
+                <li key={productType.text}>
                   <Link
-                    href={item.path || "#"}
+                    href={productType.path || "#"}
                     className={styles["item-link"]}
                   >
-                    {item.text}
+                    {productType.text}
                   </Link>
                 </li>
               ))}
             </ul>
           ))}
+          {/* COMPANY INFO COLUMN */}
+          <ul className={styles["column"]}>
+            <li>
+              <h5 className={styles["column-header"]}>COMPANY INFO</h5>
+            </li>
+            {companyInfoNav().map((companyInfo) => (
+              <li key={companyInfo.text}>
+                <Link
+                  href={companyInfo.path || "#"}
+                  className={styles["item-link"]}
+                >
+                  {companyInfo.text}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
       </footer>
 
