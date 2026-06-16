@@ -3,7 +3,7 @@
     display: flex;
     list-style: none;
     padding: 0;
-    padding-bottom: var(--size-4);
+    margin: 0;
     gap: 0.5rem;
     font-size: 0.9rem;
     color: var(--neutral-11);
@@ -16,12 +16,12 @@
     line-height: 1.25;
   }
 
-  .breadcrumb-item a {
+  .breadcrumb-item-link {
     border-bottom: 1px dotted var(--text-color);
-  }
 
-  .breadcrumb-item a:hover {
-    border-bottom: none;
+    &:hover {
+      border-bottom: none;
+    }
   }
 
   .separator {

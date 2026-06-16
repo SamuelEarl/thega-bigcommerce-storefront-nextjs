@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import HeaderMobile from "./header-mobile";
 import MobileNav from "./mobile-nav";
 import HeaderDesktop from "./header-desktop";
-import { Breadcrumbs } from "./breadcrumbs";
+import { Breadcrumbs } from "../app/shop/[[...categories]]/breadcrumbs";
 import Footer from "./footer";
 import styles from "./base-layout.module.css";
 
