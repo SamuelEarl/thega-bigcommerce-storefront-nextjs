@@ -139,11 +139,11 @@ const menNav = {
 //   }
 // };
 
-export interface NavItem {
+export interface INavItem {
   text: string;
   path: string;
   navLevel: number;
-  subnav?: NavItem[];
+  subnav?: INavItem[];
   hasSamePathAsParentNavItem?: boolean;
 }
 
@@ -232,7 +232,7 @@ function createLevel2Nav(audience: string, sportsObj: Record<string, string[]>):
 }
 
 // Main function to create audience navigation from config object
-function createLevel1Nav(config: { audience: string; categories: Record<string, string[] | Record<string, string[]>> }): ILevel1 {
+function createLevel1Nav(config: { audience: string; categories: Record<string, string[] | Record<string, string[]>> }): INavItem {
   const { audience, categories } = config;
   const audienceDisplay = capitalizeFirstLetter(audience);
 
@@ -273,12 +273,12 @@ export function createTopNav() {
   ];
 }
 
-export function topNav(): ILevel1[] {
+export function topNav(): INavItem[] {
   return createTopNav();
 }
 
 // Keep old implementation commented for reference
-export function TOP_NAV_OLD(): ILevel1[] {
+export function TOP_NAV_OLD(): INavItem[] {
   return [
     {
       text: "MEN",
