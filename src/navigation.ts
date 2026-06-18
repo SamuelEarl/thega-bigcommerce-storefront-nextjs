@@ -14,7 +14,7 @@ const menNav = {
         },
         {
           name: "basketball",
-          productTypes: ["high_tops", "low_tops"],
+          productTypes: ["high-tops", "low-tops"],
         },
       ]
     },
@@ -23,14 +23,14 @@ const menNav = {
       subcategories: [
         {
           name: "pants",
-          productTypes: ["running", "cross_training"],
+          productTypes: ["running", "cross-training"],
         },
         {
           name: "shorts",
           productTypes: ["running", "soccer", "basketball"],
         },
         {
-          name: "shirts_and_tops",
+          name: "shirts-and-tops",
           productTypes: ["running", "soccer", "basketball"],
         },
       ]
@@ -44,11 +44,11 @@ const menNav = {
         },
         {
           name: "socks",
-          productTypes: ["no_show", "crew", "mid_calf"],
+          productTypes: ["no-show", "crew", "mid-calf"],
         },
         {
           name: "belts",
-          productTypes: ["casual", "golf"],
+          productTypes: ["ratchet", "clamp"],
         },
       ]
     },
@@ -57,14 +57,14 @@ const menNav = {
       subcategories: [
         {
           name: "running",
-          productCategories: [
+          sportProductCategories: [
             {
               name: "shoes",
               productTypes: ["road", "trail"],
             },
             {
               name: "clothing",
-              productTypes: ["pants", "shorts", "shirts_and_tops"],
+              productTypes: ["pants", "shorts", "shirts-and-tops"],
             },
             {
               name: "accessories",
@@ -74,14 +74,14 @@ const menNav = {
         },
         {
           name: "soccer",
-          productCategories: [
+          sportProductCategories: [
             {
               name: "shoes",
               productTypes: ["cleats", "turf"],
             },
             {
               name: "clothing",
-              productTypes: ["shorts", "shirts_and_tops"],
+              productTypes: ["shorts", "shirts-and-tops"],
             },
             {
               name: "accessories",
@@ -91,14 +91,14 @@ const menNav = {
         },
         {
           name: "basketball",
-          productCategories: [
+          sportProductCategories: [
             {
               name: "shoes",
-              productTypes: ["high_tops", "low_tops"],
+              productTypes: ["high-tops", "low-tops"],
             },
             {
               name: "clothing",
-              productTypes: ["jerseys", "shorts", "shirts_and_tops"],
+              productTypes: ["jerseys", "shorts", "shirts-and-tops"],
             },
             {
               name: "accessories",
@@ -115,12 +115,12 @@ const menNav = {
 //   audience: "women",
 //   categories: {
 //     shoes: ["running", "soccer", "basketball"],
-//     clothing: ["pants", "shorts", "shirts_and_tops"],
+//     clothing: ["pants", "shorts", "shirts-and-tops"],
 //     accessories: ["hats", "socks", "belts"],
 //     sports: {
-//       running: ["shoes", "shorts", "shirts_and_tops"],
-//       soccer: ["shoes", "shorts", "shirts_and_tops"],
-//       basketball: ["shoes", "shorts", "shirts_and_tops"],
+//       running: ["shoes", "shorts", "shirts-and-tops"],
+//       soccer: ["shoes", "shorts", "shirts-and-tops"],
+//       basketball: ["shoes", "shorts", "shirts-and-tops"],
 //     },
 //   }
 // };
@@ -129,144 +129,120 @@ const menNav = {
 //   audience: "kids",
 //   categories: {
 //     shoes: ["running", "soccer", "basketball"],
-//     clothing: ["pants", "shorts", "shirts_and_tops"],
+//     clothing: ["pants", "shorts", "shirts-and-tops"],
 //     accessories: ["hats", "socks", "belts"],
 //     sports: {
-//       running: ["shoes", "shorts", "shirts_and_tops"],
-//       soccer: ["shoes", "shorts", "shirts_and_tops"],
-//       basketball: ["shoes", "shorts", "shirts_and_tops"],
+//       running: ["shoes", "shorts", "shirts-and-tops"],
+//       soccer: ["shoes", "shorts", "shirts-and-tops"],
+//       basketball: ["shoes", "shorts", "shirts-and-tops"],
 //     },
 //   }
 // };
 
-
-export interface IProductType {
+export interface NavItem {
   text: string;
   path: string;
-  navType: string;
-  hasSamePathAsParentNav?: boolean;
-}
-
-export interface ISubcategory {
-  text: string;
-  path: string;
-  navType: string;
-  subnav?: IProductType[];
-  hasSamePathAsParentNav?: boolean;
-};
-
-export interface ICategory {
-  text: string;
-  path: string;
-  navType: string;
-  subnav?: ISubcategory[];
-  hasSamePathAsParentNav?: boolean;
-};
-
-export interface IAudience {
-  text: string;
-  path: string;
-  navType: string;
-  subnav?: ICategory[];
+  navLevel: number;
+  subnav?: NavItem[];
+  hasSamePathAsParentNavItem?: boolean;
 }
 
 // Union type for any navigation item
-export type NavItem = IAudience | ICategory | ISport | IProductType;
 
 function capitalizeFirstLetter(str: string): string {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// Format product type slug to display name (e.g., "shirts_and_tops" -> "Shirts & Tops")
+// Format product type slug to display name (e.g., "shirts-and-tops" -> "Shirts & Tops")
 function formatProductTypeName(slug: string): string {
   return slug
-    .split('_')
+    .split('-')
     .map(word => word === 'and' ? '&' : capitalizeFirstLetter(word))
     .join(' ');
 }
 
 // Create a regular category (Shoes, Clothing, Accessories)
-function createCategoryNav(audience: string, categoryName: string, productTypes: string[]): ICategory {
+function createCategoryNav(audience: string, categoryName: string, productTypes: string[]): ILevel2 {
   const categoryDisplay = capitalizeFirstLetter(categoryName);
   const audienceDisplay = capitalizeFirstLetter(audience);
 
   return {
     text: categoryDisplay,
     path: `/shop/${audience}/${categoryName}`,
-    navType: "category",
+    navLevel: "category",
     subnav: [
       {
         text: `All ${audienceDisplay}'s ${categoryDisplay}`,
         path: `/shop/${audience}/${categoryName}`,
-        navType: "allCategoryProducts",
+        navLevel: "allCategoryProducts",
       },
       ...productTypes.map((productType) => ({
         text: formatProductTypeName(productType),
         path: `/shop/${audience}/${categoryName}/${productType}`,
-        navType: "productType",
+        navLevel: "productType",
       })),
     ],
   };
 }
 
 // Create a sport with its product types
-function createSportNav(audience: string, sportName: string, productTypes: string[]): ISport {
+function createLevel3Nav(audience: string, sportName: string, productTypes: string[]): ILevel3 {
   const sportDisplay = capitalizeFirstLetter(sportName);
   const audienceDisplay = capitalizeFirstLetter(audience);
 
   return {
     text: sportDisplay,
     path: `/shop/${audience}/${sportName}`,
-    navType: "sport",
+    navLevel: "sport",
     subnav: [
       {
         text: `All ${audienceDisplay}'s ${sportDisplay}`,
         path: `/shop/${audience}/${sportName}`,
-        navType: "allProductType",
+        navLevel: "allProductType",
       },
       ...productTypes.map((productType) => ({
         text: formatProductTypeName(productType),
         path: `/shop/${audience}/${sportName}/${productType}`,
-        navType: "productType",
+        navLevel: "productType",
       })),
     ],
   };
 }
 
 // Create the Sports category with all sports
-function createSportsCategory(audience: string, sportsObj: Record<string, string[]>): ICategory {
+function createLevel2Nav(audience: string, sportsObj: Record<string, string[]>): ILevel2 {
   const audienceDisplay = capitalizeFirstLetter(audience);
 
   return {
     text: "Sports",
     path: `/shop/${audience}/sports`,
-    navType: "category",
+    navLevel: "category",
     subnav: [
       {
         text: `All ${audienceDisplay}'s Sports`,
         path: `/shop/${audience}/sports`,
-        navType: "allSports",
+        navLevel: "allSports",
       },
       ...Object.entries(sportsObj).map(([sportName, productTypes]) =>
-        createSportNav(audience, sportName, productTypes)
+        createLevel3Nav(audience, sportName, productTypes)
       ),
     ],
   };
 }
 
 // Main function to create audience navigation from config object
-function createAudienceNav(config: { audience: string; categories: Record<string, string[] | Record<string, string[]>> }): IAudience {
+function createLevel1Nav(config: { audience: string; categories: Record<string, string[] | Record<string, string[]>> }): ILevel1 {
   const { audience, categories } = config;
   const audienceDisplay = capitalizeFirstLetter(audience);
 
-  const subnav: ICategory[] = [
+  const subnav: ILevel2[] = [
     // "All [Audience]'s Products" link
     {
       text: `All ${audienceDisplay}'s Products`,
       path: `/shop/${audience}`,
-      navType: "allAudienceProducts",
-      hasSamePathAsParentNav: true,
+      navLevel: "allAudienceProducts",
+      hasSamePathAsParentNavItem: true,
     },
   ];
 
@@ -274,7 +250,7 @@ function createAudienceNav(config: { audience: string; categories: Record<string
   Object.entries(categories).forEach(([categoryName, value]) => {
     if (categoryName === 'sports' && typeof value === 'object' && !Array.isArray(value)) {
       // Special handling for sports category
-      subnav.push(createSportsCategory(audience, value as Record<string, string[]>));
+      subnav.push(createLevel2Nav(audience, value as Record<string, string[]>));
     } else if (Array.isArray(value)) {
       // Regular category with product types
       subnav.push(createCategoryNav(audience, categoryName, value));
@@ -284,114 +260,114 @@ function createAudienceNav(config: { audience: string; categories: Record<string
   return {
     text: audience.toUpperCase(),
     path: `/shop/${audience}`,
-    navType: "audience",
+    navLevel: "audience",
     subnav,
   };
 }
 
 export function createTopNav() {
   return [
-    createAudienceNav(menNav),
-    // createAudienceNav(womenNav),
-    // createAudienceNav(kidsNav),
+    createLevel1Nav(menNav),
+    // createLevel1Nav(womenNav),
+    // createLevel1Nav(kidsNav),
   ];
 }
 
-export function topNav(): IAudience[] {
+export function topNav(): ILevel1[] {
   return createTopNav();
 }
 
 // Keep old implementation commented for reference
-export function TOP_NAV_OLD(): IAudience[] {
+export function TOP_NAV_OLD(): ILevel1[] {
   return [
     {
       text: "MEN",
-      path: "/shop/men",
-      navType: "audience",
+      path: "/shop/audience/men",
+      navLevel: 1,
       subnav: [
         {
           text: "All Men's Products",
-          path: "/shop/men",
-          navType: "audience", // This is an "audience" navType because it has the same path as its parent nav.
-          hasSamePathAsParentNav: true,
+          path: "/shop/audience/men",
+          navLevel: 1, // This is an "audience" navLevel because it has the same path as its parent nav.
+          hasSamePathAsParentNavItem: true,
         },
         {
           text: "Shoes",
-          path: "/shop/men/shoes",
-          navType: "category",
+          path: "/shop/audience/men/category/shoes",
+          navLevel: 2,
           subnav: [
             {
               text: "All Men's Shoes",
-              path: "/shop/men/shoes",
-              navType: "category",
-              hasSamePathAsParentNav: true,
+              path: "/shop/audience/men/category/shoes",
+              navLevel: 2,
+              hasSamePathAsParentNavItem: true,
             },
             {
               text: "Running",
-              path: "/shop/men/shoes/running",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/shoes/sport/running",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Running Shoes",
-                  path: "/shop/men/shoes/running",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/shoes/sport/running",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Road",
-                  path: "/shop/men/shoes/running/road",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/shoes/sport/running/product-type/road",
+                  navLevel: 4,
                 },
                 {
                   text: "Trail",
-                  path: "/shop/men/shoes/running/trail",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/shoes/sport/running/product-type/trail",
+                  navLevel: 4,
                 },
               ],
             },
             {
               text: "Soccer",
-              path: "/shop/men/shoes/soccer",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/shoes/sport/soccer",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Soccer Shoes",
-                  path: "/shop/men/shoes/soccer",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/shoes/sport/soccer",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Cleats",
-                  path: "/shop/men/shoes/soccer/cleats",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/shoes/sport/soccer/product-type/cleats",
+                  navLevel: 4,
                 },
                 {
                   text: "Turf",
-                  path: "/shop/men/shoes/soccer/turf",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/shoes/sport/soccer/product-type/turf",
+                  navLevel: 4,
                 },
               ],
             },
             {
               text: "Basketball",
-              path: "/shop/men/shoes/basketball",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/shoes/sport/basketball",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Basketball Shoes",
-                  path: "/shop/men/shoes/basketball",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/shoes/sport/basketball",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "High Tops",
-                  path: "/shop/men/shoes/basketball/high_tops",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/shoes/sport/basketball/product-type/high-tops",
+                  navLevel: 4,
                 },
                 {
                   text: "Low Tops",
-                  path: "/shop/men/shoes/basketball/low_tops",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/shoes/sport/basketball/product-type/low-tops",
+                  navLevel: 4,
                 },
               ],
             },
@@ -399,91 +375,91 @@ export function TOP_NAV_OLD(): IAudience[] {
         },
         {
           text: "Clothing",
-          path: "/shop/men/clothing",
-          navType: "category",
+          path: "/shop/audience/men/category/clothing",
+          navLevel: 2,
           subnav: [
             {
               text: "All Men's Clothing",
-              path: "/shop/men/clothing",
-              navType: "category",
-              hasSamePathAsParentNav: true,
+              path: "/shop/audience/men/category/clothing",
+              navLevel: 2,
+              hasSamePathAsParentNavItem: true,
             },
             {
               text: "Pants",
-              path: "/shop/men/clothing/pants",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/clothing/subcategory/pants",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Pants",
-                  path: "/shop/men/clothing/pants",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/clothing/subcategory/pants",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Running",
-                  path: "/shop/men/clothing/pants/running",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/pants/sport/running",
+                  navLevel: 4,
                 },
                 {
                   text: "Cross Training",
-                  path: "/shop/men/clothing/pants/cross_training",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/pants/sport/cross-training",
+                  navLevel: 4,
                 },
               ],
             },
             {
               text: "Shorts",
-              path: "/shop/men/clothing/shorts",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/clothing/subcategory/shorts",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Shorts",
-                  path: "/shop/men/clothing/shorts",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/clothing/subcategory/shorts",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Running",
-                  path: "/shop/men/clothing/shorts/running",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/shorts/sport/running",
+                  navLevel: 4,
                 },
                 {
                   text: "Soccer",
-                  path: "/shop/men/clothing/shorts/soccer",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/shorts/sport/soccer",
+                  navLevel: 4,
                 },
                 {
                   text: "Basketball",
-                  path: "/shop/men/clothing/shorts/basketball",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/shorts/sport/basketball",
+                  navLevel: 4,
                 },
               ],
             },
             {
               text: "Shirts & Tops",
-              path: "/shop/men/clothing/shirts_and_tops",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/clothing/subcategory/shirts-and-tops",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Shirts & Tops",
-                  path: "/shop/men/clothing/shirts_and_tops",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/clothing/subcategory/shirts-and-tops",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Running",
-                  path: "/shop/men/clothing/shirts_and_tops/running",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/shirts-and-tops/sport/running",
+                  navLevel: 4,
                 },
                 {
                   text: "Soccer",
-                  path: "/shop/men/clothing/shirts_and_tops/soccer",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/shirts-and-tops/sport/soccer",
+                  navLevel: 4,
                 },
                 {
                   text: "Basketball",
-                  path: "/shop/men/clothing/shirts_and_tops/basketball",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/clothing/subcategory/shirts-and-tops/sport/basketball",
+                  navLevel: 4,
                 },
               ],
             },
@@ -491,176 +467,182 @@ export function TOP_NAV_OLD(): IAudience[] {
         },
         {
           text: "Accessories",
-          path: "/shop/men/accessories",
-          navType: "category",
+          path: "/shop/audience/men/category/accessories",
+          navLevel: 2,
           subnav: [
             {
               text: "All Men's Accessories",
-              path: "/shop/men/accessories",
-              navType: "category",
-              hasSamePathAsParentNav: true,
+              path: "/shop/audience/men/category/accessories",
+              navLevel: 2,
+              hasSamePathAsParentNavItem: true,
             },
             {
               text: "Hats",
-              path: "/shop/men/accessories/hats",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/accessories/subcategory/hats",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Hats",
-                  path: "/shop/men/accessories/hats",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/accessories/subcategory/hats",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Baseball",
-                  path: "/shop/men/accessories/hats/baseball",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/accessories/subcategory/hats/sport/baseball",
+                  navLevel: 4,
                 },
                 {
                   text: "Running",
-                  path: "/shop/men/accessories/hats/running",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/accessories/subcategory/hats/sport/running",
+                  navLevel: 4,
                 },
               ],
             },
             {
               text: "Socks",
-              path: "/shop/men/accessories/socks",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/accessories/subcategory/socks",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Socks",
-                  path: "/shop/men/accessories/socks",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/accessories/subcategory/socks",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "No Show",
-                  path: "/shop/men/accessories/socks/no_show",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/accessories/subcategory/socks/product-type/no-show",
+                  navLevel: 4,
                 },
                 {
                   text: "Crew",
-                  path: "/shop/men/accessories/socks/crew",
-                  navType: "productType",
+                  path: "/shop/audience/men/category/accessories/subcategory/socks/product-type/crew",
+                  navLevel: 4,
                 },
               ],
             },
             {
               text: "Belts",
-              path: "/shop/men/accessories/belts",
-              navType: "subcategory",
+              path: "/shop/audience/men/category/accessories/subcategory/belts",
+              navLevel: 3,
               subnav: [
                 {
                   text: "All Men's Belts",
-                  path: "/shop/men/accessories/belts",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/category/accessories/subcategory/belts",
+                  navLevel: 3,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
-                  text: "Casual",
-                  path: "/shop/men/accessories/belts/casual",
-                  navType: "productType",
+                  text: "Ratchet",
+                  path: "/shop/audience/men/category/accessories/subcategory/belts/product-type/ratchet",
+                  navLevel: 4,
                 },
                 {
-                  text: "Golf",
-                  path: "/shop/men/accessories/belts/golf",
-                  navType: "productType",
+                  text: "Clamp",
+                  path: "/shop/audience/men/category/accessories/subcategory/belts/product-type/clamp",
+                  navLevel: 4,
                 },
+
               ],
             },
           ],
         },
         {
           text: "Sports",
-          path: "/shop/men/sports",
-          navType: "category",
+          path: "/shop/audience/men/sport/all",
+          navLevel: 2,
           subnav: [
             {
               text: "All Men's Sports",
-              path: "/shop/men/sports",
-              navType: "category",
-              hasSamePathAsParentNav: true,
+              path: "/shop/audience/men/sport/all",
+              navLevel: 2,
+              hasSamePathAsParentNavItem: true,
             },
             {
               text: "Running",
-              path: "/shop/men/running",
-              navType: "subcategory",
+              path: "/shop/audience/men/sport/running",
+              navLevel: 2,
               subnav: [
                 {
                   text: "All Men's Running",
-                  path: "/shop/men/running",
-                  navType: "subcategory",
-                  hasSamePathAsParentNav: true,
+                  path: "/shop/audience/men/sport/running",
+                  navLevel: 2,
+                  hasSamePathAsParentNavItem: true,
                 },
                 {
                   text: "Shoes",
-                  path: "/shop/men/running/shoes",
-                  navType: "productType",
+                  path: "/shop/audience/men/sport/running/category/shoes",
+                  navLevel: 3,
+                  subnav: [
+                    {
+                      text: "All Men's Running Shoes",
+                      path: "/shop/audience/men/sport/running/category/shoes",
+                      navLevel: 3,
+                      hasSamePathAsParentNavItem: true,
+                    },
+                    {
+                      text: "Road",
+                      path: "/shop/audience/men/sport/running/category/shoes/product-type/road",
+                      navLevel: 4,
+                    },
+                    {
+                      text: "Trail",
+                      path: "/shop/audience/men/sport/running/category/shoes/product-type/trail",
+                      navLevel: 4,
+                    },
+                  ],
                 },
                 {
-                  text: "Shorts",
-                  path: "/shop/men/running/shorts",
-                  navType: "productType",
+                  text: "Clothing",
+                  path: "/shop/audience/men/sport/running/category/clothing",
+                  navLevel: 3,
+                  subnav: [
+                    {
+                      text: "All Men's Running Clothing",
+                      path: "/shop/audience/men/sport/running/category/clothing",
+                      navLevel: 3,
+                      hasSamePathAsParentNavItem: true,
+                    },
+                    {
+                      text: "Pants",
+                      path: "/shop/audience/men/sport/running/category/clothing/subcategory/pants",
+                      navLevel: 4,
+                    },
+                    {
+                      text: "Shorts",
+                      path: "/shop/audience/men/sport/running/category/clothing/subcategory/shorts",
+                      navLevel: 4,
+                    },
+                    {
+                      text: "Shirts & Tops",
+                      path: "/shop/audience/men/sport/running/category/clothing/subcategory/shirts-and-tops",
+                      navLevel: 4,
+                    },
+                  ],
                 },
                 {
-                  text: "Shirts & Tops",
-                  path: "/shop/men/running/shirts_and_tops",
-                  navType: "productType",
-                },
-              ],
-            },
-            {
-              text: "Soccer",
-              path: "/shop/men/soccer",
-              navType: "sport",
-              subnav: [
-                {
-                  text: "All Men's Soccer",
-                  path: "/shop/men/soccer",
-                  navType: "allProductType",
-                },
-                {
-                  text: "Shoes",
-                  path: "/shop/men/soccer/shoes",
-                  navType: "productType",
-                },
-                {
-                  text: "Shorts",
-                  path: "/shop/men/soccer/shorts",
-                  navType: "productType",
-                },
-                {
-                  text: "Shirts & Tops",
-                  path: "/shop/men/soccer/shirts_and_tops",
-                  navType: "productType",
-                },
-              ],
-            },
-            {
-              text: "Basketball",
-              path: "/shop/men/basketball",
-              navType: "sport",
-              subnav: [
-                {
-                  text: "All Men's Basketball",
-                  path: "/shop/men/basketball",
-                  navType: "allProductType",
-                },
-                {
-                  text: "Shoes",
-                  path: "/shop/men/basketball/shoes",
-                  navType: "productType",
-                },
-                {
-                  text: "Shorts",
-                  path: "/shop/men/basketball/shorts",
-                  navType: "productType",
-                },
-                {
-                  text: "Shirts & Tops",
-                  path: "/shop/men/basketball/shirts_and_tops",
-                  navType: "productType",
+                  text: "Accessories",
+                  path: "/shop/audience/men/sport/running/category/accessories",
+                  navLevel: 3,
+                  subnav: [
+                    {
+                      text: "All Men's Running Accessories",
+                      path: "/shop/audience/men/sport/running/category/accessories",
+                      navLevel: 3,
+                      hasSamePathAsParentNavItem: true,
+                    },
+                    {
+                      text: "Hats",
+                      path: "/shop/audience/men/sport/running/category/accessories/subcategory/hats",
+                      navLevel: 4,
+                    },
+                    {
+                      text: "Socks",
+                      path: "/shop/audience/men/sport/running/category/accessories/subcategory/socks",
+                      navLevel: 4,
+                    },
+                  ],
                 },
               ],
             },
