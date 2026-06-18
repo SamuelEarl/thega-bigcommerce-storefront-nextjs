@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topNav, type IAudience, type ICategory, type ISport, type IProductType } from "@/navigation";
+import { topNav, type INavItem } from "@/navigation";
 import styles from "./breadcrumbs.module.css";
 
 interface BreadcrumbItem {
   text: string;
   path: string;
 }
-
-type NavNode = IAudience | ICategory | ISport | IProductType;
 
 /**
  * Recursively searches through nav items to find the breadcrumb trail for a given path.
@@ -19,7 +17,7 @@ type NavNode = IAudience | ICategory | ISport | IProductType;
  * @param targetPath The path to find
  * @returns Array of breadcrumb items representing the trail, or null if not found
  */
-function searchNavItems(items: NavNode[], targetPath: string): BreadcrumbItem[] | null {
+function searchNavItems(items: INavItem[], targetPath: string): BreadcrumbItem[] | null {
   for (const item of items) {
     // Check if this item matches the target path
     if (item.path === targetPath) {

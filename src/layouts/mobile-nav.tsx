@@ -10,7 +10,7 @@ import {
   RiUserLine,
   type RemixiconComponentType,
 } from "@remixicon/react";
-import { iconNav, topNav, ISport } from "@/navigation";
+import { iconNav, topNav, INavItem } from "@/navigation";
 import Logo from "@/../public/images/logo-and-name-horizontal-white-fbfbfb.svg"
 import styles from "./mobile-nav.module.css"
 
@@ -246,9 +246,9 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
                     ?.subnav?.find((subItem) => subItem.text === activeCategorySubmenu)
                     ?.subnav;
 
-                  const sportItem = categorySubnav?.find((item) => item.text === activeSportSubmenu) as ISport | undefined;
+                  const sportItem = categorySubnav?.find((item) => item.text === activeSportSubmenu) as INavItem | undefined;
 
-                  // Only map over subnav if the sportItem has it
+                  // Only map over subnav if the sportItem has a subnav.
                   if (sportItem?.subnav) {
                     return sportItem.subnav.map((productTypeItem) => (
                       <li key={productTypeItem.text} className={styles["nav-item"]}>

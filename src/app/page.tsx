@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NavItem, topNav } from "@/navigation";
+import { INavItem, topNav } from "@/navigation";
 import styles from "./page.module.css";
 
 export default function Home() {

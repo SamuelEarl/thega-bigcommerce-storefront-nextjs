@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topNav, type IAudience, type ICategory, type ISport, type IProductType } from "@/navigation";
+import { topNav, type INavItem } from "@/navigation";
 import styles from "./drill-down-nav.module.css";
 
 interface DrillDownLink {
@@ -10,14 +10,12 @@ interface DrillDownLink {
   path: string;
 }
 
-type NavNode = IAudience | ICategory | ISport | IProductType;
-
 /**
- * Filters out "all" navTypes and maps to DrillDownLink format.
+ * Filters out "all" items (those with hasSamePathAsParentNavItem flag) and maps to DrillDownLink format.
  */
-function filterAndMapChildren(items: NavNode[]): DrillDownLink[] {
+function filterAndMapChildren(items: INavItem[]): DrillDownLink[] {
   return items
-    .filter(item => !item.navType.startsWith("all"))
+    .filter(item => !item.hasSamePathAsParentNavItem)
     .map(item => ({
       text: item.text,
       path: item.path,
@@ -27,7 +25,7 @@ function filterAndMapChildren(items: NavNode[]): DrillDownLink[] {
 /**
  * Recursively searches nav items to find the one matching the target path.
  */
-function findNavItem(items: NavNode[], targetPath: string): NavNode | null {
+function findNavItem(items: INavItem[], targetPath: string): INavItem | null {
   for (const item of items) {
     if (item.path === targetPath) {
       return item;
@@ -49,7 +47,7 @@ function findDirectChildren(targetPath: string): DrillDownLink[] | null {
   const nav = topNav();
 
   // Determine which items to use as children
-  let childItems: NavNode[] | undefined;
+  let childItems: INavItem[] | undefined;
 
   if (targetPath === "/shop") {
     childItems = nav;

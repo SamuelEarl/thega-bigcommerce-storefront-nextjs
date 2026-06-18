@@ -8,7 +8,7 @@ import {
   type RemixiconComponentType,
 } from "@remixicon/react";
 import Logo from "@/../public/images/logo-and-name-horizontal-white-fbfbfb.svg";
-import { iconNav, NavItem, topNav } from "@/navigation";
+import { iconNav, INavItem, topNav } from "@/navigation";
 import styles from "./header-desktop.module.css";
 
 // Icon mapping
@@ -24,7 +24,7 @@ export default function HeaderDesktop() {
 
   // Find the active nav item's subnav data for the mega menu.
   const activeCategorySubmenu = topNav()
-    .find((item: NavItem) => item.text === activeAudienceMenu)
+    .find((item: INavItem) => item.text === activeAudienceMenu)
     ?.subnav ?? null;
   // const activeCategorySubmenu = activeAudienceMenu ? topNav().audience[activeAudienceMenu].category : {};
 
@@ -91,10 +91,10 @@ export default function HeaderDesktop() {
         {/* The active mega menu. This is a single mega menu container whose content changes based on the activeAudienceMenu state. */}
         <div className={`${styles["mega-menu-container"]} ${activeAudienceMenu ? styles["show-mega-menu"] : ""}`.trim()}>
           <div className={styles["mega-menu"]}>
-            {/* If the subnav item is an `isAllAudienceProductsLink` item, then display it in the top row - above the bottom row of columns. */}
+            {/* If the subnav item is a `hasSamePathAsParentNavItem` item, then display it in the top row - above the bottom row of columns. */}
             <div className={styles["mega-menu-top-row"]}>
               {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
-                if (category.isAllAudienceProductsLink) {
+                if (category.hasSamePathAsParentNavItem) {
                   return (
                     <Link
                       key={category.text}
@@ -111,8 +111,8 @@ export default function HeaderDesktop() {
             {/* Categories row (Shoes, Clothing, Accessories) - excludes Sports */}
             <ul className={`${styles["nav-list"]} ${styles["mega-menu-categories-row"]}`}>
               {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
-                // Do not display the `isAllAudienceProductsLink` item or Sports category in this row.
-                if (category.isAllAudienceProductsLink || category.text === "Sports") return;
+                // Do not display the `hasSamePathAsParentNavItem` item or Sports category in this row.
+                if (category.hasSamePathAsParentNavItem || category.text === "Sports") return;
                 // Make sure to check for the existence of a subnav.
                 // I only want to display columns that have a heading and a subnav under that heading.
                 // If the category has a subnav, then display a category heading along with a subnav.
@@ -153,17 +153,17 @@ export default function HeaderDesktop() {
             {/* Sports row - displays each sport as a column with its product types */}
             <ul className={`${styles["nav-list"]} ${styles["mega-menu-sports-row"]}`}>
               {(() => {
-                // Find the Sports category
+                // Find the Sports category.
                 const sportsCategory = activeCategorySubmenu?.find((category) => category.text === "Sports");
 
-                // If Sports category exists and has subnav, map over the sports
-                if (sportsCategory && 'subnav' in sportsCategory && sportsCategory.subnav) {
+                // If sportsCategory exists and has a `subnav` property, then map over the sports.subnav array.
+                if (sportsCategory?.subnav) {
                   return sportsCategory.subnav.map((sport) => {
                     // Skip the "All Men's Sports" link
-                    if (sport.navType === "allSports") return null;
+                    if (sport.hasSamePathAsParentNavItem) return null;
 
-                    // Display each sport as a column heading with its product types
-                    if ('subnav' in sport && sport.subnav) {
+                    // Display each sport as a column heading with the respective product types below the heading.
+                    if (sport.subnav) {
                       return (
                         <li key={sport.text}>
                           <h5 className={styles["mega-menu-column-heading"]}>

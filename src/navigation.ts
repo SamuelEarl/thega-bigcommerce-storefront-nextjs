@@ -111,22 +111,234 @@ const menNav = {
   ]
 };
 
-// const womenNav = {
-//   audience: "women",
-//   categories: {
-//     shoes: ["running", "soccer", "basketball"],
-//     clothing: ["pants", "shorts", "shirts-and-tops"],
-//     accessories: ["hats", "socks", "belts"],
-//     sports: {
-//       running: ["shoes", "shorts", "shirts-and-tops"],
-//       soccer: ["shoes", "shorts", "shirts-and-tops"],
-//       basketball: ["shoes", "shorts", "shirts-and-tops"],
-//     },
-//   }
-// };
+const womenNav = {
+  audience: "women",
+  categories: [
+    {
+      name: "shoes",
+      subcategories: [
+        {
+          name: "running",
+          productTypes: ["road", "trail"],
+        },
+        {
+          name: "soccer",
+          productTypes: ["cleats", "turf"],
+        },
+        {
+          name: "basketball",
+          productTypes: ["high-tops", "low-tops"],
+        },
+      ]
+    },
+    {
+      name: "clothing",
+      subcategories: [
+        {
+          name: "pants",
+          productTypes: ["running", "cross-training"],
+        },
+        {
+          name: "shorts",
+          productTypes: ["running", "soccer", "basketball"],
+        },
+        {
+          name: "shirts-and-tops",
+          productTypes: ["running", "soccer", "basketball"],
+        },
+      ]
+    },
+    {
+      name: "accessories",
+      subcategories: [
+        {
+          name: "hats",
+          productTypes: ["baseball", "running"],
+        },
+        {
+          name: "socks",
+          productTypes: ["no-show", "crew", "mid-calf"],
+        },
+        {
+          name: "belts",
+          productTypes: ["ratchet", "clamp"],
+        },
+      ]
+    },
+    {
+      name: "sports",
+      subcategories: [
+        {
+          name: "running",
+          sportProductCategories: [
+            {
+              name: "shoes",
+              productTypes: ["road", "trail"],
+            },
+            {
+              name: "clothing",
+              productTypes: ["pants", "shorts", "shirts-and-tops"],
+            },
+            {
+              name: "accessories",
+              productTypes: ["hats", "socks", "belts"],
+            }
+          ],
+        },
+        {
+          name: "soccer",
+          sportProductCategories: [
+            {
+              name: "shoes",
+              productTypes: ["cleats", "turf"],
+            },
+            {
+              name: "clothing",
+              productTypes: ["shorts", "shirts-and-tops"],
+            },
+            {
+              name: "accessories",
+              productTypes: ["socks", "balls"],
+            }
+          ],
+        },
+        {
+          name: "basketball",
+          sportProductCategories: [
+            {
+              name: "shoes",
+              productTypes: ["high-tops", "low-tops"],
+            },
+            {
+              name: "clothing",
+              productTypes: ["jerseys", "shorts", "shirts-and-tops"],
+            },
+            {
+              name: "accessories",
+              productTypes: ["socks", "balls"],
+            }
+          ],
+        },
+      ]
+    }
+  ]
+};
 
-// const kidsNav = {
-//   audience: "kids",
+const kidsNav = {
+  audience: "kids",
+  categories: [
+    {
+      name: "shoes",
+      subcategories: [
+        {
+          name: "running",
+          productTypes: ["road", "trail"],
+        },
+        {
+          name: "soccer",
+          productTypes: ["cleats", "turf"],
+        },
+        {
+          name: "basketball",
+          productTypes: ["high-tops", "low-tops"],
+        },
+      ]
+    },
+    {
+      name: "clothing",
+      subcategories: [
+        {
+          name: "pants",
+          productTypes: ["running", "cross-training"],
+        },
+        {
+          name: "shorts",
+          productTypes: ["running", "soccer", "basketball"],
+        },
+        {
+          name: "shirts-and-tops",
+          productTypes: ["running", "soccer", "basketball"],
+        },
+      ]
+    },
+    {
+      name: "accessories",
+      subcategories: [
+        {
+          name: "hats",
+          productTypes: ["baseball", "running"],
+        },
+        {
+          name: "socks",
+          productTypes: ["no-show", "crew", "mid-calf"],
+        },
+        {
+          name: "belts",
+          productTypes: ["ratchet", "clamp"],
+        },
+      ]
+    },
+    {
+      name: "sports",
+      subcategories: [
+        {
+          name: "running",
+          sportProductCategories: [
+            {
+              name: "shoes",
+              productTypes: ["road", "trail"],
+            },
+            {
+              name: "clothing",
+              productTypes: ["pants", "shorts", "shirts-and-tops"],
+            },
+            {
+              name: "accessories",
+              productTypes: ["hats", "socks", "belts"],
+            }
+          ],
+        },
+        {
+          name: "soccer",
+          sportProductCategories: [
+            {
+              name: "shoes",
+              productTypes: ["cleats", "turf"],
+            },
+            {
+              name: "clothing",
+              productTypes: ["shorts", "shirts-and-tops"],
+            },
+            {
+              name: "accessories",
+              productTypes: ["socks", "balls"],
+            }
+          ],
+        },
+        {
+          name: "basketball",
+          sportProductCategories: [
+            {
+              name: "shoes",
+              productTypes: ["high-tops", "low-tops"],
+            },
+            {
+              name: "clothing",
+              productTypes: ["jerseys", "shorts", "shirts-and-tops"],
+            },
+            {
+              name: "accessories",
+              productTypes: ["socks", "balls"],
+            }
+          ],
+        },
+      ]
+    }
+  ]
+};
+
+// const menNav = {
+//   audience: "men",
 //   categories: {
 //     shoes: ["running", "soccer", "basketball"],
 //     clothing: ["pants", "shorts", "shirts-and-tops"],
@@ -154,122 +366,206 @@ function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+// Get possessive form of audience (e.g., "Men's", "Women's", "Kids'")
+function getPossessiveForm(audience: string): string {
+  const capitalized = capitalizeFirstLetter(audience);
+  // If the word ends with 's', just add an apostrophe
+  if (capitalized.toLowerCase().endsWith('s')) {
+    return `${capitalized}'`;
+  }
+  // Otherwise, add apostrophe-s
+  return `${capitalized}'s`;
+}
+
 // Format product type slug to display name (e.g., "shirts-and-tops" -> "Shirts & Tops")
-function formatProductTypeName(slug: string): string {
+function formatName(slug: string): string {
   return slug
     .split('-')
     .map(word => word === 'and' ? '&' : capitalizeFirstLetter(word))
     .join(' ');
 }
 
-// Create a regular category (Shoes, Clothing, Accessories)
-function createCategoryNav(audience: string, categoryName: string, productTypes: string[]): ILevel2 {
-  const categoryDisplay = capitalizeFirstLetter(categoryName);
-  const audienceDisplay = capitalizeFirstLetter(audience);
+// Create product-type objects for a subcategory that is inside a category object
+// (Shoes, Clothing, Accessories)
+function createSubcategoryNav(
+  audience: string,
+  categoryName: string,
+  subcategoryName: string,
+  productTypes: string[]
+): INavItem {
+  const subcategoryDisplay = formatName(subcategoryName);
+  const audiencePossessive = getPossessiveForm(audience);
+
+  return {
+    text: subcategoryDisplay,
+    path: `/shop/audience/${audience}/category/${categoryName}/sport/${subcategoryName}`,
+    navLevel: 3,
+    subnav: [
+      {
+        text: `All ${audiencePossessive} ${subcategoryDisplay} ${formatName(categoryName)}`,
+        path: `/shop/audience/${audience}/category/${categoryName}/sport/${subcategoryName}`,
+        navLevel: 3,
+        hasSamePathAsParentNavItem: true,
+      },
+      ...productTypes.map((productType) => ({
+        text: formatName(productType),
+        path: `/shop/audience/${audience}/category/${categoryName}/sport/${subcategoryName}/product-type/${productType}`,
+        navLevel: 4,
+      })),
+    ],
+  };
+}
+
+// Create a category object (Shoes, Clothing, Accessories) with subcategories.
+function createCategoryNav(
+  audience: string,
+  category: { name: string; subcategories: Array<{ name: string; productTypes: string[] }> }
+): INavItem {
+  const categoryDisplay = formatName(category.name);
+  const audiencePossessive = getPossessiveForm(audience);
 
   return {
     text: categoryDisplay,
-    path: `/shop/${audience}/${categoryName}`,
-    navLevel: "category",
+    path: `/shop/audience/${audience}/category/${category.name}`,
+    navLevel: 2,
     subnav: [
       {
-        text: `All ${audienceDisplay}'s ${categoryDisplay}`,
-        path: `/shop/${audience}/${categoryName}`,
-        navLevel: "allCategoryProducts",
+        text: `All ${audiencePossessive} ${categoryDisplay}`,
+        path: `/shop/audience/${audience}/category/${category.name}`,
+        navLevel: 2,
+        hasSamePathAsParentNavItem: true,
       },
-      ...productTypes.map((productType) => ({
-        text: formatProductTypeName(productType),
-        path: `/shop/${audience}/${categoryName}/${productType}`,
-        navLevel: "productType",
-      })),
-    ],
-  };
-}
-
-// Create a sport with its product types
-function createLevel3Nav(audience: string, sportName: string, productTypes: string[]): ILevel3 {
-  const sportDisplay = capitalizeFirstLetter(sportName);
-  const audienceDisplay = capitalizeFirstLetter(audience);
-
-  return {
-    text: sportDisplay,
-    path: `/shop/${audience}/${sportName}`,
-    navLevel: "sport",
-    subnav: [
-      {
-        text: `All ${audienceDisplay}'s ${sportDisplay}`,
-        path: `/shop/${audience}/${sportName}`,
-        navLevel: "allProductType",
-      },
-      ...productTypes.map((productType) => ({
-        text: formatProductTypeName(productType),
-        path: `/shop/${audience}/${sportName}/${productType}`,
-        navLevel: "productType",
-      })),
-    ],
-  };
-}
-
-// Create the Sports category with all sports
-function createLevel2Nav(audience: string, sportsObj: Record<string, string[]>): ILevel2 {
-  const audienceDisplay = capitalizeFirstLetter(audience);
-
-  return {
-    text: "Sports",
-    path: `/shop/${audience}/sports`,
-    navLevel: "category",
-    subnav: [
-      {
-        text: `All ${audienceDisplay}'s Sports`,
-        path: `/shop/${audience}/sports`,
-        navLevel: "allSports",
-      },
-      ...Object.entries(sportsObj).map(([sportName, productTypes]) =>
-        createLevel3Nav(audience, sportName, productTypes)
+      ...category.subcategories.map((subcategory) =>
+        createSubcategoryNav(audience, category.name, subcategory.name, subcategory.productTypes)
       ),
     ],
   };
 }
 
-// Main function to create audience navigation from config object
-function createLevel1Nav(config: { audience: string; categories: Record<string, string[] | Record<string, string[]>> }): INavItem {
-  const { audience, categories } = config;
-  const audienceDisplay = capitalizeFirstLetter(audience);
+// Create categories within a sport object (for `Sports` navigation)
+function createSportProductCategoryNav(
+  audience: string,
+  sportName: string,
+  productCategory: { name: string; productTypes: string[] }
+): INavItem {
+  const categoryDisplay = formatName(productCategory.name);
+  const sportDisplay = formatName(sportName);
+  const audiencePossessive = getPossessiveForm(audience);
 
-  const subnav: ILevel2[] = [
+  return {
+    text: categoryDisplay,
+    path: `/shop/audience/${audience}/sport/${sportName}/category/${productCategory.name}`,
+    navLevel: 3,
+    subnav: [
+      {
+        text: `All ${audiencePossessive} ${sportDisplay} ${categoryDisplay}`,
+        path: `/shop/audience/${audience}/sport/${sportName}/category/${productCategory.name}`,
+        navLevel: 3,
+        hasSamePathAsParentNavItem: true,
+      },
+      ...productCategory.productTypes.map((productType) => ({
+        text: formatName(productType),
+        path: `/shop/audience/${audience}/sport/${sportName}/category/${productCategory.name}/subcategory/${productType}`,
+        navLevel: 4,
+      })),
+    ],
+  };
+}
+
+// Create a sport with its product categories
+function createSportNav(
+  audience: string,
+  sport: { name: string; sportProductCategories: Array<{ name: string; productTypes: string[] }> }
+): INavItem {
+  const sportDisplay = formatName(sport.name);
+  const audiencePossessive = getPossessiveForm(audience);
+
+  return {
+    text: sportDisplay,
+    path: `/shop/audience/${audience}/sport/${sport.name}`,
+    navLevel: 2,
+    subnav: [
+      {
+        text: `All ${audiencePossessive} ${sportDisplay}`,
+        path: `/shop/audience/${audience}/sport/${sport.name}`,
+        navLevel: 2,
+        hasSamePathAsParentNavItem: true,
+      },
+      ...sport.sportProductCategories.map((productCategory) =>
+        createSportProductCategoryNav(audience, sport.name, productCategory)
+      ),
+    ],
+  };
+}
+
+// Create the Sports category with all sports
+function createSportsNav(
+  audience: string,
+  sportsCategory: { name: string; subcategories: Array<{ name: string; sportProductCategories: Array<{ name: string; productTypes: string[] }> }> }
+): INavItem {
+  const audiencePossessive = getPossessiveForm(audience);
+
+  return {
+    text: "Sports",
+    path: `/shop/audience/${audience}/sport/all`,
+    navLevel: 2,
+    subnav: [
+      {
+        text: `All ${audiencePossessive} Sports`,
+        path: `/shop/audience/${audience}/sport/all`,
+        navLevel: 2,
+        hasSamePathAsParentNavItem: true,
+      },
+      ...sportsCategory.subcategories.map((sport) => createSportNav(audience, sport)),
+    ],
+  };
+}
+
+// Main function to create audience navigation from config object.
+function createAudienceNav(config: {
+  audience: string;
+  categories: Array<{
+    name: string;
+    subcategories: Array<{ name: string; productTypes?: string[]; sportProductCategories?: Array<{ name: string; productTypes: string[] }> }>;
+  }>;
+}): INavItem {
+  const { audience, categories } = config;
+  const audiencePossessive = getPossessiveForm(audience);
+
+  const subnav: INavItem[] = [
     // "All [Audience]'s Products" link
     {
-      text: `All ${audienceDisplay}'s Products`,
-      path: `/shop/${audience}`,
-      navLevel: "allAudienceProducts",
+      text: `All ${audiencePossessive} Products`,
+      path: `/shop/audience/${audience}`,
+      navLevel: 1,
       hasSamePathAsParentNavItem: true,
     },
   ];
 
   // Process each category
-  Object.entries(categories).forEach(([categoryName, value]) => {
-    if (categoryName === 'sports' && typeof value === 'object' && !Array.isArray(value)) {
+  categories.forEach((category) => {
+    if (category.name === 'sports') {
       // Special handling for sports category
-      subnav.push(createLevel2Nav(audience, value as Record<string, string[]>));
-    } else if (Array.isArray(value)) {
-      // Regular category with product types
-      subnav.push(createCategoryNav(audience, categoryName, value));
+      subnav.push(createSportsNav(audience, category as any));
+    } else {
+      // Regular category with subcategories
+      subnav.push(createCategoryNav(audience, category as any));
     }
   });
 
   return {
     text: audience.toUpperCase(),
-    path: `/shop/${audience}`,
-    navLevel: "audience",
+    path: `/shop/audience/${audience}`,
+    navLevel: 1,
     subnav,
   };
 }
 
 export function createTopNav() {
   return [
-    createLevel1Nav(menNav),
-    // createLevel1Nav(womenNav),
-    // createLevel1Nav(kidsNav),
+    createAudienceNav(menNav),
+    createAudienceNav(womenNav),
+    createAudienceNav(kidsNav),
   ];
 }
 
@@ -288,7 +584,7 @@ export function TOP_NAV_OLD(): INavItem[] {
         {
           text: "All Men's Products",
           path: "/shop/audience/men",
-          navLevel: 1, // This is an "audience" navLevel because it has the same path as its parent nav.
+          navLevel: 1,
           hasSamePathAsParentNavItem: true,
         },
         {
