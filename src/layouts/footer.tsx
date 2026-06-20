@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/../public/images/logo-and-name-horizontal-black-191919.svg";
-import { topNav, companyInfoNav } from "@/navigation";
+import { mainNav, companyInfoNav } from "@/navigation";
 import styles from "./footer.module.css";
 
 export default function Footer() {
@@ -13,7 +13,7 @@ export default function Footer() {
       <hr className={styles["footer-top-divider"]} />
       <footer className={styles["footer-top"]}>
         <nav className={styles["footer-nav"]}>
-          {topNav().map((category) => (
+          {mainNav().map((category) => (
             <ul className={styles["column"]} key={category.text}>
               <li>
                 <h5 className={styles["column-header"]}>{category.text}</h5>

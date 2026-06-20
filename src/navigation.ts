@@ -561,7 +561,7 @@ function createAudienceNav(config: {
   };
 }
 
-export function createTopNav() {
+export function createMainNav() {
   return [
     createAudienceNav(menNav),
     createAudienceNav(womenNav),
@@ -569,12 +569,12 @@ export function createTopNav() {
   ];
 }
 
-export function topNav(): INavItem[] {
-  return createTopNav();
+export function mainNav(): INavItem[] {
+  return createMainNav();
 }
 
 // Keep old implementation commented for reference
-export function TOP_NAV_OLD(): INavItem[] {
+export function MAIN_NAV_OLD(): INavItem[] {
   return [
     {
       text: "MEN",

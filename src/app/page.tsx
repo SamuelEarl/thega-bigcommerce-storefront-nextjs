@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { INavItem, topNav } from "@/navigation";
+import { INavItem, mainNav } from "@/navigation";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
             <p className={styles["paragraph-styles"]}>and our gear powers every step forward.</p>
           </div>
           <div className={styles["cta-container"]}>
-            {topNav().map((audience) => (
+            {mainNav().map((audience) => (
               <Link key={audience.text} href={audience.path} className={styles["cta"]}>
                 SHOP {audience.text}
               </Link>

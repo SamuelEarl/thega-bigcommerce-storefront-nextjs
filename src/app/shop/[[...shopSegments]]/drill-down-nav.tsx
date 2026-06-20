@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topNav, type INavItem } from "@/navigation";
+import { mainNav, type INavItem } from "@/navigation";
 import styles from "./drill-down-nav.module.css";
 
 interface DrillDownLink {
@@ -44,7 +44,7 @@ function findNavItem(items: INavItem[], targetPath: string): INavItem | null {
  * Returns null if no children exist or all children are filtered out.
  */
 function findDirectChildren(targetPath: string): DrillDownLink[] | null {
-  const nav = topNav();
+  const nav = mainNav();
 
   // Determine which items to use as children
   let childItems: INavItem[] | undefined;

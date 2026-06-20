@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { topNav, type INavItem } from "@/navigation";
+import { mainNav, type INavItem } from "@/navigation";
 import styles from "./breadcrumbs.module.css";
 
 interface BreadcrumbItem {
@@ -43,7 +43,7 @@ function searchNavItems(items: INavItem[], targetPath: string): BreadcrumbItem[]
  * @returns An array of breadcrumb items.
  */
 function findPath(targetPath: string): BreadcrumbItem[] | null {
-  const nav = topNav();
+  const nav = mainNav();
   return searchNavItems(nav, targetPath);
 }
 

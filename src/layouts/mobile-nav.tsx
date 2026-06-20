@@ -10,7 +10,7 @@ import {
   RiUserLine,
   type RemixiconComponentType,
 } from "@remixicon/react";
-import { iconNav, topNav, INavItem } from "@/navigation";
+import { iconNav, mainNav, INavItem } from "@/navigation";
 import Logo from "@/../public/images/logo-and-name-horizontal-white-fbfbfb.svg"
 import styles from "./mobile-nav.module.css"
 
@@ -105,7 +105,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
         {/* Level 1 Panel: Audience navigation (e.g. Men, Women, Kids) */}
         <div className={styles["nav-panel"]}>
           <ul className={styles["navigation-list"]}>
-            {topNav().map((audience) => (
+            {mainNav().map((audience) => (
               <li key={audience.text} className={styles["nav-item"]}>
                 {
                   // If the audience nav item has a subnav, then display a button that can be clicked, which will then display the audience > categories menu. If the button is clicked, then set `activeAudienceMenu` to equal `audience.text`.
@@ -149,8 +149,8 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               </div>
 
               <ul className={styles["subnav-list"]}>
-                {/* Find the activeAudienceMenu in topNav() and map over its subnav. */}
-                {topNav().find((item) => item.text === activeAudienceMenu)?.subnav?.map((subnavItem) => (
+                {/* Find the activeAudienceMenu in mainNav() and map over its subnav. */}
+                {mainNav().find((item) => item.text === activeAudienceMenu)?.subnav?.map((subnavItem) => (
                   <li key={subnavItem.text} className={styles["nav-item"]}>
                     {/* If subnavItem has a subnav, then set activeCategorySubMenu to equal subnavItem.text. */}
                     {'subnav' in subnavItem && subnavItem.subnav ? (
@@ -194,7 +194,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
 
               <ul className={styles["subnav-list"]}>
                 {/* Find the activeAudienceMenu, then find activeCategorySubmenu within it, then map over the category's subnav to display sports or productTypes. */}
-                {topNav()
+                {mainNav()
                   .find((item) => item.text === activeAudienceMenu)
                   ?.subnav?.find((subItem) => subItem.text === activeCategorySubmenu)
                   ?.subnav?.map((sportOrProductTypeItem) => (
@@ -241,7 +241,7 @@ export default function MobileNav({ isOpen, onClose }: MobileNavProps) {
               <ul className={styles["subnav-list"]}>
                 {/* Find the activeAudienceMenu, then activeCategorySubmenu, then activeSportSubmenu, then map over the sport's subnav to display the product types. */}
                 {(() => {
-                  const categorySubnav = topNav()
+                  const categorySubnav = mainNav()
                     .find((item) => item.text === activeAudienceMenu)
                     ?.subnav?.find((subItem) => subItem.text === activeCategorySubmenu)
                     ?.subnav;

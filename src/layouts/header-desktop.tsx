@@ -8,7 +8,7 @@ import {
   type RemixiconComponentType,
 } from "@remixicon/react";
 import Logo from "@/../public/images/logo-and-name-horizontal-white-fbfbfb.svg";
-import { iconNav, INavItem, topNav } from "@/navigation";
+import { iconNav, INavItem, mainNav } from "@/navigation";
 import styles from "./header-desktop.module.css";
 
 // Icon mapping
@@ -23,10 +23,10 @@ export default function HeaderDesktop() {
   const [activeAudienceMenu, setActiveAudienceMenu] = useState<string | null>(null);
 
   // Find the active nav item's subnav data for the mega menu.
-  const activeCategorySubmenu = topNav()
+  const activeCategorySubmenu = mainNav()
     .find((item: INavItem) => item.text === activeAudienceMenu)
     ?.subnav ?? null;
-  // const activeCategorySubmenu = activeAudienceMenu ? topNav().audience[activeAudienceMenu].category : {};
+  // const activeCategorySubmenu = activeAudienceMenu ? mainNav().audience[activeAudienceMenu].category : {};
 
   return (
     <div className={styles["header-desktop-content"]}>
@@ -49,7 +49,7 @@ export default function HeaderDesktop() {
       >
         {/* The Audience navigation items that appear in the header (above the mega menu). */}
         <ul className={`${styles["nav-list"]} ${styles["desktop-top-nav-list"]}`}>
-          {topNav().map((audience) => {
+          {mainNav().map((audience) => {
             if (audience.subnav) {
               // Render the top-level navigation Link along with its subnav in the mega menu.
               return (
