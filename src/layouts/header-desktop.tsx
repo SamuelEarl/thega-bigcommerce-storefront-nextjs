@@ -22,11 +22,10 @@ export default function HeaderDesktop() {
   // Track which mega menu is open by nav item text. null = all closed.
   const [activeAudienceMenu, setActiveAudienceMenu] = useState<string | null>(null);
 
-  // Find the active nav item's subnav data for the mega menu.
-  const activeCategorySubmenu = mainNav()
+  // Find the content that should populate the active mega menu.
+  const activeMenuContent = mainNav()
     .find((item: INavItem) => item.text === activeAudienceMenu)
     ?.subnav ?? null;
-  // const activeCategorySubmenu = activeAudienceMenu ? mainNav().audience[activeAudienceMenu].category : {};
 
   return (
     <div className={styles["header-desktop-content"]}>
@@ -93,7 +92,7 @@ export default function HeaderDesktop() {
           <div className={styles["mega-menu"]}>
             {/* If the subnav item is a `hasSamePathAsParentNavItem` item, then display it in the top row - above the bottom row of columns. */}
             <div className={styles["mega-menu-top-row"]}>
-              {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
+              {activeMenuContent && activeMenuContent.map((category) => {
                 if (category.hasSamePathAsParentNavItem) {
                   return (
                     <Link
@@ -110,7 +109,7 @@ export default function HeaderDesktop() {
             </div>
             {/* Categories row (Shoes, Clothing, Accessories) - excludes Sports */}
             <ul className={`${styles["nav-list"]} ${styles["mega-menu-categories-row"]}`}>
-              {activeCategorySubmenu && activeCategorySubmenu.map((category) => {
+              {activeMenuContent && activeMenuContent.map((category) => {
                 // Do not display the `hasSamePathAsParentNavItem` item or Sports category in this row.
                 if (category.hasSamePathAsParentNavItem || category.text === "Sports") return;
                 // Make sure to check for the existence of a subnav.
@@ -154,7 +153,7 @@ export default function HeaderDesktop() {
             <ul className={`${styles["nav-list"]} ${styles["mega-menu-sports-row"]}`}>
               {(() => {
                 // Find the Sports category.
-                const sportsCategory = activeCategorySubmenu?.find((category) => category.text === "Sports");
+                const sportsCategory = activeMenuContent?.find((category) => category.text === "Sports");
 
                 // If sportsCategory exists and has a `subnav` property, then map over the sports.subnav array.
                 if (sportsCategory?.subnav) {

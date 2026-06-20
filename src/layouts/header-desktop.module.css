@@ -58,6 +58,9 @@
 
     .mega-menu-container {
       width: 100vw;
+      /* If the mega menu is taller than the viewport, then add a scrollbar. */
+      max-height: calc(100vh - 100px);
+      overflow-y: auto;
       display: flex;
       justify-content: center;
       position: absolute;
