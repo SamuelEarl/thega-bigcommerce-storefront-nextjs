@@ -49,6 +49,8 @@ export default function HeaderDesktop() {
         {/* The Audience navigation items that appear in the header (above the mega menu). */}
         <ul className={`${styles["nav-list"]} ${styles["desktop-top-nav-list"]}`}>
           {mainNav().map((audience) => {
+            const isActive = activeAudienceMenu === audience.text;
+
             if (audience.subnav) {
               // Render the top-level navigation Link along with its subnav in the mega menu.
               return (
@@ -58,7 +60,7 @@ export default function HeaderDesktop() {
                   onMouseEnter={() => setActiveAudienceMenu(audience.text)}
                 >
                   <Link
-                    className={styles["desktop-top-nav-item-link"]}
+                    className={`${styles["desktop-top-nav-item-link"]} ${isActive ? styles["active-mega-menu"] : ""}`}
                     href={audience.path}
                     onClick={() => setActiveAudienceMenu(null)}
                   >
