@@ -34,7 +34,7 @@ Yes, using 4K images for high-resolution displays like Apple's Retina is a good 
 
 ### Best practices
 
-* For most websites, smaller 1080p compressed images are the right size to use (i.e. images should be served at a resolution of 2x). Some exceptions are photocentric sites where your site relies on hyper-crisp visuals (e.g., photography portfolios, luxury branding) in which case 1080p looks noticeably pixelated on 4K monitors.
+* For most websites, 1080p compressed images are the right size to use (i.e. images should be served at a resolution of 2x). Some exceptions are photocentric sites where your site relies on hyper-crisp visuals (e.g., photography portfolios, luxury branding) in which case 1080p looks noticeably pixelated on 4K monitors.
     * A standard 1080p image is **1,920 pixels wide** and **1,080 pixels tall**, resulting in a **16:9 aspect ratio**.
     * Because image sizes are defined by width and height, the exact width can vary depending on the format:
         * **Standard HD (16:9):** 1920 × 1080 (1,920 pixels wide)

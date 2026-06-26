@@ -1,19 +1,25 @@
 @media (--xs-min) {
-  @media (--standard-res) {
+  /* 
+  * For most websites, 1080p compressed images are the right size to use. See IMAGE_LOADING_&_PERFORMANCE.md for more info. 
+  * Also, I am using CSS background-image instead of Next.js <Image> component because it is easier to position the image and text over the image with CSS background-image. Also, I don't need to lazy load the hero image because it should always render when the user visits the homepage.
+  */
+
+  /* @media (--standard-res) {
     .hero-image-container {
-      background-image: url("/images/res-standard/hero-image-optimized-xs-res-standard-768x800.webp");
+      background-image: url("/images/res-standard/hero-image-xs-res-standard-768x800.webp");
     }
   }
 
   @media (--high-res) {
     .hero-image-container {
-      background-image: url("/images/res-high/hero-image-optimized-xs-res-high-1536x1600.webp");
+      background-image: url("/images/res-high/hero-image-xs-res-high-1536x1600.webp");
     }
-  }
+  } */
 
   .hero-image-container {
     /* The height of the hero image is 100vh - the height of the <header> element. */
     height: calc(100vh - 61px);
+    background-image: url("/images/backgrounds/hero-image-xs-res-standard-768x800.webp");
     background-repeat: no-repeat;
     background-position: top right 40%;
     background-size: cover;
@@ -84,19 +90,20 @@
 
 
 @media (--md-min) {
-  @media (--standard-res) {
+  /* @media (--standard-res) {
     .hero-image-container {
-      background-image: url("/images/res-standard/hero-image-optimized-md-res-standard-1280x1280.webp");
+      background-image: url("/images/res-standard/hero-image-md-res-standard-1280x1280.webp");
     }
   }
 
   @media (--high-res) {
     .hero-image-container {
-      background-image: url("/images/res-high/hero-image-optimized-md-res-high-2560x2560.webp");
+      background-image: url("/images/res-high/hero-image-md-res-high-2560x2560.webp");
     }
-  }
+  } */
 
   .hero-image-container {
+    background-image: url("/images/backgrounds/hero-image-md-res-standard-1280x1280.webp");
     background-position: top center;
 
     .hero-content-container {
@@ -122,21 +129,22 @@
 
 
 @media (--xl-min) {
-  @media (--standard-res) {
+  /* @media (--standard-res) {
     .hero-image-container {
-      background-image: url("/images/res-standard/hero-image-optimized-xl-res-standard-2000x800.webp");
+      background-image: url("/images/res-standard/hero-image-xl-res-standard-2000x800.webp");
     }
   }
 
   @media (--high-res) {
     .hero-image-container {
-      background-image: url("/images/res-high/hero-image-optimized-xl-res-high-4000x1600.webp");
+      background-image: url("/images/res-high/hero-image-xl-res-high-4000x1600.webp");
     }
-  }
+  } */
 
   .hero-image-container {
     /* The height of the hero image is 100vh - the height of the <header> element. */
     height: calc(100vh - 64px);
+    background-image: url("/images/backgrounds/hero-image-xl-res-standard-2000x800.webp");
     flex-direction: row;
     align-items: flex-end;
 
