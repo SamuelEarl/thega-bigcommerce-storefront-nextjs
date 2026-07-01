@@ -152,7 +152,6 @@
   .hero-image-container {
     /* The height of the hero image is 100vh - the height of the <header> element. */
     height: calc(100vh - 64px);
-    /* background-image: url("/images/backgrounds/hero-image-xl-res-standard-2000x800.webp"); */
     background-image: image-set(
       url("/images/backgrounds/xl/hero-image-xl-resolution-standard-2000x800.avif") type("image/avif"),
       url("/images/backgrounds/xl/hero-image-xl-resolution-standard-2000x800.webp") type("image/webp"),
