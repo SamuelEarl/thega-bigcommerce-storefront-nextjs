@@ -1,4 +1,6 @@
-# THEGA SPORTSWEAR - BigCommerce Storefront Next.js
+# THEGA SPORTSWEAR - Medusa.js Storefront Next.js
+
+UPDATE: I am going to use Medusa.js instead of BigCommerce for the ecommerce platform. I will use an Amazon Seller account that is integrated with Printful for marketing and market research to learn which products sell well. Once I have a good idea of what sells, then I will purchase small quantities and sell them directly through my Medusa.js store.
 
 ---
 

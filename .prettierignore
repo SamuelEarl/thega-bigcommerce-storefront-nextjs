@@ -28,3 +28,7 @@ yarn.lock
 # Generated files
 *.gen.ts
 *.generated.ts
+
+# CSS files
+*.css
+*.module.css
