@@ -10,7 +10,7 @@ import {
   getElementSizes,
   getElementWidth,
 } from "../colors-and-sizes";
-import styles from "./button.module.css";
+import styles from "./Button.module.css";
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
   variant?: Variant;

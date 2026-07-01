@@ -2,7 +2,7 @@
 
 import { useEffect, type ComponentProps } from "react";
 import { RiCloseLine } from "@remixicon/react";
-import styles from "./modal.module.css";
+import styles from "./Modal.module.css";
 
 // EXAMPLE USAGE:
 // function ModalExample() {

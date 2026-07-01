@@ -4,7 +4,7 @@
 // https://moderncss.dev/pure-css-custom-checkbox-style/
 
 import { useState, type ComponentProps } from "react";
-import styles from "./checkbox.module.css";
+import styles from "./Checkbox.module.css";
 
 
 export function Checkbox({ onChange, children, ...props }: ComponentProps<"input">) {

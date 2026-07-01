@@ -1,9 +1,9 @@
 // Buttons
-export { Button } from "./buttons/button";
-export type { ButtonProps } from "./buttons/button";
+export { Button } from "./buttons/Button";
+export type { ButtonProps } from "./buttons/Button";
 
 // Checkboxes
-export { Checkbox } from "./checkboxes/checkbox";
+export { Checkbox } from "./checkboxes/Checkbox";
 
 // Modals
 export {
@@ -12,7 +12,7 @@ export {
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from "./modals/modal";
+} from "./modals/Modal";
 
 // Colors and Sizes utilities
 export {
