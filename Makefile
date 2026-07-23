@@ -7,6 +7,36 @@ install:
 
 
 # -------------------------
+# Development
+# -------------------------
+
+# Run this target to start all the projects in the "app" folder that have a "dev" script defined.
+.PHONY: dev
+dev:
+	@clear
+	@echo "🚀 Starting Nextjs development server...\n"
+	@pnpm run dev
+
+
+# -------------------------
+# Build
+# You should run the build commands after making new changes to make sure that your applications are still compiling.
+# -------------------------
+
+.PHONY: build-staging
+build-staging:
+	@clear
+	@echo "🛠️  Building projects for staging to make sure they still compile and work...\n"
+	@pnpm run build:staging
+
+.PHONY: build-prod
+build-prod:
+	@clear
+	@echo "🛠️  Building projects for production to make sure they still compile and work...\n"
+	@pnpm run build:prod
+
+
+# -------------------------
 # Linting and Formatting
 # Prettier handles quotes, semicolons, and commas. 
 # ESLint handles brace-style. The eslint-plugin-only-warn you already have ensures all rules show as warnings, not errors!
@@ -42,36 +72,6 @@ format-fix:
 	@clear
 	@echo "✏️ Fixing code formats...\n"
 	@pnpm run format:fix
-
-
-# -------------------------
-# Development
-# -------------------------
-
-# Run this target to start all the projects in the "app" folder that have a "dev" script defined.
-.PHONY: dev
-dev:
-	@clear
-	@echo "🚀 Starting Nextjs development server...\n"
-	@pnpm run dev
-
-
-# -------------------------
-# Build
-# You should run the build commands after making new changes to make sure that your applications are still compiling.
-# -------------------------
-
-.PHONY: build-staging
-build-staging:
-	@clear
-	@echo "🛠️  Building projects for staging to make sure they still compile and work...\n"
-	@pnpm run build:staging
-
-.PHONY: build-prod
-build-prod:
-	@clear
-	@echo "🛠️  Building projects for production to make sure they still compile and work...\n"
-	@pnpm run build:prod
 
 
 # -------------------------
